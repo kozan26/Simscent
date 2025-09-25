@@ -693,60 +693,93 @@
 })();
 </script>
 
+<!-- GitHub Pages base‑path safe auto JSON loader -->
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const JSON_PATH = './perfumes_data.json';
-  fetch(JSON_PATH, { cache: 'no-store' })
-    .then(r => { if (!r.ok) throw new Error('JSON yüklenemedi: ' + r.status); return r.json(); })
-    .then(data => {
-      // Try to call common data initialization hooks if they exist
-      const fns = [
-        'processJSON','loadJSON','loadData','ingestJSON','applyJSON',
-        'onJSONLoaded','initFromJSON','bootstrapFromJSON','useJSON',
-        'hydrateFromJSON','setData','initData'
-      ];
-      let called = false;
-      for (const name of fns) {
-        if (typeof window[name] === 'function') {
-          try { window[name](data); called = true; } catch (e) { console.error(e); }
-        }
+(function() {
+  function pathBase() {
+    var p = location.pathname;
+    if (!p || p === "/") return "/";
+    return p.endsWith("/") ? p : p.replace(/[^\/]+$/, "");
+  }
+  function invokeWith(data) {
+    if (window.__SIMCENT_JSON_DONE__) return;
+    window.__SIMCENT_JSON_DONE__ = true;
+    var fns = [
+      'processJSON','loadJSON','loadData','ingestJSON','applyJSON',
+      'onJSONLoaded','initFromJSON','bootstrapFromJSON','useJSON',
+      'hydrateFromJSON','setData','initData'
+    ];
+    var called = false;
+    for (var i=0;i<fns.length;i++) {
+      var name = fns[i];
+      if (typeof window[name] === 'function') {
+        try { window[name](data); called = true; } catch (e) { console.error(e); }
       }
-      // Always dispatch a generic event for app code to listen to
-      try { window.dispatchEvent(new CustomEvent('simcent:jsonLoaded', { detail: data })); } catch(_) {}
-      // Remove/hide upload UI if present
-      try {
-        const selectors = [
-          'input[type="file"]', '[data-upload]', '.json-upload', '#json-upload', '#jsonInput', '#json-file'
-        ];
-        document.querySelectorAll(selectors.join(',')).forEach(el => {
-          if (el.closest('label')) el.closest('label').remove();
-          else el.remove();
-        });
-        document.querySelectorAll('.upload-section, #uploadSection, [data-section="upload"]').forEach(el => el.remove());
-        // Remove buttons/links that say "JSON Yükle"
-        document.querySelectorAll('button, a').forEach(el => {
-          if (/json yükle/i.test(el.textContent || '')) el.remove();
-        });
-      } catch (e) { console.warn('UI cleanup:', e); }
-      console.log('JSON otomatik yüklendi', { autoInvoked: called });
-    })
-    .catch(err => {
+    }
+    try { window.dispatchEvent(new CustomEvent('simcent:jsonLoaded', { detail: data })); } catch (_) {}
+    // Cleanup any upload UI
+    try {
+      var selectors = [
+        'input[type="file"]', '[data-upload]', '.json-upload', '#json-upload', '#jsonInput', '#json-file'
+      ];
+      document.querySelectorAll(selectors.join(',')).forEach(function(el){
+        if (el.closest && el.closest('label')) el.closest('label').remove(); else el.remove();
+      });
+      ['.upload-section', '#uploadSection', '[data-section="upload"]'].forEach(function(sel){
+        document.querySelectorAll(sel).forEach(function(el){ el.remove(); });
+      });
+      document.querySelectorAll('button, a').forEach(function(el){
+        if ((el.textContent||'').toLowerCase().includes('json yükle')) el.remove();
+      });
+    } catch (e) { console.warn('UI cleanup:', e); }
+    // Small badge
+    try {
+      var b = document.createElement('div');
+      b.textContent = 'JSON yüklendi ✓';
+      Object.assign(b.style, {
+        position:'fixed', bottom:'16px', left:'16px', background:'#111', color:'#fff',
+        padding:'8px 12px', borderRadius:'10px', zIndex: 9999, opacity:'0.9',
+        fontFamily:'system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif', fontSize:'12px'
+      });
+      document.body.appendChild(b);
+      setTimeout(function(){ b.remove(); }, 2000);
+    } catch (_){}
+    console.log('JSON loaded (GitHub Pages safe)');
+  }
+  function tryFetch(urls) {
+    if (!urls.length) throw new Error('No JSON URL candidates worked.');
+    var url = urls.shift();
+    return fetch(url, { cache: 'no-store' })
+      .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(invokeWith)
+      .catch(function(err){
+        console.warn('Fetch failed for', url, err);
+        return tryFetch(urls);
+      });
+  }
+  function start() {
+    var base = pathBase();
+    var cands = [
+      base + 'perfumes_data.json?v=1',
+      './perfumes_data.json?v=1',
+      'perfumes_data.json?v=1'
+    ];
+    tryFetch(cands).catch(function(err){
       console.error('JSON otomatik yükleme hatası:', err);
-      // Minimal toast
-      try {
-        const msg = document.createElement('div');
-        msg.textContent = 'JSON yüklenemedi. Lütfen sayfayı yenileyin.';
-        Object.assign(msg.style, {
-          position:'fixed',bottom:'16px',right:'16px',
-          background:'#111',color:'#fff',padding:'10px 14px',
-          borderRadius:'10px',zIndex:9999,boxShadow:'0 6px 24px rgba(0,0,0,.2)',
-          fontFamily:'system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif', fontSize:'14px'
-        });
-        document.body.appendChild(msg);
-        setTimeout(() => msg.remove(), 5000);
-      } catch (_) {}
+      var msg = document.createElement('div');
+      msg.textContent = 'JSON yüklenemedi. Lütfen sayfayı yenileyin.';
+      Object.assign(msg.style, {
+        position:'fixed',bottom:'16px',right:'16px',
+        background:'#c00',color:'#fff',padding:'10px 14px',
+        borderRadius:'10px',zIndex:9999,boxShadow:'0 6px 24px rgba(0,0,0,.2)',
+        fontFamily:'system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif', fontSize:'14px'
+      });
+      document.body.appendChild(msg);
+      setTimeout(function(){ msg.remove(); }, 5000);
     });
-});
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+})();
 </script>
 
 </body>
