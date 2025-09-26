@@ -1066,7 +1066,7 @@
 
     async function loadInitialData() {
       try {
-        const response = await fetch('perfumes_data.json');
+        const response = await fetch(`${BASE_PATH}/perfumes_data.json`);
         if (!response.ok) {
           throw new Error(`HTTP hatası! Durum: ${response.status}`);
         }
