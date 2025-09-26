@@ -1,6 +1,27 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+  <script>
+    (function(){
+      const ss = window.sessionStorage;
+      let path = window.location.pathname;
+      const basePath = '/simscent';
+
+      if (ss && !ss.getItem('gh-pages-redirect')) {
+        ss.setItem('gh-pages-redirect', 'true');
+        
+        if (path.startsWith(basePath)) {
+            const relativePath = path.substring(basePath.length);
+            const newUrl = basePath + '/?p=' + relativePath;
+            window.location.replace(newUrl);
+        }
+      } else if (ss) {
+        ss.removeItem('gh-pages-redirect');
+      }
+    })();
+  </script>
+
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>simscent — Ana Sayfa</title>
@@ -238,6 +259,17 @@
         </button>
       </div>
     </section>
+
+    <!-- ============== Google Ads Alanı Başlangıcı ============== -->
+    <section class="section" id="ad-placeholder">
+        <div style="display: flex; justify-content: center; align-items: center; min-height: 100px; background-color: #f1f5f9; border: 1px dashed #cbd5e1; border-radius: 16px; text-align: center; color: #64748b; font-family: 'Inter', sans-serif;">
+            <div>
+                <div style="font-weight: 600; font-size: 16px;">Reklam Alanı</div>
+                <p style="font-size: 13px; margin-top: 4px;">Google AdSense kodunuzu buraya yerleştirin.</p>
+            </div>
+        </div>
+    </section>
+    <!-- ============== Google Ads Alanı Sonu ============== -->
 
     <section class="section" id="results">
       <h3 style="font-weight:800;font-size:22px;margin-bottom:12px;font-family:'Playfair Display',serif">Sonuçlar</h3>
@@ -796,7 +828,7 @@
       for(const p of picks){
         const perf = p.choice?.perfume;
         const img = perf?.['Image URL'] || `https://placehold.co/144x144/e2e8f0/64748b?text=${encodeURIComponent((perf?.Brand||'?').slice(0,1))}`;
-        const title = `${(FAMILY_TR?.[p.a]||p.a)} & ${(FAMILY_TR?.[p.b]||p.b)}`;
+        const title = `${(FAMILY_TR?.[p.a]||p.a)} + ${(FAMILY_TR?.[p.b]||p.b)}`;
         const brandName = perf ? (perf.Brand||'') : '—';
         const fragName = perf ? (perf.fullName||'Seçim bulunamadı') : 'Seçim bulunamadı';
         const el = document.createElement('div'); el.className='fc';
@@ -1118,3 +1150,5 @@
 </script>
 </body>
 </html>
+
+
