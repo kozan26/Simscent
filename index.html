@@ -957,10 +957,16 @@
     document.title = `${ref.fullName} — Simcent`;
     setMeta('description', `${ref.Brand} ${ref.fullName} notalar, akordlar ve benzer parfümler.`);
 
-    // Update URL with real path, no hash.
-    const brandSlug = (ref.Brand || 'unknown').toLowerCase().replace(/\s+/g, '-');
-    const fragSlug  = (ref.fullName).toLowerCase().replace(/\s+/g, '-');
-    const newPath   = `${BASE_PATH}/p/${encodeURIComponent(brandSlug)}/${encodeURIComponent(fragSlug)}`;
+    // URL için temiz ve okunabilir metin (slug) oluşturan fonksiyon
+    const slugify = (text) => text.toString().toLowerCase()
+        .replace(/&/g, 'and')           // & karakterini 'and' ile değiştir
+        .replace(/\s+/g, '-')           // Boşlukları - ile değiştir
+        .replace(/[^\w\-]+/g, '')       // Kelime olmayan karakterleri (özel karakterler) kaldır
+        .replace(/\-\-+/g, '-');        // Birden fazla -'yi tek - yap
+
+    const brandSlug = slugify(ref.Brand || 'unknown');
+    const fragSlug  = slugify(ref.fullName);
+    const newPath   = `${BASE_PATH}/p/${brandSlug}/${fragSlug}`;
 
     if (location.pathname !== newPath) {
         history.pushState({ perfume: ref.fullName }, '', newPath);
@@ -1139,4 +1145,5 @@
 </script>
 </body>
 </html>
+
 
