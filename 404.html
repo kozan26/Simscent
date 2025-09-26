@@ -702,7 +702,7 @@
       for(const p of picks){
         const perf = p.choice?.perfume;
         const img = perf?.['Image URL'] || `https://placehold.co/144x144/e2e8f0/64748b?text=${encodeURIComponent((perf?.Brand||'?').slice(0,1))}`;
-        const title = `${(FAMILY_TR?.[p.a]||p.a)} + ${(FAMILY_TR?.[p.b]||p.b)}`;
+        const title = `${(FAMILY_TR?.[p.a]||p.a)} & ${(FAMILY_TR?.[p.b]||p.b)}`;
         const brandName = perf ? (perf.Brand||'') : '—';
         const fragName = perf ? (perf.fullName||'Seçim bulunamadı') : 'Seçim bulunamadı';
         const el = document.createElement('div'); el.className='fc';
@@ -924,5 +924,6 @@
 </script>
 </body>
 </html>
+
 
 
