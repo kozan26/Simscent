@@ -266,6 +266,8 @@
   const log = Object.assign(function(...a){ if(DEBUG) console.log('%c[Simcent]', 'color:#6366f1;font-weight:700', ...a); },{
     warn:(...a)=>DEBUG&&console.warn('[Simcent]',...a), error:(...a)=>DEBUG&&console.error('[Simcent]',...a), group:(l)=>DEBUG&&console.group(l), end:()=>DEBUG&&console.groupEnd()
   });
+  
+  const BASE_PATH = '/Simcent'; // For GitHub Pages subdirectory
 
   // DOM helpers
   const q=(s,r=document)=>{const el=r.querySelector(s); if(!el) throw new Error('Selector not found: '+s); return el;};
@@ -910,8 +912,8 @@
   // Actions
   function handleRealRouting(){
     const path = location.pathname;
-    // Assuming base path is '/' for production. For local dev in a subdir, you might need to adjust.
-    const match = path.match(/^\/p\/([^/]+)\/([^/]+)/);
+    const regex = new RegExp(`^${BASE_PATH}\/p\/([^/]+)\/([^/]+)`);
+    const match = path.match(regex);
     
     if (!match) {
         if (state.currentRef) {
@@ -958,8 +960,7 @@
     // Update URL with real path, no hash.
     const brandSlug = (ref.Brand || 'unknown').toLowerCase().replace(/\s+/g, '-');
     const fragSlug  = (ref.fullName).toLowerCase().replace(/\s+/g, '-');
-    // NOTE: This assumes the app is at the root. If in a subdirectory, add the base path.
-    const newPath   = `/p/${encodeURIComponent(brandSlug)}/${encodeURIComponent(fragSlug)}`;
+    const newPath   = `${BASE_PATH}/p/${encodeURIComponent(brandSlug)}/${encodeURIComponent(fragSlug)}`;
 
     if (location.pathname !== newPath) {
         history.pushState({ perfume: ref.fullName }, '', newPath);
@@ -1023,10 +1024,11 @@
     // SEO: Reset title and meta description
     document.title = 'Simcent — Ana Sayfa';
     setMeta('description', 'Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul.');
-
+    
+    const homePath = `${BASE_PATH}/`;
     // Navigate to root path
-    if (pushState && location.pathname !== '/') {
-        history.pushState({}, '', '/');
+    if (pushState && location.pathname !== homePath && location.pathname !== BASE_PATH) {
+        history.pushState({}, '', homePath);
     }
 
     if (state.data.length > 0) {
@@ -1103,7 +1105,7 @@
       // Migration for old hash-based links
       if (location.hash.startsWith('#/')) {
         const legacyPath = location.hash.slice(2).replace(/_/g, '-').replace(/\+/g, '-');
-        const newPath = `/p/${legacyPath}`;
+        const newPath = `${BASE_PATH}/p/${legacyPath}`;
         history.replaceState({}, '', newPath);
         handleRealRouting(); // Manually trigger router after replacing state
       } else {
