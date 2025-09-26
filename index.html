@@ -159,6 +159,25 @@
 
     [data-debug-outline] *{outline:1px dashed rgba(100,116,139,.35)}
   </style>
+
+<style id="simcent-autopreview-style">
+  .simcent-preview{margin:24px auto;max-width:1200px;padding:0 16px;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,sans-serif}
+  .simcent-preview h2{font-size:18px;margin:0 0 12px;color:#111}
+  .simcent-badge{display:inline-block;background:#e9f7ef;color:#0a7a3b;border:1px solid #bfe8cf;padding:6px 10px;border-radius:999px;font-size:12px;margin-bottom:12px}
+  .simcent-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
+  .simcent-card{background:#fff;border:1px solid #eee;border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,.04)}
+  .simcent-card img{width:100%;height:180px;object-fit:cover;display:block;background:#f6f7f9}
+  .simcent-card .meta{padding:10px 12px}
+  .simcent-card .name{font-weight:600;font-size:14px;color:#111;line-height:1.2;margin-bottom:4px}
+  .simcent-card .brand{font-size:12px;color:#555}
+  @media (prefers-color-scheme: dark){
+    .simcent-card{background:#111;border-color:#222;box-shadow:none}
+    .simcent-card .name{color:#fafafa}
+    .simcent-card .brand{color:#aaa}
+    .simcent-preview h2{color:#fafafa}
+  }
+</style>
+
 </head>
 <body>
 <main class="landing" id="appRoot">
@@ -780,6 +799,42 @@
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();
+</script>
+
+
+<script id="simcent-autopreview-script">
+(function(){
+  function renderPreview(data){
+    try{
+      if (!Array.isArray(data) || data.length === 0) return;
+      if (document.getElementById('simcent-autopreview')) return; // don't duplicate
+      var wrap = document.createElement('section');
+      wrap.id = 'simcent-autopreview';
+      wrap.className = 'simcent-preview';
+      var count = data.length;
+      wrap.innerHTML = '<span class="simcent-badge">JSON yüklendi • ' + count + ' kayıt</span>' +
+                       '<h2>Önizleme (ilk 24)</h2>' +
+                       '<div class="simcent-grid" id="simcent-grid"></div>';
+      document.body.appendChild(wrap);
+      var grid = wrap.querySelector('#simcent-grid');
+      var first = data.slice(0,24);
+      first.forEach(function(item){
+        var img = item['Image URL'] || item['image'] || item['img'] || '';
+        var name = item['Fragrance Name'] || item['name'] || 'Adı yok';
+        var brand = item['Brand'] || item['brand'] || '';
+        var card = document.createElement('article');
+        card.className = 'simcent-card';
+        card.innerHTML = '<img loading="lazy" alt=" ' + (name||'') + ' " src="'+ (img||'') +'"/>' +
+                         '<div class="meta"><div class="name">'+ (name||'') +'</div><div class="brand">'+ (brand||'') +'</div></div>';
+        grid.appendChild(card);
+      });
+    }catch(e){ console.warn('Preview render error', e); }
+  }
+  // If our generic loader already dispatched, use that:
+  window.addEventListener('simcent:jsonLoaded', function(e){ renderPreview(e.detail); });
+  // Also attach a global fallback in case other code wants to call it:
+  window.__simcentPreview = renderPreview;
+})(); 
 </script>
 
 </body>
