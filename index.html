@@ -217,7 +217,7 @@
       </div>
     </section>
 
-    <!-- Preferences are moved dynamically by JS -->
+    <!-- Preferences HIDDEN by default -->
     <section class="section" id="upload-section" style="display:none">
       <h3 style="font-weight:800;font-size:22px;margin-bottom:16px;font-family:'Playfair Display',serif">Tercihler</h3>
       <div class="card" style="box-shadow:none;border:1px solid var(--border);padding:16px" id="prefs">
@@ -469,7 +469,7 @@
     const notes = p['Fragrance Notes'] || '';
     const notesHTML = notes ? `
     <div class="detail-section">
-      <h4 class='detail-section-title'>Parfüm Notaları</h4>
+      <h4 class='detail-section-title'>Notalar</h4>
       <div class='chips'>
           ${notes.split(',').map(s => s.trim()).filter(Boolean).map(note =>
               `<span class='chip note-link' data-note='${encodeURIComponent(note)}'>${note}</span>`
@@ -529,10 +529,6 @@
     state.currentRef=ref;
     const out=q('#out'); out.innerHTML='';
     out.appendChild(renderRefDetail(ref));
-    
-    const prefsSection = q('#upload-section');
-    out.appendChild(prefsSection);
-
     if(sims.length){
       const titleText = `${ref.fullName || 'Seçtiğiniz Parfüm'} Benzeri Parfümler`;
       const h2=document.createElement('div');
@@ -667,18 +663,16 @@
     out.innerHTML = ''; 
 
     const results = state.data
-        .map(p => ({ perfume: p, score: p[accordName] || 0 }))
-        .filter(item => item.score > 0)
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 20)
-        .map(item => item.perfume);
+        .filter(p => p['Main Accords'] && p['Main Accords'].toLowerCase().includes(accordName.toLowerCase()))
+        .sort((a,b) => (b[accordName] || 0) - (a[accordName] || 0) )
+        .slice(0,20);
 
     const header = document.createElement('div');
     header.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;';
 
     const title = document.createElement('h3');
     title.style.cssText = "font-weight:800; font-size:22px; font-family:'Playfair Display',serif;";
-    title.textContent = `'${accordName}' Akorduna Sahip Parfümler (Top 20)`;
+    title.textContent = `'${accordName}' Akorduna Sahip Parfümler (${results.length})`;
 
     const backBtn = document.createElement('button');
     backBtn.className = 'btn ghost';
@@ -708,7 +702,7 @@
           <div>
             <div style='display:flex;justify-content:space-between;align-items:flex-start;gap:8px'>
               <div class='pf-brand brand-link' data-brand="${encodeURIComponent(p.Brand || '')}">${p.Brand||''}</div>
-              <div class='badge' style="background:var(--shell); color: var(--text); border:1px solid var(--border);">${p[accordName]}</div>
+              ${year ? `<div class='badge' style="background:var(--shell); color: var(--text); border:1px solid var(--border);">${year}</div>` : ''}
             </div>
             <div class='pf-name' style="margin-top:4px">${p.fullName||''}</div>
           </div>`;
@@ -968,15 +962,9 @@
   }
 
   function resetToHome() {
-    const prefsSection = q('#upload-section');
-    const featuredSection = q('#featured');
-    if (featuredSection.parentNode && prefsSection.parentNode !== featuredSection.parentNode) {
-        featuredSection.parentNode.insertBefore(prefsSection, featuredSection);
-    }
-    prefsSection.style.display = 'none';
-
     state.currentRef = null;
     q('#searchInput').value = '';
+    q('#upload-section').style.display = 'none';
 
     if (state.data.length > 0) {
         const idx = Math.floor(Math.random() * state.data.length);
@@ -996,7 +984,7 @@
   function thumbURL(item){ 
     const brand=(item.Brand||'?')+''; 
     const letter=encodeURIComponent(brand.slice(0,1)); 
-    return item['Image URL']||`https://placehold.co/40pxx40/e2e8f0/64748b?text=${letter}`; 
+    return item['Image URL']||`https://placehold.co/40x40/e2e8f0/64748b?text=${letter}`; 
   }
 
   function setHeroFromPerfume(p){
@@ -1065,8 +1053,7 @@
     loadInitialData();
   }
   init();
-})();AC
+})();
 </script>
 </body>
 </html>
-
