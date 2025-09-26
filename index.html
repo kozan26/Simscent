@@ -465,6 +465,16 @@
           ${tags.map(k=>`<span class='chip'><span class="material-symbols-outlined">${ICONS[k]||'label'}</span>${LABELS[k]||k}</span>`).join('')}
         </div>
       </div>`:'';
+    
+    const notes = p['Fragrance Notes'] || '';
+    const notesHTML = notes ? `
+    <div class="detail-section">
+        <div class='chips'>
+            ${notes.split(',').map(s => s.trim()).filter(Boolean).map(note =>
+                `<span class='chip note-link' data-note='${encodeURIComponent(note)}'>${note}</span>`
+            ).join('')}
+        </div>
+    </div>` : '';
    
     const el=document.createElement('div'); el.className='card'; el.style.boxShadow='var(--elev-1)';
     el.innerHTML=`
@@ -482,6 +492,7 @@
               <h4 class='detail-section-title'>Ana Akordlar</h4>
               <div class='chips'>${(p['Main Accords']||'').split(',').map(s=>s.trim()).filter(Boolean).map(a=>`<span class='chip accord-link' data-accord='${encodeURIComponent(a)}'>${a}</span>`).join('') || '<span class="chip" style="opacity:.7">Belirtilmedi</span>'}</div>
             </div>
+            ${notesHTML}
             ${tagsHTML}
             <div class="detail-section">
               <h4 class='detail-section-title'>Puanlar</h4>
@@ -701,6 +712,61 @@
     out.scrollIntoView({ behavior: 'smooth' });
   }
 
+    function showNoteResults(noteName) {
+    const out = q('#out');
+    out.innerHTML = ''; 
+
+    const results = state.data.filter(p => p['Fragrance Notes'] && p['Fragrance Notes'].toLowerCase().includes(noteName.toLowerCase()));
+
+    const header = document.createElement('div');
+    header.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;';
+
+    const title = document.createElement('h3');
+    title.style.cssText = "font-weight:800; font-size:22px; font-family:'Playfair Display',serif;";
+    title.textContent = `'${noteName}' Notalı Parfümler (${results.length})`;
+
+    const backBtn = document.createElement('button');
+    backBtn.className = 'btn ghost';
+    backBtn.textContent = 'Geri Dön';
+    on(backBtn, 'click', () => findSimilar(false));
+
+    header.appendChild(title);
+    header.appendChild(backBtn);
+    out.appendChild(header);
+
+    if (results.length === 0) {
+        out.innerHTML += `<p>Bu notayı içeren sonuç bulunamadı.</p>`;
+        return;
+    }
+
+    const grid = document.createElement('div');
+    grid.style.cssText = 'display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:20px;';
+
+    results.forEach(p => {
+        const year = p['Release Year'] || '';
+        const img = p['Image URL'] || `https://placehold.co/240x240/e2e8f0/64748b?text=${encodeURIComponent((p.Brand||'?').slice(0,1))}`;
+        const el = document.createElement('div'); 
+        el.className = `pf`;
+        el.style.cursor = 'pointer';
+        el.innerHTML = `
+          <img class='pf-img' src='${img}' alt='${p.fullName}' onerror="this.onerror=null;this.src='https://placehold.co/240x240/e2e8f0/64748b?text=Hata'"/>
+          <div>
+            <div style='display:flex;justify-content:space-between;align-items:flex-start;gap:8px'>
+              <div class='pf-brand brand-link' data-brand="${encodeURIComponent(p.Brand || '')}">${p.Brand||''}</div>
+              ${year ? `<div class='badge' style="background:var(--shell); color: var(--text); border:1px solid var(--border);">${year}</div>` : ''}
+            </div>
+            <div class='pf-name' style="margin-top:4px">${p.fullName||''}</div>
+          </div>`;
+        on(el, 'click', () => {
+            setReferenceAndFindSimilar(p, true);
+        });
+        grid.appendChild(el);
+    });
+
+    out.appendChild(grid);
+    out.scrollIntoView({ behavior: 'smooth' });
+  }
+
   // ======= FEATURED RENDER =======
   function renderFeatured(){
     const sec = q('#featured');
@@ -721,7 +787,7 @@
     for(const p of picks){
       const perf = p.choice?.perfume;
       const img = perf?.['Image URL'] || `https://placehold.co/144x144/e2e8f0/64748b?text=${encodeURIComponent((perf?.Brand||'?').slice(0,1))}`;
-      const title = `${(FAMILY_TR?.[p.a]||p.a)} & ${(FAMILY_TR?.[p.b]||p.b)}`;
+      const title = `${(FAMILY_TR?.[p.a]||p.a)} + ${(FAMILY_TR?.[p.b]||p.b)}`;
       const brandName = perf ? (perf.Brand||'') : '—';
       const fragName = perf ? (perf.fullName||'Seçim bulunamadı') : 'Seçim bulunamadı';
       const el = document.createElement('div'); el.className='fc';
@@ -804,6 +870,14 @@
             e.stopPropagation();
             const name = decodeURIComponent(accordLink.dataset.accord);
             if (name) showAccordResults(name);
+            return;
+        }
+
+        const noteLink = e.target.closest('.note-link');
+        if (noteLink) {
+            e.stopPropagation();
+            const name = decodeURIComponent(noteLink.dataset.note);
+            if (name) showNoteResults(name);
             return;
         }
     });
@@ -947,7 +1021,10 @@
       const idx = Math.floor(Math.random()*data.length);
       const rnd = data[idx];
       setHeroFromPerfume(rnd);
-      showPrefs();
+      
+      // showPrefs() was here, removing it to hide preferences on initial load
+      q('#upload-section').style.display = 'none';
+
 
       q('#out').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Koleksiyon Yüklendi</h4><p style="color:var(--muted);margin-top:4px">Bir parfüm arayabilir veya "Beni Şaşırt!" butonunu kullanabilirsiniz.</p></div>`;
       showToast(`✅ ${data.length} parfüm başarıyla yüklendi.`,'ok');
