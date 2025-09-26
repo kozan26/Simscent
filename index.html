@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -907,7 +906,7 @@
     const hash = window.location.hash.substring(1);
     if (!hash) return;
 
-    const perfumeName = decodeURIComponent(hash);
+    const perfumeName = decodeURIComponent(hash.replace(/_/g, '%20'));
 
     // Prevent re-rendering if the hash points to the currently displayed perfume
     if (state.currentRef && perfumeName === state.currentRef.fullName) {
@@ -938,7 +937,7 @@
     q('#searchInput').value = ref.fullName;
 
     // Update URL hash without adding to history stack unnecessarily
-    const newHash = `#${encodeURIComponent(ref.fullName)}`;
+    const newHash = `#${encodeURIComponent(ref.fullName).replace(/%20/g, '_')}`;
     if (window.location.hash !== newHash) {
         history.pushState(null, '', newHash);
     }
