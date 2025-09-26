@@ -161,6 +161,14 @@
     .pf-brand.brand-link:hover {
         color: var(--brand-secondary);
     }
+    .chip.note-link {
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .chip.note-link:hover {
+      background-color: #e2e8f0;
+      border-color: #d1d5db;
+    }
 
     /* Toast & FAB */
     .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,16px);background:var(--text);color:#fff;padding:12px 18px;border-radius:12px;box-shadow:var(--elev-2);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:9999;font-weight:700;font-size:15px;letter-spacing:.2px}
@@ -457,7 +465,15 @@
           ${tags.map(k=>`<span class='chip'><span class="material-symbols-outlined">${ICONS[k]||'label'}</span>${LABELS[k]||k}</span>`).join('')}
         </div>
       </div>`:'';
-    const notesHTML = notes?`<div class="detail-section" style="margin-top:24px;border-top:1px solid var(--border);padding-top:24px;"><h4 class='detail-section-title'>Notalar</h4><p class='notes-text'>${notes}</p></div>`:'';
+    const notesHTML = notes ? `
+            <div class="detail-section" style="margin-top:24px;border-top:1px solid var(--border);padding-top:24px;">
+                <h4 class='detail-section-title'>Notalar</h4>
+                <div class='chips'>
+                    ${notes.split(',').map(s => s.trim()).filter(Boolean).map(note => 
+                        `<span class='chip note-link' data-note='${encodeURIComponent(note)}'>${note}</span>`
+                    ).join('')}
+                </div>
+            </div>` : '';
     const el=document.createElement('div'); el.className='card'; el.style.boxShadow='var(--elev-1)';
     el.innerHTML=`
       <div class="card-inner">
@@ -639,6 +655,61 @@
     out.scrollIntoView({ behavior: 'smooth' });
   }
 
+  function showNoteResults(noteName) {
+    const out = q('#out');
+    out.innerHTML = ''; 
+
+    const results = state.data.filter(p => p['Fragrance Notes'] && p['Fragrance Notes'].toLowerCase().includes(noteName.toLowerCase()));
+
+    const header = document.createElement('div');
+    header.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;';
+
+    const title = document.createElement('h3');
+    title.style.cssText = "font-weight:800; font-size:22px; font-family:'Playfair Display',serif;";
+    title.textContent = `'${noteName}' Notalı Parfümler (${results.length})`;
+
+    const backBtn = document.createElement('button');
+    backBtn.className = 'btn ghost';
+    backBtn.textContent = 'Geri Dön';
+    on(backBtn, 'click', () => findSimilar(false));
+
+    header.appendChild(title);
+    header.appendChild(backBtn);
+    out.appendChild(header);
+
+    if (results.length === 0) {
+        out.innerHTML += `<p>Bu notayı içeren sonuç bulunamadı.</p>`;
+        return;
+    }
+
+    const grid = document.createElement('div');
+    grid.style.cssText = 'display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:20px;';
+
+    results.forEach(p => {
+        const year = p['Release Year'] || '';
+        const img = p['Image URL'] || `https://placehold.co/240x240/e2e8f0/64748b?text=${encodeURIComponent((p.Brand||'?').slice(0,1))}`;
+        const el = document.createElement('div'); 
+        el.className = `pf`;
+        el.style.cursor = 'pointer';
+        el.innerHTML = `
+          <img class='pf-img' src='${img}' alt='${p.fullName}' onerror="this.onerror=null;this.src='https://placehold.co/240x240/e2e8f0/64748b?text=Hata'"/>
+          <div>
+            <div style='display:flex;justify-content:space-between;align-items:flex-start;gap:8px'>
+              <div class='pf-brand brand-link' data-brand="${encodeURIComponent(p.Brand || '')}">${p.Brand||''}</div>
+              ${year ? `<div class='badge' style="background:var(--shell); color: var(--text); border:1px solid var(--border);">${year}</div>` : ''}
+            </div>
+            <div class='pf-name' style="margin-top:4px">${p.fullName||''}</div>
+          </div>`;
+        on(el, 'click', () => {
+            setReferenceAndFindSimilar(p, true);
+        });
+        grid.appendChild(el);
+    });
+
+    out.appendChild(grid);
+    out.scrollIntoView({ behavior: 'smooth' });
+  }
+
   // ======= FEATURED RENDER =======
   function renderFeatured(){
     const sec = q('#featured');
@@ -732,6 +803,14 @@
             e.stopPropagation();
             const name = decodeURIComponent(brandLink.dataset.brand);
             if (name) showBrandResults(name);
+            return;
+        }
+
+        const noteLink = e.target.closest('.note-link');
+        if (noteLink) {
+            e.stopPropagation();
+            const name = decodeURIComponent(noteLink.dataset.note);
+            if (name) showNoteResults(name);
             return;
         }
     });
