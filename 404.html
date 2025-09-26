@@ -1,26 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <script>
-    (function(){
-      const ss = window.sessionStorage;
-      let path = window.location.pathname;
-      const basePath = '/simscent';
-
-      if (ss && !ss.getItem('gh-pages-redirect')) {
-        ss.setItem('gh-pages-redirect', 'true');
-        
-        if (path.startsWith(basePath)) {
-            const relativePath = path.substring(basePath.length);
-            const newUrl = basePath + '/?p=' + relativePath;
-            window.location.replace(newUrl);
-        }
-      } else if (ss) {
-        ss.removeItem('gh-pages-redirect');
-      }
-    })();
-  </script>
-
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>simscent — Ana Sayfa</title>
@@ -30,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,500..700,0..1,-50..200"/>
   <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+
   <style>
     :root{
       --brand-primary:#B99B6B;--brand-secondary:#A08C62;--text:#3a3a3a;--muted:#888;--border:#eee;--card:#fff;--shell:#f9f8f6;
@@ -175,18 +156,11 @@
         color: var(--brand-primary);
         text-decoration: underline;
     }
-    .pf-brand.brand-link:hover {
-        color: var(--brand-secondary);
-    }
+    .pf-brand.brand-link:hover { color: var(--brand-secondary); }
     .chip.note-link:hover, .chip.accord-link:hover {
-      background-color: #e2e8f0;
-      border-color: #d1d5db;
-      color: var(--text);
+      background-color: #e2e8f0;border-color:#d1d5db;color: var(--text);
     }
-     .chip.accord-link {
-        cursor: pointer;
-        transition: all .2s;
-    }
+    .chip.accord-link { cursor: pointer; transition: all .2s; }
 
     .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,16px);background:var(--text);color:#fff;padding:12px 18px;border-radius:12px;box-shadow:var(--elev-2);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:9999;font-weight:700;font-size:15px;letter-spacing:.2px}
     .toast.show{opacity:1;transform:translate(-50%,0)}
@@ -273,15 +247,13 @@
 </button>
 
 <script>
-  // FIX: This block reads the query parameter from the 404 redirect.
+  /* Eski linklerden gelebilecek ?p=... formatını kök yola dönüştür. */
   (function() {
     const params = new URLSearchParams(window.location.search);
-    const path = params.get('p');
-    if (path) {
-      const basePath = '/simscent'; // Ensure this matches your repo name
-      // This replaces the URL in the address bar without reloading the page.
-      // It changes `/simscent/?p=/path` to `/simscent/path`
-      window.history.replaceState(null, '', basePath + path + window.location.hash);
+    const p = params.get('p');
+    if (p) {
+      const clean = p.startsWith('/') ? p : '/' + p;
+      window.history.replaceState(null, '', clean + window.location.hash);
     }
   })();
 
@@ -291,8 +263,9 @@
     const log = Object.assign(function(...a){ if(DEBUG) console.log('%c[simscent]', 'color:#6366f1;font-weight:700', ...a); },{
       warn:(...a)=>DEBUG&&console.warn('[simscent]',...a), error:(...a)=>DEBUG&&console.error('[simscent]',...a), group:(l)=>DEBUG&&console.group(l), end:()=>DEBUG&&console.groupEnd()
     });
-    
-    const BASE_PATH = '/simscent';
+
+    /* Cloudflare Pages: kök alan (/) kullan */
+    const BASE_PATH = '';
 
     const q=(s,r=document)=>{const el=r.querySelector(s); if(!el) throw new Error('Selector not found: '+s); return el;};
     const qa=(s,r=document)=>Array.from(r.querySelectorAll(s));
@@ -1086,7 +1059,8 @@
 
     async function loadInitialData() {
       try {
-        const response = await fetch(`${BASE_PATH}/perfumes_data.json`);
+        /* Cloudflare Pages: kökten yükle */
+        const response = await fetch(`/perfumes_data.json`);
         if (!response.ok) {
           throw new Error(`HTTP hatası! Durum: ${response.status}`);
         }
@@ -1112,7 +1086,6 @@
         showToast(`✅ ${data.length} parfüm başarıyla yüklendi.`,'ok');
         
         window.addEventListener('popstate', handleRealRouting);
-
         handleRealRouting();
 
       } catch (err) {
@@ -1138,4 +1111,3 @@
 </script>
 </body>
 </html>
-
