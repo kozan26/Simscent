@@ -4,6 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Simcent — Ana Sayfa</title>
+  <meta name="description" content="Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
@@ -292,6 +293,11 @@
   const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
   const toPct=(v)=>{const n=Number(v);return !isFinite(n)?0:(n<11?Math.round(n*10):Math.round(n))};
   function showToast(msg,type='ok'){ const t=q('#toast'); if(!t){ if(DEBUG) console.log('[toast]', msg); return; } t.textContent=msg; t.className=`toast ${type||'ok'} show`; clearTimeout(window.__toastTimer); window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2600); }
+  function setMeta(name, content){
+    let m = document.querySelector(`meta[name="${name}"]`);
+    if (!m) { m = document.createElement('meta'); m.name = name; document.head.appendChild(m); }
+    m.setAttribute('content', content);
+  }
 
   function addFullName(arr){
     for(const p of arr){
@@ -902,36 +908,38 @@
   }
 
   // Actions
-  function handlePathRouting() {
-      const hash = window.location.hash;
-      if (!hash.startsWith('#/')) {
-          if (state.currentRef) { 
-              resetToHome();
-          }
-          return;
-      }
-      
-      const pathParts = hash.substring(2).split('/'); // Remove '#/' and split by '/'
-      if (pathParts.length < 2) return; // Invalid path format
+  function handleRealRouting(){
+    const path = location.pathname;
+    // Assuming base path is '/' for production. For local dev in a subdir, you might need to adjust.
+    const match = path.match(/^\/p\/([^/]+)\/([^/]+)/);
+    
+    if (!match) {
+        if (state.currentRef) {
+            resetToHome(false); // Don't push a new history state if we are already at root
+        }
+        return;
+    }
+    
+    const [, brandSlug, fragSlug] = match;
+    const perfumeName = decodeURIComponent(fragSlug).replace(/-/g, ' ');
+    
+    if (state.currentRef && perfumeName === state.currentRef.fullName) {
+        return; // Already displaying this perfume
+    }
 
-      const fragSlug = pathParts[1];
-      const perfumeName = decodeURIComponent(fragSlug.replace(/_/g, ' '));
-
-      if (state.currentRef && perfumeName === state.currentRef.fullName) {
-          return;
-      }
-
-      if (state.fuse) {
-          const result = state.fuse.search(perfumeName);
-          if (result.length > 0 && result[0].item) {
-              log(`Path'ten bulundu: ${perfumeName}`);
-              setReferenceAndFindSimilar(result[0].item, true);
-          } else {
-              log.warn(`Path'ten parfüm bulunamadı: ${perfumeName}`);
-          }
-      } else {
-          setTimeout(handlePathRouting, 200); // Retry if data isn't loaded yet
-      }
+    if (state.fuse) {
+        const result = state.fuse.search(perfumeName);
+        if (result.length > 0 && result[0].item) {
+            log(`Path'ten bulundu: ${perfumeName}`);
+            setReferenceAndFindSimilar(result[0].item, true);
+        } else {
+            log.warn(`Path'ten parfüm bulunamadı: ${perfumeName}`);
+            resetToHome(); // Perfume not found, go home
+        }
+    } else {
+        // Data not loaded yet, retry
+        setTimeout(handleRealRouting, 200);
+    }
   }
 
   function setReferenceAndFindSimilar(ref, scroll = true) {
@@ -943,18 +951,20 @@
     state.currentRef = ref;
     q('#searchInput').value = ref.fullName;
 
-    // Update URL with path-based hash, ensuring no query parameters remain
-    const brandSlug = encodeURIComponent((ref.Brand || 'unknown').replace(/ /g, '_'));
-    const fragSlug = encodeURIComponent(ref.fullName.replace(/ /g, '_'));
-    const newPathAndHash = window.location.pathname + `#/${brandSlug}/${fragSlug}`;
-    
-    const currentPathAndHash = window.location.pathname + window.location.hash;
+    // SEO: Update title and meta description
+    document.title = `${ref.fullName} — Simcent`;
+    setMeta('description', `${ref.Brand} ${ref.fullName} notalar, akordlar ve benzer parfümler.`);
 
-    // Only update history if the target URL is different from the current one
-    if (currentPathAndHash !== newPathAndHash) {
-        history.pushState({ perfume: ref.fullName }, '', newPathAndHash);
+    // Update URL with real path, no hash.
+    const brandSlug = (ref.Brand || 'unknown').toLowerCase().replace(/\s+/g, '-');
+    const fragSlug  = (ref.fullName).toLowerCase().replace(/\s+/g, '-');
+    // NOTE: This assumes the app is at the root. If in a subdirectory, add the base path.
+    const newPath   = `/p/${encodeURIComponent(brandSlug)}/${encodeURIComponent(fragSlug)}`;
+
+    if (location.pathname !== newPath) {
+        history.pushState({ perfume: ref.fullName }, '', newPath);
     }
-
+    
     showPrefs();
 
     const prefs = {
@@ -1005,14 +1015,18 @@
     setReferenceAndFindSimilar(p, true);
   }
 
-  function resetToHome() {
+  function resetToHome(pushState = true) {
     state.currentRef = null;
     q('#searchInput').value = '';
     q('#upload-section').style.display = 'none';
+    
+    // SEO: Reset title and meta description
+    document.title = 'Simcent — Ana Sayfa';
+    setMeta('description', 'Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul.');
 
-    // Clear the URL hash and any search parameters by navigating to the base path
-    if (window.location.hash || window.location.search) {
-        history.pushState({}, "", window.location.pathname);
+    // Navigate to root path
+    if (pushState && location.pathname !== '/') {
+        history.pushState({}, '', '/');
     }
 
     if (state.data.length > 0) {
@@ -1023,8 +1037,10 @@
 
     q('#out').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Koleksiyon Yüklendi</h4><p style="color:var(--muted);margin-top:4px">Bir parfüm arayabilir veya "Beni Şaşırt!" butonunu kullanabilirsiniz.</p></div>`;
     
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+    if (pushState) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
   
   function showPrefs(){ 
     q('#upload-section').style.display = 'block'; 
@@ -1081,10 +1097,19 @@
       q('#out').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Koleksiyon Yüklendi</h4><p style="color:var(--muted);margin-top:4px">Bir parfüm arayabilir veya "Beni Şaşırt!" butonunu kullanabilirsiniz.</p></div>`;
       showToast(`✅ ${data.length} parfüm başarıyla yüklendi.`,'ok');
       
-      // Check for path on initial load
-      handlePathRouting();
-      // Listen for back/forward button navigation
-      window.addEventListener('hashchange', handlePathRouting);
+      // Listen for back/forward browser actions
+      window.addEventListener('popstate', handleRealRouting);
+
+      // Migration for old hash-based links
+      if (location.hash.startsWith('#/')) {
+        const legacyPath = location.hash.slice(2).replace(/_/g, '-').replace(/\+/g, '-');
+        const newPath = `/p/${legacyPath}`;
+        history.replaceState({}, '', newPath);
+        handleRealRouting(); // Manually trigger router after replacing state
+      } else {
+        // Handle path on initial load for direct access
+        handleRealRouting();
+      }
 
     } catch (err) {
       log.error(err);
