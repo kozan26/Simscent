@@ -148,13 +148,13 @@
     .fc-body{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center}
     .fc-img{width:72px;height:72px;border-radius:12px;object-fit:cover;background:#e2e8f0}
 
-    .brand-link, .perfumer-link, .note-link {
+    .brand-link, .perfumer-link, .note-link, .accord-link {
         font-weight: 600;
         color: var(--brand-secondary);
         transition: color .2s;
         cursor: pointer;
     }
-    .brand-link:hover, .perfumer-link:hover, .note-link:hover {
+    .brand-link:hover, .perfumer-link:hover, .note-link:hover, .accord-link:hover {
         color: var(--brand-primary);
         text-decoration: underline;
     }
@@ -469,11 +469,12 @@
     const notes = p['Fragrance Notes'] || '';
     const notesHTML = notes ? `
     <div class="detail-section">
-        <div class='chips'>
-            ${notes.split(',').map(s => s.trim()).filter(Boolean).map(note =>
-                `<span class='chip note-link' data-note='${encodeURIComponent(note)}'>${note}</span>`
-            ).join('')}
-        </div>
+      <h4 class='detail-section-title'>Notalar</h4>
+      <div class='chips'>
+          ${notes.split(',').map(s => s.trim()).filter(Boolean).map(note =>
+              `<span class='chip note-link' data-note='${encodeURIComponent(note)}'>${note}</span>`
+          ).join('')}
+      </div>
     </div>` : '';
    
     const el=document.createElement('div'); el.className='card'; el.style.boxShadow='var(--elev-1)';
@@ -483,6 +484,7 @@
           <div>
             <img class='ref-card-image' src='${img}' alt='${p.fullName}' onerror="this.onerror=null;this.src='https://google.com/images/cleardot.gif'"/>
             ${sourceLink}
+            ${notesHTML}
           </div>
           <div>
             <div class='pf-brand brand-link' data-brand="${encodeURIComponent(p.Brand || '')}">${p.Brand||'—'}</div>
@@ -492,7 +494,6 @@
               <h4 class='detail-section-title'>Ana Akordlar</h4>
               <div class='chips'>${(p['Main Accords']||'').split(',').map(s=>s.trim()).filter(Boolean).map(a=>`<span class='chip accord-link' data-accord='${encodeURIComponent(a)}'>${a}</span>`).join('') || '<span class="chip" style="opacity:.7">Belirtilmedi</span>'}</div>
             </div>
-            ${notesHTML}
             ${tagsHTML}
             <div class="detail-section">
               <h4 class='detail-section-title'>Puanlar</h4>
@@ -661,7 +662,10 @@
     const out = q('#out');
     out.innerHTML = ''; 
 
-    const results = state.data.filter(p => p['Main Accords'] && p['Main Accords'].toLowerCase().includes(accordName.toLowerCase()));
+    const results = state.data
+        .filter(p => p['Main Accords'] && p['Main Accords'].toLowerCase().includes(accordName.toLowerCase()))
+        .sort((a,b) => (b[accordName] || 0) - (a[accordName] || 0) )
+        .slice(0,20);
 
     const header = document.createElement('div');
     header.style.cssText = 'display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;';
@@ -1022,7 +1026,6 @@
       const rnd = data[idx];
       setHeroFromPerfume(rnd);
       
-      // showPrefs() was here, removing it to hide preferences on initial load
       q('#upload-section').style.display = 'none';
 
 
@@ -1054,3 +1057,4 @@
 </script>
 </body>
 </html>
+
