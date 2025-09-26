@@ -943,13 +943,16 @@
     state.currentRef = ref;
     q('#searchInput').value = ref.fullName;
 
-    // Update URL with path-based hash
+    // Update URL with path-based hash, ensuring no query parameters remain
     const brandSlug = encodeURIComponent((ref.Brand || 'unknown').replace(/ /g, '_'));
     const fragSlug = encodeURIComponent(ref.fullName.replace(/ /g, '_'));
-    const newHash = `#/${brandSlug}/${fragSlug}`;
+    const newPathAndHash = window.location.pathname + `#/${brandSlug}/${fragSlug}`;
+    
+    const currentPathAndHash = window.location.pathname + window.location.hash;
 
-    if (window.location.hash !== newHash) {
-        history.pushState({ perfume: ref.fullName }, '', newHash);
+    // Only update history if the target URL is different from the current one
+    if (currentPathAndHash !== newPathAndHash) {
+        history.pushState({ perfume: ref.fullName }, '', newPathAndHash);
     }
 
     showPrefs();
@@ -1007,9 +1010,9 @@
     q('#searchInput').value = '';
     q('#upload-section').style.display = 'none';
 
-    // Clear the URL hash
-    if (window.location.hash) {
-        history.pushState({}, "", window.location.pathname + window.location.search);
+    // Clear the URL hash and any search parameters by navigating to the base path
+    if (window.location.hash || window.location.search) {
+        history.pushState({}, "", window.location.pathname);
     }
 
     if (state.data.length > 0) {
@@ -1109,6 +1112,4 @@
 </script>
 </body>
 </html>
-
-
 
