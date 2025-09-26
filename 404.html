@@ -788,7 +788,7 @@
       if (state.fuse) {
         const result = state.fuse.search(perfumeName);
         if (result.length > 0 && result[0].item) {
-          log(`Path'ten bulundu: ${perfum eName}`);
+          log(`Path'ten bulundu: ${perfumeName}`);
           setReferenceAndFindSimilar(result[0].item, true);
         } else {
           log.warn(`Path'ten parfüm bulunamadı: ${perfumeName}`);
@@ -932,3 +932,4 @@
 </script>
 </body>
 </html>
+
