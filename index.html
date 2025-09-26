@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -265,8 +264,7 @@
         <div style="display: flex; justify-content: center; align-items: center; min-height: 100px; background-color: #f1f5f9; border: 1px dashed #cbd5e1; border-radius: 16px; text-align: center; color: #64748b; font-family: 'Inter', sans-serif;">
             <div>
                 <div style="font-weight: 600; font-size: 16px;">Reklam Alanı</div>
-                <p style="font-size: 13px; margin-top: 4px;"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9033780165680589"
-     crossorigin="anonymous"></script>.</p>
+                <p style="font-size: 13px; margin-top: 4px;">Google AdSense kodunuzu buraya yerleştirin.</p>
             </div>
         </div>
     </section>
@@ -326,6 +324,7 @@
     const LABELS = {Daily:'Günlük',Business:'İş',Evening:'Akşam','Night Out':'Gece',Leisure:'Rahat',Sport:'Spor',Spring:'İlkbahar',Summer:'Yaz',Fall:'Sonbahar',Winter:'Kış',Classic:'Klasik',Masculine:'Maskülen',Feminine:'Feminen',Modern:'Modern'};
     const ICONS  = {Daily:'sunny',Business:'work',Evening:'nights_stay','Night Out':'nightlife',Leisure:'weekend',Sport:'directions_run',Spring:'local_florist',Summer:'sunny',Fall:'eco',Winter:'ac_unit',Classic:'account_balance',Masculine:'man',Feminine:'woman',Modern:'auto_awesome'};
     const FAMILY_TR = {Animal:'Hayvansı',Aquatic:'Akvatik',Chypre:'Şipre',Citrus:'Narenciye',Creamy:'Kremamsı',Earthy:'Topramsı',Floral:'Çiçeksi','Fougère':'Fujer',Fresh:'Ferahlık',Fruity:'Meyvemsi',Gourmand:'Gurme',Green:'Yeşil',Leathery:'Deri',Oriental:'Oryantal',Powdery:'Pudramsı',Resinous:'Reçineli',Smoky:'Dumanlı',Spicy:'Baharatlı',Sweet:'Tatlı',Synthetic:'Sentetik',Woody:'Odunsu'};
+    const ACCORD_TR = {'woody':'Odunsu','aromatic':'Aromatik','fresh spicy':'Taze Baharatlı','citrus':'Narenciye','amber':'Amber','warm spicy':'Sıcak Baharatlı','green':'Yeşil','sweet':'Tatlı','musky':'Misk','fruity':'Meyvemsi','powdery':'Pudramsı','vanilla':'Vanilya','floral':'Çiçeksi','white floral':'Beyaz Çiçeksi','rose':'Gül','oud':'Öd','smoky':'Dumanlı','leather':'Deri','earthy':'Topraksı','animalic':'Hayvansı','aquatic':'Akvatik','patchouli':'Paçuli','iris':'İris','balsamic':'Balsamik','tobacco':'Tütün','cinnamon':'Tarçın','spicy':'Baharatlı','resinous':'Reçineli','chypre':'Şipre','fougère':'Fujer','gourmand':'Gurme','creamy':'Kremamsı','synthetic':'Sentetik','fresh':'Ferah'};
 
     const toPct=(v)=>{const n=Number(v);return !isFinite(n)?0:(n<11?Math.round(n*10):Math.round(n))};
     function showToast(msg,type='ok'){ const t=q('#toast'); if(!t){ if(DEBUG) console.log('[toast]', msg); return; } t.textContent=msg; t.className=`toast ${type||'ok'} show`; clearTimeout(window.__toastTimer); window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2600); }
@@ -531,7 +530,7 @@
               ${subDetailsHTML}
               <div class="detail-section">
                 <h4 class='detail-section-title'>Ana Akordlar</h4>
-                <div class='chips'>${(p['Main Accords']||'').split(',').map(s=>s.trim()).filter(Boolean).map(a=>`<span class='chip accord-link' data-accord='${encodeURIComponent(a)}'>${a}</span>`).join('') || '<span class="chip" style="opacity:.7">Belirtilmedi</span>'}</div>
+                <div class='chips'>${(p['Main Accords']||'').split(',').map(s=>s.trim()).filter(Boolean).map(a=>`<span class='chip accord-link' data-accord='${encodeURIComponent(a)}'>${ACCORD_TR[a.toLowerCase()] || a}</span>`).join('') || '<span class="chip" style="opacity:.7">Belirtilmedi</span>'}</div>
               </div>
               ${tagsHTML}
               <div class="detail-section">
@@ -1151,5 +1150,4 @@
 </script>
 </body>
 </html>
-
 
