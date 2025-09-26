@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -902,6 +903,31 @@
   }
 
   // Actions
+  function handleInitialHash() {
+    const hash = window.location.hash.substring(1);
+    if (!hash) return;
+
+    const perfumeName = decodeURIComponent(hash);
+
+    // Prevent re-rendering if the hash points to the currently displayed perfume
+    if (state.currentRef && perfumeName === state.currentRef.fullName) {
+        return;
+    }
+
+    if (state.fuse) {
+        const result = state.fuse.search(perfumeName);
+        if (result.length > 0 && result[0].item) {
+            log(`Hash found, loading: ${perfumeName}`);
+            setReferenceAndFindSimilar(result[0].item, true);
+        } else {
+            log.warn(`Perfume from hash not found: ${perfumeName}`);
+        }
+    } else {
+        // If data isn't ready, try again in a moment
+        setTimeout(handleInitialHash, 200);
+    }
+  }
+
   function setReferenceAndFindSimilar(ref, scroll = true) {
     if (!ref) {
       showToast('Geçerli bir parfüm seçilemedi.', 'err');
@@ -910,6 +936,12 @@
 
     state.currentRef = ref;
     q('#searchInput').value = ref.fullName;
+
+    // Update URL hash without adding to history stack unnecessarily
+    const newHash = `#${encodeURIComponent(ref.fullName)}`;
+    if (window.location.hash !== newHash) {
+        history.pushState(null, '', newHash);
+    }
 
     showPrefs();
 
@@ -965,6 +997,9 @@
     state.currentRef = null;
     q('#searchInput').value = '';
     q('#upload-section').style.display = 'none';
+
+    // Clear the URL hash
+    history.pushState("", document.title, window.location.pathname + window.location.search);
 
     if (state.data.length > 0) {
         const idx = Math.floor(Math.random() * state.data.length);
@@ -1031,6 +1066,12 @@
 
       q('#out').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Koleksiyon Yüklendi</h4><p style="color:var(--muted);margin-top:4px">Bir parfüm arayabilir veya "Beni Şaşırt!" butonunu kullanabilirsiniz.</p></div>`;
       showToast(`✅ ${data.length} parfüm başarıyla yüklendi.`,'ok');
+      
+      // Check for hash on initial load
+      handleInitialHash();
+      // Listen for back/forward button navigation
+      window.addEventListener('hashchange', handleInitialHash);
+
     } catch (err) {
       log.error(err);
       showToast(`❌ Veri yüklenemedi: ${err.message}`,'err');
@@ -1057,3 +1098,4 @@
 </script>
 </body>
 </html>
+
