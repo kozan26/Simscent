@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Simcent — Ana Sayfa</title>
+  <title>simscent — Ana Sayfa</title>
   <meta name="description" content="Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul."/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -187,7 +187,7 @@
 <main class="landing" id="appRoot">
   <div class="card"><div class="card-inner">
     <div class="top">
-      <div class="brand"><div class="logo"></div>Simcent</div>
+      <div class="brand"><div class="logo"></div>simscent</div>
       <button class="cta" id="signupBtn">Kayıt Ol</button>
     </div>
 
@@ -263,11 +263,11 @@
 'use strict';
 (function(){
   const DEBUG = /[?#&]debug\b|__DEBUG__=1/.test(location.href);
-  const log = Object.assign(function(...a){ if(DEBUG) console.log('%c[Simcent]', 'color:#6366f1;font-weight:700', ...a); },{
-    warn:(...a)=>DEBUG&&console.warn('[Simcent]',...a), error:(...a)=>DEBUG&&console.error('[Simcent]',...a), group:(l)=>DEBUG&&console.group(l), end:()=>DEBUG&&console.groupEnd()
+  const log = Object.assign(function(...a){ if(DEBUG) console.log('%c[simscent]', 'color:#6366f1;font-weight:700', ...a); },{
+    warn:(...a)=>DEBUG&&console.warn('[simscent]',...a), error:(...a)=>DEBUG&&console.error('[simscent]',...a), group:(l)=>DEBUG&&console.group(l), end:()=>DEBUG&&console.groupEnd()
   });
   
-  const BASE_PATH = '/Simcent'; // For GitHub Pages subdirectory
+  const BASE_PATH = '/simscent'; // For GitHub Pages subdirectory
 
   // DOM helpers
   const q=(s,r=document)=>{const el=r.querySelector(s); if(!el) throw new Error('Selector not found: '+s); return el;};
@@ -954,7 +954,7 @@
     q('#searchInput').value = ref.fullName;
 
     // SEO: Update title and meta description
-    document.title = `${ref.fullName} — Simcent`;
+    document.title = `${ref.fullName} — simscent`;
     setMeta('description', `${ref.Brand} ${ref.fullName} notalar, akordlar ve benzer parfümler.`);
 
     // Update URL with real path, no hash.
@@ -1022,7 +1022,7 @@
     q('#upload-section').style.display = 'none';
     
     // SEO: Reset title and meta description
-    document.title = 'Simcent — Ana Sayfa';
+    document.title = 'simscent — Ana Sayfa';
     setMeta('description', 'Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul.');
     
     const homePath = `${BASE_PATH}/`;
@@ -1122,7 +1122,7 @@
 
 
   // Public debug
-  window.Simcent = {
+  window.simscent = {
     getState:()=>({ count:state.data.length, hasFuse:!!state.fuse, currentRef: state.currentRef, featured: state.featured }),
     loadJSON:(txt)=>{ const data=addFullName(parseFlexibleJSON(txt)); state.data=data; buildFuse(); buildFeaturedIndex(); pickFeatured(3); renderFeatured(); log('Manual load', data.length); showPrefs(); },
     nextFeatured:()=>{ const {pairs}=state.featured; const count=3; const pages=Math.max(1, Math.ceil(Math.min(pairs.length,10)/count)); state.featured.page=(state.featured.page+1)%pages; pickFeatured(count); renderFeatured(); }
