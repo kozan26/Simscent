@@ -902,18 +902,20 @@
   }
 
   // Actions
-  function handleUrlParameters() {
-      const params = new URLSearchParams(window.location.search);
-      const perfumeQuery = params.get('perfume');
-
-      if (!perfumeQuery) {
-          if (state.currentRef) { // Sadece ana sayfada değilsek sıfırla
+  function handlePathRouting() {
+      const hash = window.location.hash;
+      if (!hash.startsWith('#/')) {
+          if (state.currentRef) { 
               resetToHome();
           }
           return;
       }
       
-      const perfumeName = decodeURIComponent(perfumeQuery).replace(/_/g, ' ');
+      const pathParts = hash.substring(2).split('/'); // Remove '#/' and split by '/'
+      if (pathParts.length < 2) return; // Invalid path format
+
+      const fragSlug = pathParts[1];
+      const perfumeName = decodeURIComponent(fragSlug.replace(/_/g, ' '));
 
       if (state.currentRef && perfumeName === state.currentRef.fullName) {
           return;
@@ -922,13 +924,13 @@
       if (state.fuse) {
           const result = state.fuse.search(perfumeName);
           if (result.length > 0 && result[0].item) {
-              log(`URL parametresi bulundu: ${perfumeName}`);
+              log(`Path'ten bulundu: ${perfumeName}`);
               setReferenceAndFindSimilar(result[0].item, true);
           } else {
-              log.warn(`URL'den parfüm bulunamadı: ${perfumeName}`);
+              log.warn(`Path'ten parfüm bulunamadı: ${perfumeName}`);
           }
       } else {
-          setTimeout(handleUrlParameters, 200);
+          setTimeout(handlePathRouting, 200); // Retry if data isn't loaded yet
       }
   }
 
@@ -941,12 +943,13 @@
     state.currentRef = ref;
     q('#searchInput').value = ref.fullName;
 
-    // URL'yi sorgu parametresi ile güncelle
-    const perfumeQuery = encodeURIComponent(ref.fullName.replace(/ /g, '_'));
-    const url = new URL(window.location);
-    url.search = `?perfume=${perfumeQuery}`;
-    if (window.location.href !== url.href) {
-        history.pushState({ perfume: ref.fullName }, '', url);
+    // Update URL with path-based hash
+    const brandSlug = encodeURIComponent((ref.Brand || 'unknown').replace(/ /g, '_'));
+    const fragSlug = encodeURIComponent(ref.fullName.replace(/ /g, '_'));
+    const newHash = `#/${brandSlug}/${fragSlug}`;
+
+    if (window.location.hash !== newHash) {
+        history.pushState({ perfume: ref.fullName }, '', newHash);
     }
 
     showPrefs();
@@ -1004,9 +1007,9 @@
     q('#searchInput').value = '';
     q('#upload-section').style.display = 'none';
 
-    // URL sorgu parametrelerini temizle
-    if (window.location.search) {
-        history.pushState({}, "", window.location.pathname);
+    // Clear the URL hash
+    if (window.location.hash) {
+        history.pushState({}, "", window.location.pathname + window.location.search);
     }
 
     if (state.data.length > 0) {
@@ -1075,10 +1078,10 @@
       q('#out').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Koleksiyon Yüklendi</h4><p style="color:var(--muted);margin-top:4px">Bir parfüm arayabilir veya "Beni Şaşırt!" butonunu kullanabilirsiniz.</p></div>`;
       showToast(`✅ ${data.length} parfüm başarıyla yüklendi.`,'ok');
       
-      // Sayfa yüklendiğinde sorgu parametrelerini kontrol et
-      handleUrlParameters();
-      // Tarayıcının geri/ileri butonlarını dinle
-      window.addEventListener('popstate', handleUrlParameters);
+      // Check for path on initial load
+      handlePathRouting();
+      // Listen for back/forward button navigation
+      window.addEventListener('hashchange', handlePathRouting);
 
     } catch (err) {
       log.error(err);
@@ -1106,5 +1109,6 @@
 </script>
 </body>
 </html>
+
 
 
