@@ -1,0 +1,11 @@
+{
+  "name": "simscent",
+  "private": true,
+  "scripts": {
+    "build": "node generate.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^3.80.0"
+  },
+  "engines": { "node": ">=18" }
+}
