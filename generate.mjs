@@ -12,6 +12,8 @@ const BASE_PATH = process.env.BASE_PATH || ''; // GH Pages alt yolda '/repo-adin
 const SRC_HTML = 'index.html';
 const SRC_JSON = 'perfumes_data.json';
 const OUT_DIR  = 'dist';
+const ASSETS_DIR = 'assets';
+const PUBLIC_DIR = 'public';
 
 // Ayarlar
 const MAX_SIMS = 10;    // her sayfadaki benzer sayısı
@@ -219,7 +221,7 @@ function hydrateFromPrerender(){
     fetch((base||'') + '/perfumes_data.json')
       .then(r=>r.ok?r.text():Promise.reject())
       .then(t=>{
-        const data = addFullName(parseFlexibleJSON(t.replace(/:\\s*NaN/gi,': null')));
+        const data = addFullName(parseJSONFlex(t.replace(/:\\s*NaN/gi,': null')));
         state.data = data; buildFuse(); buildFeaturedIndex(); pickFeatured(3); renderFeatured();
       })
       .catch(()=>{});
@@ -308,6 +310,16 @@ function pick(obj, keys){ const o={}; for(const k of keys){ if(Object.prototype.
   write(path.join(OUT_DIR,'index.html'), baseHTML);
   write(path.join(OUT_DIR,'perfumes_data.json'), raw);
 
+  // Statikler: assets/ → dist/assets, public/ → dist/
+  if (fs.existsSync(ASSETS_DIR)) {
+    fs.cpSync(ASSETS_DIR, path.join(OUT_DIR, 'assets'), { recursive: true });
+    console.log('• Kopyalandı:', ASSETS_DIR, '→', path.join(OUT_DIR,'assets'));
+  }
+  if (fs.existsSync(PUBLIC_DIR)) {
+    fs.cpSync(PUBLIC_DIR, OUT_DIR, { recursive: true });
+    console.log('• Kopyalandı:', PUBLIC_DIR, '→', OUT_DIR);
+  }
+
   // Tekil sayfalar
   let n = 0;
   for(const perf of data){
@@ -331,6 +343,16 @@ function pick(obj, keys){ const o={}; for(const k of keys){ if(Object.prototype.
 Allow: /
 Sitemap: ${DOMAIN}/sitemap.xml`;
   write(path.join(OUT_DIR,'robots.txt'), robots);
+
+  // Cloudflare Pages: SPA fallback ve cache header'ları
+  write(path.join(OUT_DIR,'_redirects'), '/* /index.html 200\n');
+  write(path.join(OUT_DIR,'_headers'), `
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*
+  Cache-Control: public, max-age=60
+`.trim() + '\n');
 
   console.log(`\n✅ Tamamlandı. Üretilen sayfa: ${n} (+ sitemap.xml, robots.txt, perfumes_data.json, index.html)`);
   console.timeEnd('build');
