@@ -413,7 +413,7 @@
       const key = `${p.a}|${p.b}`;
       const items = topMap.get(key) || [];
       const len = Math.min(items.length, 20);
-      if(len===0){ picks.push({key, a:p.a, b:p.b, choice:null, list:[], rank:null}); continue; }
+      if(len===0){ picks.push({key, a: p.a, b: p.b, choice:null, list: [], rank: null}); continue; }
 
       let idx = Math.floor(Math.random()*len);
       for(let tries=0; tries<4 && picks.some(px => px.choice?.idx === items[idx]?.idx); tries++){
@@ -447,7 +447,10 @@
       </div>`;
     if(!isRef){
       el.style.cursor='pointer';
+      el.tabIndex = 0;
+      el.setAttribute('role','button');
       on(el,'click',() => setReferenceAndFindSimilar(p, true));
+      on(el,'keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') { e.preventDefault(); setReferenceAndFindSimilar(p,true);} });
     }
     return el;
   }
@@ -533,80 +536,109 @@
     requestAnimationFrame(step);
   }
 
-  /* New: robust per-card snap navigation (never stuck at the end) */
+  /* Carousel — page-step, never gets stuck, works great with 10 items */
   function setupCarousel(container){
-    const windowEl=container.querySelector('.carousel-window');
-    const prevBtn=container.querySelector('.carousel-btn.prev');
-    const nextBtn=container.querySelector('.carousel-btn.next');
-    const cards=Array.from(windowEl.children);
-    if(!cards.length) return;
+    const windowEl = container.querySelector('.carousel-window');
+    const prevBtn  = container.querySelector('.carousel-btn.prev');
+    const nextBtn  = container.querySelector('.carousel-btn.next');
+    let cards      = Array.from(windowEl.children);
+    if (!cards.length) return;
+
+    // keyboard nav
+    windowEl.setAttribute('tabindex', '0');
+
+    const css = getComputedStyle(windowEl);
+    const gap = (() => {
+      const g = parseFloat(css.gap); if (!isNaN(g)) return g;
+      const cg = parseFloat(css.columnGap); if (!isNaN(cg)) return cg;
+      const rg = parseFloat(css.rowGap); if (!isNaN(rg)) return rg;
+      return 0;
+    })();
 
     let positions = [];
-    function recomputePositions(){
+    let visible = 1;
+
+    function recompute(){
+      cards = Array.from(windowEl.children);
+      if (!cards.length) return;
+
+      const firstWidth = cards[0].getBoundingClientRect().width;
+      const cardW = firstWidth + gap;
+
+      visible = Math.max(1, Math.floor((windowEl.clientWidth + gap) / cardW));
+
+      const lastStartIndex = Math.max(0, cards.length - visible);
+
+      positions = [];
+      for (let i = 0; i <= lastStartIndex; i++){
+        positions.push(cards[i].offsetLeft);
+      }
+
       const max = Math.max(0, windowEl.scrollWidth - windowEl.clientWidth);
-      positions = cards.map(c => Math.min(c.offsetLeft, max));
-      positions.push(max);                               // ensure we can reach the true end
-      positions.sort((a,b)=>a-b);
-      // de-dup small diffs
-      positions = positions.filter((v,i,arr)=> i===0 || Math.abs(v-arr[i-1])>1);
-      updateButtons();
+      if (positions[positions.length - 1] !== max) positions.push(max);
+
+      toggleBtns();
+      focusEffect();
     }
 
     function currentIndex(){
       const x = windowEl.scrollLeft;
       let i = 0;
-      while(i < positions.length-1 && positions[i+1] <= x+1) i++;
+      while (i < positions.length - 1 && positions[i + 1] <= x + 1) i++;
       return i;
     }
 
-    function updateButtons(){
-      const last = positions[positions.length-1] ?? 0;
+    function goTo(i){
+      const target = Math.max(0, Math.min(i, positions.length - 1));
+      animateScrollTo(windowEl, positions[target]);
+    }
+
+    function next(){ goTo(currentIndex() + visible); }
+    function prev(){ goTo(currentIndex() - visible); }
+
+    function toggleBtns(){
+      const scrollable = windowEl.scrollWidth > windowEl.clientWidth + 1;
+      prevBtn.style.display = nextBtn.style.display = scrollable ? 'flex' : 'none';
+
+      const last = positions[positions.length - 1] ?? 0;
       prevBtn.disabled = windowEl.scrollLeft <= 1;
       nextBtn.disabled = windowEl.scrollLeft >= last - 1;
     }
 
-    function goNext(){
-      const i = currentIndex();
-      const nextI = Math.min(positions.length-1, i+1);
-      animateScrollTo(windowEl, positions[nextI]);
-    }
-    function goPrev(){
-      const i = currentIndex();
-      const prevI = Math.max(0, i-1);
-      animateScrollTo(windowEl, positions[prevI]);
-    }
-
-    prevBtn.addEventListener('click', goPrev);
-    nextBtn.addEventListener('click', goNext);
-
-    // Nice focus effect (no opacity changes)
-    function onScroll(){
-      updateButtons();
+    function focusEffect(){
       const center = windowEl.scrollLeft + windowEl.clientWidth / 2;
-      for(const card of cards){
-        const cx = card.offsetLeft + card.offsetWidth/2;
-        const d = Math.abs(cx - center);
-        const range = card.offsetWidth * 0.9;
-        const t = Math.max(0, 1 - d / range);           // 0..1 focus factor
-        const scale = 0.98 + t * 0.04;                  // 0.98..1.02
+      for (const card of cards){
+        const rect = card.getBoundingClientRect();
+        const cx   = card.offsetLeft + rect.width / 2;
+        const d    = Math.abs(cx - center);
+        const range= rect.width * 0.9;
+        const t    = Math.max(0, 1 - d / range); // 0..1
+        const scale= 0.98 + t * 0.04;            // 0.98..1.02
         const lift = -2 * t;
         card.style.transform = `translateY(${lift}px) scale(${scale})`;
-        card.style.boxShadow = t>0.45 ? 'var(--elev-3)' : 'var(--elev-1)';
-        // no opacity tweaks
+        card.style.boxShadow = t > 0.45 ? 'var(--elev-3)' : 'var(--elev-1)';
       }
     }
-    windowEl.addEventListener('scroll', onScroll, {passive:true});
 
-    const ro = new ResizeObserver(()=>{ recomputePositions(); onScroll(); });
-    ro.observe(windowEl);
-    // images may load later and shift offsets — listen once
-    cards.forEach(c => {
-      const img = c.querySelector('img');
-      if (img) img.addEventListener('load', ()=>{ recomputePositions(); onScroll(); }, {once:true});
+    prevBtn.onclick = prev;
+    nextBtn.onclick = next;
+
+    windowEl.addEventListener('scroll', () => {
+      toggleBtns();
+      focusEffect();
+    }, { passive: true });
+
+    windowEl.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
     });
 
-    recomputePositions();
-    onScroll();
+    const ro = new ResizeObserver(() => recompute());
+    ro.observe(windowEl);
+
+    cards.forEach(c => c.querySelector('img')?.addEventListener('load', recompute, { once: true }));
+
+    recompute();
   }
 
   function similarities(target,prefs){
@@ -634,7 +666,11 @@
         <button class="carousel-btn prev" aria-label="Önceki"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
         <button class="carousel-btn next" aria-label="Sonraki"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>`;
       const windowEl=carouselContainer.querySelector('.carousel-window');
-      sims.forEach(s=>windowEl.appendChild(renderCard(s,'sim')));
+
+      // 10 parfüm senaryosu için şeridi güvenle doldur
+      const list = sims.slice(0, Math.min(10, sims.length));
+      list.forEach(s=>windowEl.appendChild(renderCard(s,'sim')));
+
       out.appendChild(carouselContainer);
       setupCarousel(carouselContainer);
     }
