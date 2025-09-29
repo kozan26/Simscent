@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="katman_1" data-name="katman 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 285.97 285.97">
+  <defs>
+    <style>
+      .cls-1 {
+        font-family: Copse, Copse;
+        font-size: 424.38px;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        stroke: #caab69;
+        stroke-miterlimit: 10;
+        stroke-width: 16px;
+      }
+
+      .cls-1, .cls-3, .cls-4 {
+        fill: #fcf8ea;
+      }
+
+      .cls-2 {
+        fill: none;
+      }
+
+      .cls-5 {
+        clip-path: url(#clippath);
+      }
+    </style>
+    <clipPath id="clippath">
+      <circle class="cls-3" cx="142.98" cy="142.98" r="127.27"/>
+    </clipPath>
+  </defs>
+  <circle class="cls-4" cx="142.98" cy="142.98" r="127.27"/>
+  <g class="cls-5">
+    <text class="cls-1" transform="translate(18.34 300.4) scale(1.02 1)"><tspan x="0" y="0">S</tspan></text>
+  </g>
+  <circle class="cls-2" cx="142.98" cy="142.98" r="127.27"/>
+</svg>
