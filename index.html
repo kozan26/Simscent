@@ -2,25 +2,32 @@
 <html lang="tr">
 <head>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7LCE4Z60ZB"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7LCE4Z60ZB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7LCE4Z60ZB');
+  </script>
 
-  gtag('config', 'G-7LCE4Z60ZB');
-</script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>simscent — Ana Sayfa</title>
   <meta name="description" content="Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul."/>
   <meta name="google-adsense-account" content="ca-pub-9033780165680589">
   <link rel="canonical" href="https://www.simscent.com/"/>
+
+  <!-- Favicon / app icons (logo dosyalarını repoya ekle) -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+
+  <!-- Fonts & icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,500..700,0..1,-50..200"/>
   <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+
   <style>
     :root{
       --brand-primary:#B99B6B;--brand-secondary:#A08C62;--text:#3a3a3a;--muted:#888;--border:#eee;--card:#fff;--shell:#f9f8f6;
@@ -41,8 +48,13 @@
     @media(min-width:1024px){.card-inner{padding:40px}}
 
     .top{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px}
-    .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;letter-spacing:-.02em;font-family:'Playfair Display',serif; cursor: pointer;}
-    .logo{width:32px;height:32px;border-radius:10px;background:var(--brand-primary);box-shadow:0 10px 24px rgba(185,155,107,.35)}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;letter-spacing:-.02em;font-family:'Playfair Display',serif;cursor:pointer}
+    /* LOGO: /assets/logo.svg dosyasını arka plan olarak çeker */
+    .logo{
+      width:32px;height:32px;border-radius:10px;
+      background: var(--brand-primary) url('/assets/logo.svg') center/70% no-repeat;
+      box-shadow:0 10px 24px rgba(185,155,107,.35)
+    }
     .cta{border:none;border-radius:8px;padding:10px 20px;font-weight:700;font-size:15px;color:#fff;background:var(--text);cursor:pointer}
 
     .hero{display:grid;grid-template-columns:1fr;gap:40px;align-items:center;margin-top:20px}
@@ -53,15 +65,8 @@
     .blob2{width:130px;height:130px;background:rgba(185,155,107,.1);left:220px;bottom:-10px;opacity:.6}
 
     .shot{
-      width:100%;
-      aspect-ratio:1/1;
-      object-fit:cover;
-      padding:16px;
-      background:#fff;
-      border:1px solid var(--border);
-      border-radius:28px;
-      transform:rotate(-6deg);
-      box-shadow:0 28px 70px rgba(0,0,0,.15)
+      width:100%;aspect-ratio:1/1;object-fit:cover;padding:16px;background:#fff;border:1px solid var(--border);
+      border-radius:28px;transform:rotate(-6deg);box-shadow:0 28px 70px rgba(0,0,0,.15)
     }
 
     .title{font-family:'Playfair Display',serif;font-size:clamp(38px,5.6vw,60px);font-weight:800;letter-spacing:-.04em;line-height:1.05;color:#222;margin-bottom:16px}
@@ -89,19 +94,11 @@
     @media(min-width:768px){.section{padding:48px 0}}
 
     #prefs .pref-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:12px 16px}
-    .row{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-      padding:12px;min-height:48px;border:1px solid #f1f5f9;border-radius:14px;background:#fff
-    }
+    .row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;min-height:48px;border:1px solid #f1f5f9;border-radius:14px;background:#fff}
     .lbl{font-size:16px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     @media(min-width:768px){.lbl{font-size:18px}}
-    .toggle{
-      position:relative;width:44px;height:26px;background:#e2e8f0;border-radius:999px;transition:background .25s ease;cursor:pointer;flex-shrink:0
-    }
-    .toggle .dot{
-      position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:999px;background:#fff;
-      box-shadow:0 2px 6px rgba(2,6,23,.15);transition:transform .25s ease
-    }
+    .toggle{position:relative;width:44px;height:26px;background:#e2e8f0;border-radius:999px;transition:background .25s ease;cursor:pointer;flex-shrink:0}
+    .toggle .dot{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:999px;background:#fff;box-shadow:0 2px 6px rgba(2,6,23,.15);transition:transform .25s ease}
     .toggle.active{background:var(--brand-primary)}
     .toggle.active .dot{transform:translateX(18px)}
 
@@ -156,22 +153,10 @@
     .fc-body{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center}
     .fc-img{width:72px;height:72px;border-radius:12px;object-fit:cover;background:#e2e8f0}
 
-    .brand-link, .perfumer-link, .note-link, .accord-link {
-        font-weight: 600;
-        color: var(--brand-secondary);
-        transition: color .2s;
-        cursor: pointer;
-    }
-    .brand-link:hover, .perfumer-link:hover, .note-link:hover, .accord-link:hover {
-        color: var(--brand-primary);
-        text-decoration: underline;
-    }
+    .brand-link, .perfumer-link, .note-link, .accord-link {font-weight: 600;color: var(--brand-secondary);transition: color .2s;cursor: pointer;}
+    .brand-link:hover, .perfumer-link:hover, .note-link:hover, .accord-link:hover {color: var(--brand-primary);text-decoration: underline;}
     .pf-brand.brand-link:hover { color: var(--brand-secondary); }
-    .chip.note-link:hover, .chip.accord-link:hover {
-      background-color: #e2e8f0;
-      border-color: #d1d5db;
-      color: var(--text);
-    }
+    .chip.note-link:hover, .chip.accord-link:hover {background-color: #e2e8f0;border-color: #d1d5db;color: var(--text);}
     .chip.accord-link { cursor: pointer; transition: all .2s; }
 
     .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,16px);background:var(--text);color:#fff;padding:12px 18px;border-radius:12px;box-shadow:var(--elev-2);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:9999;font-weight:700;font-size:15px;letter-spacing:.2px}
@@ -188,7 +173,7 @@
 <main class="landing" id="appRoot">
   <div class="card"><div class="card-inner">
     <div class="top">
-      <div class="brand"><div class="logo"></div>simscent</div>
+      <div class="brand"><div class="logo" aria-hidden="true"></div>simscent</div>
       <button class="cta" id="signupBtn">Kayıt Ol</button>
     </div>
 
@@ -245,8 +230,6 @@
       </div>
     </section>
 
-
-
     <section class="section" id="results">
       <h3 style="font-weight:800;font-size:22px;margin-bottom:12px;font-family:'Playfair Display',serif">Sonuçlar</h3>
       <div id="out"><div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Keşfetmeye Başla</h4><p style="color:var(--muted);margin-top:4px">Başlamak için yukarıdan bir parfüm arayın veya “Beni Şaşırt!” butonunu kullanın.</p></div></div>
@@ -268,9 +251,6 @@
     warn:(...a)=>DEBUG&&console.warn('[simscent]',...a), error:(...a)=>DEBUG&&console.error('[simscent]',...a), group:(l)=>DEBUG&&console.group(l), end:()=>DEBUG&&console.groupEnd()
   });
 
-  // Cloudflare Pages / kök domain için base path boş:
-  const BASE_PATH = '';
-
   const q=(s,r=document)=>{const el=r.querySelector(s); if(!el) throw new Error('Selector not found: '+s); return el;};
   const qa=(s,r=document)=>Array.from(r.querySelectorAll(s));
   const on=(el,ev,fn,opt)=>el.addEventListener(ev,fn,opt);
@@ -288,8 +268,9 @@
   };
 
   const LABELS = {Daily:'Günlük',Business:'İş',Evening:'Akşam','Night Out':'Gece',Leisure:'Rahat',Sport:'Spor',Spring:'İlkbahar',Summer:'Yaz',Fall:'Sonbahar',Winter:'Kış',Classic:'Klasik',Masculine:'Maskülen',Feminine:'Feminen',Modern:'Modern'};
-  const ICONS  = {Daily:'sunny',Business:'work',Evening:'nights_stay','Night Out':'nightlife',Leisure:'weekend',Sport:'directions_run',Spring:'local_florist',Summer:'sunny',Fall:'eco',Winter:'ac_unit',Classic:'account_balance',Masculine:'man',Feminine:'woman',Modern:'auto_awesome'};
-  const FAMILY_TR = {Animal:'Hayvansı',Aquatic:'Akvatik',Chypre:'Şipre',Citrus:'Narenciye',Creamy:'Kremamsı',Earthy:'Topramsı',Floral:'Çiçeksi','Fougère':'Fujer',Fresh:'Ferahlık',Fruity:'Meyvemsi',Gourmand:'Gurme',Green:'Yeşil',Leathery:'Deri',Oriental:'Oryantal',Powdery:'Pudramsı',Resinous:'Reçineli',Smoky:'Dumanlı',Spicy:'Baharatlı',Sweet:'Tatlı',Synthetic:'Sentetik',Woody:'Odunsu'};
+  // 'styler' yerine geçerli Material ikon adı 'style'
+  const ICONS  = {Daily:'sunny',Business:'work',Evening:'nights_stay','Night Out':'nightlife',Leisure:'weekend',Sport:'directions_run',Spring:'local_florist',Summer:'sunny',Fall:'eco',Winter:'ac_unit',Classic:'account_balance',Masculine:'man',Feminine:'woman',Modern:'auto_awesome', style:'style'};
+  const FAMILY_TR = {Animal:'Hayvansı',Aquatic:'Akvatik',Chypre:'Şipre',Citrus:'Narenciye',Creamy:'Kremamsı',Earthy:'Topraksı',Floral:'Çiçeksi','Fougère':'Fujer',Fresh:'Ferahlık',Fruity:'Meyvemsi',Gourmand:'Gurme',Green:'Yeşil',Leathery:'Deri',Oriental:'Oryantal',Powdery:'Pudramsı',Resinous:'Reçineli',Smoky:'Dumanlı',Spicy:'Baharatlı',Sweet:'Tatlı',Synthetic:'Sentetik',Woody:'Odunsu'};
   const ACCORD_TR = {'woody':'Odunsu','aromatic':'Aromatik','fresh spicy':'Taze Baharatlı','citrus':'Narenciye','amber':'Amber','warm spicy':'Sıcak Baharatlı','green':'Yeşil','sweet':'Tatlı','musky':'Misk','fruity':'Meyvemsi','powdery':'Pudramsı','vanilla':'Vanilya','floral':'Çiçeksi','white floral':'Beyaz Çiçeksi','rose':'Gül','oud':'Öd','smoky':'Dumanlı','leather':'Deri','earthy':'Topraksı','animalic':'Hayvansı','aquatic':'Akvatik','patchouli':'Paçuli','iris':'İris','balsamic':'Balsamik','tobacco':'Tütün','cinnamon':'Tarçın','spicy':'Baharatlı','resinous':'Reçineli','chypre':'Şipre','fougère':'Fujer','gourmand':'Gurme','creamy':'Kremamsı','synthetic':'Sentetik','fresh':'Ferah'};
 
   const toPct=(v)=>{const n=Number(v);return !isFinite(n)?0:(n<11?Math.round(n*10):Math.round(n))};
@@ -335,12 +316,9 @@
   function vecSim(a,b,keys){ let dot=0,n1=0,n2=0; for(const k of keys){ const x=Number(a[k]||0)||0, y=Number(b[k]||0)||0; dot+=x*y; n1+=x*x; n2+=y*y; } return (!n1||!n2)?0:dot/(Math.sqrt(n1)*Math.sqrt(n2)); }
   function topKey(p,keys){ let best=null,max=-1; for(const k of keys){ const v=Number(p[k]||0); if(v>max){max=v; best=k;} } return max>0.01?best:null; }
 
-  function usedFamilyKeys(data){
-    return KEYS.family.filter(k => data.some(p => Number(p[k]||0) > 0));
-  }
+  function usedFamilyKeys(data){ return KEYS.family.filter(k => data.some(p => Number(p[k]||0) > 0)); }
   function cosine(v1,v2){
-    let dot=0,n1=0,n2=0;
-    const L=Math.min(v1.length,v2.length);
+    let dot=0,n1=0,n2=0; const L=Math.min(v1.length,v2.length);
     for(let i=0;i<L;i++){ const a=+v1[i]||0, b=+v2[i]||0; dot+=a*b; n1+=a*a; n2+=b*b; }
     if(!n1||!n2) return 0;
     return dot/(Math.sqrt(n1)*Math.sqrt(n2));
@@ -438,8 +416,8 @@
         <div class='pf-name' style="margin-top:4px">${p.fullName||''}</div>
       </div>`;
     if(!isRef){ 
-        el.style.cursor='pointer'; 
-        on(el,'click',() => setReferenceAndFindSimilar(p, true)); 
+      el.style.cursor='pointer'; 
+      on(el,'click',() => setReferenceAndFindSimilar(p, true)); 
     }
     return el;
   }
@@ -454,11 +432,11 @@
     const perfumerLinks = perfumers.map(name => `<span class='perfumer-link' data-perfumer='${encodeURIComponent(name)}'>${name}</span>`).join(', ');
 
     if (releaseYear && perfumers.length > 0) {
-        subDetailsHTML = `<p class='ref-card-sub'>${releaseYear} • ${perfumerLinks}</p>`;
+      subDetailsHTML = `<p class='ref-card-sub'>${releaseYear} • ${perfumerLinks}</p>`;
     } else if (releaseYear) {
-        subDetailsHTML = `<p class='ref-card-sub'>${releaseYear}</p>`;
+      subDetailsHTML = `<p class='ref-card-sub'>${releaseYear}</p>`;
     } else if (perfumers.length > 0) {
-        subDetailsHTML = `<p class='ref-card-sub'>${perfumerLinks}</p>`;
+      subDetailsHTML = `<p class='ref-card-sub'>${perfumerLinks}</p>`;
     }
 
     const topUsage=topKey(p,KEYS.usage), topSeason=topKey(p,KEYS.season), topStyle=topKey(p,KEYS.style);
@@ -466,7 +444,7 @@
     const tagsHTML = tags.length?`
       <div class="detail-section"><h4 class='detail-section-title'>Öne Çıkan Özellikler</h4>
         <div class='chips'>
-          ${tags.map(k=>`<span class='chip'><span class="material-symbols-outlined">${ICONS[k]||'label'}</span>${LABELS[k]||k}</span>`).join('')}
+          ${tags.map(k=>`<span class='chip'><span class="material-symbols-outlined">${ICONS[k]||ICONS.style||'label'}</span>${LABELS[k]||k}</span>`).join('')}
         </div>
       </div>`:'';
 
@@ -475,9 +453,9 @@
     <div class="detail-section">
       <h4 class='detail-section-title'>Notalar</h4>
       <div class='chips'>
-          ${notes.split(',').map(s => s.trim()).filter(Boolean).map(note =>
-              `<span class='chip note-link' data-note='${encodeURIComponent(note)}'>${note}</span>`
-          ).join('')}
+        ${notes.split(',').map(s => s.trim()).filter(Boolean).map(note =>
+          `<span class='chip note-link' data-note='${encodeURIComponent(note)}'>${note}</span>`
+        ).join('')}
       </div>
     </div>` : '';
 
@@ -718,7 +696,26 @@
     });
 
     const input=q('#searchInput'); const btn=q('#searchBtn'); const suggest=q('#suggestions'); let deb=null;
-    on(input,'input',()=>{ clearTimeout(deb); deb=setTimeout(()=>{ const qv=input.value.trim(); if(!qv||!state.fuse){ suggest.style.display='none'; return;} const res=state.fuse.search(qv).slice(0,8); if(!res.length){suggest.style.display='none';return;} suggest.innerHTML=res.map(r=>{const it=r.item; const t=thumbURL(it); const yr= it['Release Year']!=null && it['Release Year']!=='' ? String(it['Release Year']) : ''; const right=(it.Brand||yr)? `(${[it.Brand, yr].filter(Boolean).join(', ')})` : ''; return `<div class='s-item' data-index='${r.refIndex}' aria-label='${it.fullName} ${right}'><img class='s-thumb' src='${t}' alt='' loading='lazy' onerror="this.onerror=null;this.src='https://placehold.co/40x40/e2e8f0/64748b?text=?'"/><div class='s-name'>${it.fullName}</div><div class='s-brand'>${right}</div></div>`; }).join(''); suggest.style.display='block'; },140); });
+    on(input,'input',()=>{ 
+      clearTimeout(deb); 
+      deb=setTimeout(()=>{
+        const qv=input.value.trim(); 
+        if(!qv||!state.fuse){ suggest.style.display='none'; return;}
+        const res=state.fuse.search(qv).slice(0,8); 
+        if(!res.length){suggest.style.display='none';return;}
+        suggest.innerHTML=res.map(r=>{
+          const it=r.item; const t=thumbURL(it); 
+          const yr= it['Release Year']!=null && it['Release Year']!=='' ? String(it['Release Year']) : ''; 
+          const right=(it.Brand||yr)? `(${[it.Brand, yr].filter(Boolean).join(', ')})` : '';
+          return `<div class='s-item' data-index='${r.refIndex}' aria-label='${it.fullName} ${right}'>
+            <img class='s-thumb' src='${t}' alt='' loading='lazy' onerror="this.onerror=null;this.src='https://placehold.co/40x40/e2e8f0/64748b?text=?'"/>
+            <div class='s-name'>${it.fullName}</div>
+            <div class='s-brand'>${right}</div>
+          </div>`;
+        }).join(''); 
+        suggest.style.display='block'; 
+      },140); 
+    });
     on(suggest,'click',e=>{ const el=e.target.closest('.s-item'); if(!el) return; const idx = parseInt(el.dataset.index, 10); if(!isNaN(idx) && state.data[idx]) { setReferenceAndFindSimilar(state.data[idx], true); } suggest.style.display='none'; });
     on(document,'click',e=>{ if(!suggest.contains(e.target) && e.target!==input) suggest.style.display='none'; });
     on(input,'keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); suggest.style.display='none'; findSimilar(); }});
@@ -746,7 +743,7 @@
 
   function handleRealRouting(){
     const path = location.pathname;
-    const regex = /^\/p\/([^/]+)\/([^/]+)/;  // kök domain için
+    const regex = /^\/p\/([^/]+)\/([^/]+)/;
     const match = path.match(regex);
     if (!match) { if (state.currentRef) { resetToHome(false); } return; }
     const [, brandSlug, fragSlug] = match;
