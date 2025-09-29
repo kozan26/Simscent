@@ -180,6 +180,47 @@
     .fab.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
 
     [data-debug-outline] *{outline:1px dashed rgba(100,116,139,.35)}
+
+    /* === Layout polish (spacing & rhythm) — overrides === */
+    :root{
+      --space-1: 6px; --space-2:10px; --space-3:16px; --space-4:24px; --space-5:32px; --space-6:40px;
+      --radius-card:24px;
+    }
+    .section{padding:var(--space-4) 0;border-top:1px dashed #e5e7eb}
+    @media (min-width:768px){.section{padding:var(--space-5) 0}}
+    .section:first-of-type{border-top:0}
+    .card{border-radius:var(--radius-card)}
+    .card-inner{padding:24px 16px}
+    @media (min-width:768px){.card-inner{padding:32px}}
+    @media (min-width:1024px){.card-inner{padding:40px}}
+    #results h3{margin-bottom:var(--space-2)}
+    #out > .card{margin-top:var(--space-2)}
+    #upload-section{padding-top:0}
+    .prefs-head{
+      position:sticky; top:8px; margin:-8px -8px var(--space-2); padding:10px 12px;
+      border:1px solid var(--border); border-radius:12px; background:linear-gradient(0deg,#fbfaf8,#fbfaf8);
+    }
+    @media (min-width:768px){.prefs-head{margin:0 0 var(--space-2); border-radius:14px}}
+    #prefs{margin-top:var(--space-2)}
+    #prefs .row{min-height:48px; padding:10px 12px}
+    #similars{padding-top:var(--space-4)}
+    #simOut{
+      background:var(--card); border:1px solid var(--border); border-radius:var(--radius-card);
+      padding:14px; box-shadow:var(--elev-1); margin-top:var(--space-2); transition:opacity .25s;
+    }
+    @media (min-width:768px){#simOut{padding:18px}}
+    #simOut .carousel-window{padding-bottom:10px}
+    #simOut .pf{margin:10px 16px 10px 0}
+    .carousel-btn.prev{left:-14px}
+    .carousel-btn.next{right:-14px}
+    @media (min-width:1024px){
+      .carousel-btn.prev{left:-22px}
+      .carousel-btn.next{right:-22px}
+    }
+    .ref-card-grid{gap:18px}
+    @media (min-width:920px){.ref-card-grid{gap:40px}}
+    .detail-section{padding-top:16px; margin-top:16px}
+    .ref-card-title{margin-top:2px}
   </style>
 </head>
 <body>
@@ -573,20 +614,20 @@
     if(el){ el.classList.add('updating'); }
   }
 
-  // UPDATED: render reference in #results, similars in #similars
+  // Render: reference in #results, similars after prefs (#similars)
   function render(ref,sims){
     state.currentRef=ref;
 
-    // 1) Referans detayları (Sonuçlar)
+    // 1) Referans detayları
     const out=q('#out'); out.innerHTML='';
     out.appendChild(renderRefDetail(ref));
 
-    // 2) Benzeri Parfümler (Tercihler'den sonra)
+    // 2) Benzerler
     const simSec = q('#similars');
     const simTitle = q('#similarsTitle');
     const simOut = q('#simOut');
     simOut.innerHTML = '';
-    simOut.style.opacity = .35; // subtle fade-in
+    simOut.style.opacity = .35;
 
     if(sims.length){
       simTitle.textContent = `${ref.fullName || 'Seçtiğiniz Parfüm'} Benzeri Parfümler`;
@@ -604,12 +645,9 @@
     } else {
       simSec.style.display = 'none';
     }
-
-    // end of update animation
     requestAnimationFrame(()=>{ simOut.classList.remove('updating'); simOut.style.opacity = 1; });
   }
 
-  // When navigating to collections, hide similars (since no single ref)
   function hideSimilars(){ const sec = document.getElementById('similars'); if(sec) sec.style.display='none'; const out = document.getElementById('simOut'); if(out) out.innerHTML=''; }
 
   function showPerfumerResults(name) {
@@ -791,7 +829,6 @@
       const sec = document.getElementById('upload-section');
       sec.classList.toggle('collapsed');
       updatePrefUI();
-      // ikon değiştir
       const icon = collapseBtn.querySelector('.material-symbols-outlined');
       icon.textContent = sec.classList.contains('collapsed') ? 'expand_more' : 'expand_less';
     });
