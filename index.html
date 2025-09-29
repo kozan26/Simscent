@@ -51,10 +51,14 @@
     .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;letter-spacing:-.02em;font-family:'Playfair Display',serif;cursor:pointer}
     /* LOGO: /assets/logo.svg dosyasını arka plan olarak çeker */
     .logo{
-      width:32px;height:32px;border-radius:10px;
-      background: var(--brand-primary) url('/assets/logo.svg') center/70% no-repeat;
-      box-shadow:0 10px 24px rgba(185,155,107,.35)
+      width:32px; height:32px;
+      display:block;
+      background:transparent;
+      border:none;
+      box-shadow:none;
+      border-radius:0;
     }
+
     .cta{border:none;border-radius:8px;padding:10px 20px;font-weight:700;font-size:15px;color:#fff;background:var(--text);cursor:pointer}
 
     .hero{display:grid;grid-template-columns:1fr;gap:40px;align-items:center;margin-top:20px}
