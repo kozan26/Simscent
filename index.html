@@ -96,6 +96,19 @@
     .toggle.active{background:var(--brand-primary)}
     .toggle.active .dot{transform:translateX(18px)}
 
+    /* RIGHT WRAPPER FOR TOGGLE + HELP */
+    .row .right{display:flex;align-items:center;gap:8px}
+
+    /* HELP ICON + TOOLTIP */
+    .help{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;
+      border:1px solid var(--border);background:var(--shell);color:var(--muted);font-weight:800;font-size:12px;cursor:help;position:relative;flex-shrink:0}
+    .help:focus-visible{outline:2px solid var(--brand-primary);outline-offset:2px}
+    .help .tt{position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%) scale(.98);
+      background:#111;color:#fff;padding:8px 10px;border-radius:8px;box-shadow:var(--elev-2);font-size:12px;line-height:1.35;
+      min-width:200px;max-width:280px;opacity:0;pointer-events:none;transition:opacity .15s,transform .15s;z-index:50;white-space:normal}
+    .help:hover .tt, .help:focus .tt{opacity:1;transform:translateX(-50%) scale(1)}
+    .help .tt::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#111}
+
     .pf{display:flex;flex-direction:column;gap:12px;border-radius:18px;padding:12px;border:1px solid transparent;box-shadow:var(--elev-1);background:#fff;transition:box-shadow .28s cubic-bezier(.25,.8,.25,1),transform .28s cubic-bezier(.25,.8,.25,1),border-color .28s;overflow:hidden}
     .pf:hover{transform:translate3d(0,-6px,0);box-shadow:var(--elev-3);border-color:rgba(185,155,107,.35)}
     .pf-img{width:100%;aspect-ratio:1/1;border-radius:12px;object-fit:cover;background:#e2e8f0;margin:0}
@@ -224,10 +237,46 @@
       <div class="card" style="box-shadow:none;border:1px solid var(--border);padding:16px" id="prefs">
         <h4 style="font-weight:700;font-size:18px;margin-bottom:16px;font-family:'Playfair Display',serif">Benzerlik Ağırlıkları</h4>
         <div class="pref-grid">
-          <div class="row"><span class="lbl">Kullanım Amacı</span><div class="toggle active" data-pref="usage"><div class="dot"></div></div></div>
-          <div class="row"><span class="lbl">Mevsim</span><div class="toggle active" data-pref="season"><div class="dot"></div></div></div>
-          <div class="row"><span class="lbl">Stil</span><div class="toggle active" data-pref="style"><div class="dot"></div></div></div>
-          <div class="row"><span class="lbl">Koku Ailesi</span><div class="toggle active" data-pref="family"><div class="dot"></div></div></div>
+          <div class="row">
+            <span class="lbl">Kullanım Amacı</span>
+            <div class="right">
+              <div class="toggle active" data-pref="usage"><div class="dot"></div></div>
+              <span class="help" tabindex="0" role="button" aria-label="Kullanım Amacı hakkında bilgi">
+                ?
+                <span class="tt">Eşleşmede kullanım amacı (günlük, iş, akşam vb.) vektörlerini dikkate alır. Açıkken benzer kullanım senaryoları daha fazla ağırlıklandırılır.</span>
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <span class="lbl">Mevsim</span>
+            <div class="right">
+              <div class="toggle active" data-pref="season"><div class="dot"></div></div>
+              <span class="help" tabindex="0" role="button" aria-label="Mevsim hakkında bilgi">
+                ?
+                <span class="tt">Mevsim (ilkbahar, yaz, sonbahar, kış) profillerini benzerlik hesabına katar. Açıkken seçtiğiniz parfüme yakın mevsim dağılımı önceliklenir.</span>
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <span class="lbl">Stil</span>
+            <div class="right">
+              <div class="toggle active" data-pref="style"><div class="dot"></div></div>
+              <span class="help" tabindex="0" role="button" aria-label="Stil hakkında bilgi">
+                ?
+                <span class="tt">Stil (klasik, modern, maskülen, feminen) eksenlerini dahil eder. Açıkken aynı stil eğilimlerine sahip parfümler öne çıkar.</span>
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <span class="lbl">Koku Ailesi</span>
+            <div class="right">
+              <div class="toggle active" data-pref="family"><div class="dot"></div></div>
+              <span class="help" tabindex="0" role="button" aria-label="Koku Ailesi hakkında bilgi">
+                ?
+                <span class="tt">Ana koku aileleri (odunsu, narenciye, çiçeksi vb.) yoğunluklarını baz alır. Açıkken akord/aile benzerliği güçlü olanlar üst sıralara gelir.</span>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -491,7 +540,6 @@
   function movePrefsIntoResults(){
     const sec = q('#upload-section');
     const out = q('#out');
-    // ensure visible and placed right after ref card, before similar list we append next
     sec.style.display = 'block';
     out.appendChild(sec);
   }
@@ -528,14 +576,10 @@
   function render(ref,sims){
     state.currentRef=ref;
     const out=q('#out');
-    // IMPORTANT: restore prefs home BEFORE wiping, so we don't delete the node accidentally
     restorePrefsHome();
     out.innerHTML='';
-    // 1) Ref detail
     out.appendChild(renderRefDetail(ref));
-    // 2) Tercihler (moved here)
     movePrefsIntoResults();
-    // 3) Similar list
     if(sims.length){
       const titleText = `${ref.fullName || 'Seçtiğiniz Parfüm'} Benzeri Parfümler`;
       const h2=document.createElement('div');
@@ -794,7 +838,7 @@
 
     if (location.pathname !== newPath) history.pushState({ perfume: ref.fullName }, '', newPath);
 
-    // just make sure it's visible; placement is handled in render()
+    // ensure prefs visible; placement is handled in render()
     showPrefs();
 
     const prefs = {
@@ -845,7 +889,6 @@
       setHeroFromPerfume(rnd);
     }
 
-    // Return Tercihler to its home location and hide it BEFORE wiping out content
     restorePrefsHome();
 
     q('#out').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Koleksiyon Yüklendi</h4><p style="color:var(--muted);margin-top:4px">Bir parfüm arayabilir veya "Beni Şaşırt!" butonunu kullanabilirsiniz.</p></div>`;
@@ -879,7 +922,6 @@
       const rnd = data[idx];
       setHeroFromPerfume(rnd);
 
-      // keep Tercihler hidden at home
       q('#upload-section').style.display = 'none';
       q('#out').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Koleksiyon Yüklendi</h4><p style="color:var(--muted);margin-top:4px">Bir parfüm arayabilir veya "Beni Şaşırt!" butonunu kullanabilirsiniz.</p></div>`;
       showToast(`✅ ${data.length} parfüm başarıyla yüklendi.`,'ok');
@@ -900,7 +942,6 @@
   };
 
   function init(){
-    // record original home position for Tercihler
     const sec = q('#upload-section');
     prefsHome.parent = sec.parentNode;
     prefsHome.next = sec.nextSibling;
