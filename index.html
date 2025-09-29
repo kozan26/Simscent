@@ -34,7 +34,10 @@
       --elev-1:0 4px 15px rgba(0,0,0,.05);--elev-2:0 8px 30px rgba(0,0,0,.07);--elev-3:0 12px 40px rgba(0,0,0,.10);
       --ease-std:cubic-bezier(.22,.61,.36,1);
       --ease-emph:cubic-bezier(.16,1,.3,1);
-      --dur-fast:.18s; --dur:.36s; --dur-slow:.6s;
+      /* Daha yavaş süreler */
+      --dur-fast:.28s;
+      --dur:.52s;
+      --dur-slow:.9s;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
@@ -521,9 +524,9 @@
     return el;
   }
 
-  /* Easing + animate scroll */
-  const Easings = { outQuint: t => 1 - Math.pow(1 - t, 5) };
-  function animateScrollTo(scroller, targetLeft, duration=420, ease=Easings.outQuint){
+  /* Daha yumuşak ve yavaş his için cubic easing */
+  const Easings = { outCubic: t => 1 - Math.pow(1 - t, 3) };
+  function animateScrollTo(scroller, targetLeft, duration=700, ease=Easings.outCubic){
     if (prefersReduced){ scroller.scrollLeft = targetLeft; return; }
     const start= scroller.scrollLeft;
     const dist = targetLeft - start;
@@ -536,7 +539,7 @@
     requestAnimationFrame(step);
   }
 
-  /* Carousel — page-step, never gets stuck, works great with 10 items */
+  /* Carousel — page-step, slower duration, never gets stuck (10 öğe ile iyi çalışır) */
   function setupCarousel(container){
     const windowEl = container.querySelector('.carousel-window');
     const prevBtn  = container.querySelector('.carousel-btn.prev');
@@ -590,7 +593,11 @@
 
     function goTo(i){
       const target = Math.max(0, Math.min(i, positions.length - 1));
-      animateScrollTo(windowEl, positions[target]);
+      const targetLeft = positions[target];
+      const distance   = Math.abs(windowEl.scrollLeft - targetLeft);
+      // 550ms taban + mesafeye göre ek süre, üst limit 1000ms
+      const dur = Math.min(1000, 550 + distance * 0.35);
+      animateScrollTo(windowEl, targetLeft, dur);
     }
 
     function next(){ goTo(currentIndex() + visible); }
@@ -605,6 +612,7 @@
       nextBtn.disabled = windowEl.scrollLeft >= last - 1;
     }
 
+    // Daha yumuşak, daha küçük hareket (isteğe bağlı yumuşatma uygulanmış)
     function focusEffect(){
       const center = windowEl.scrollLeft + windowEl.clientWidth / 2;
       for (const card of cards){
@@ -613,8 +621,10 @@
         const d    = Math.abs(cx - center);
         const range= rect.width * 0.9;
         const t    = Math.max(0, 1 - d / range); // 0..1
-        const scale= 0.98 + t * 0.04;            // 0.98..1.02
-        const lift = -2 * t;
+
+        const scale = 0.99 + t * 0.015;  // daha küçük scale
+        const lift  = -1.2 * t;          // daha küçük lift
+
         card.style.transform = `translateY(${lift}px) scale(${scale})`;
         card.style.boxShadow = t > 0.45 ? 'var(--elev-3)' : 'var(--elev-1)';
       }
