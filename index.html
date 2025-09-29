@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-7LCE4Z60ZB"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -17,11 +16,9 @@
   <meta name="google-adsense-account" content="ca-pub-9033780165680589">
   <link rel="canonical" href="https://www.simscent.com/"/>
 
-  <!-- Favicon / app icons -->
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
 
-  <!-- Fonts & icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
@@ -29,15 +26,20 @@
   <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
 
   <style>
-    :root{
-      --brand-primary:#B99B6B;--brand-secondary:#A08C62;--text:#3a3a3a;--muted:#888;--border:#eee;--card:#fff;--shell:#f9f8f6;
-      --elev-1:0 4px 15px rgba(0,0,0,.05);--elev-2:0 8px 30px rgba(0,0,0,.07);--elev-3:0 12px 40px rgba(0,0,0,.10);
-      --ease-std:cubic-bezier(.22,.61,.36,1);
-      --ease-emph:cubic-bezier(.16,1,.3,1);
-      /* Daha yavaş süreler */
-      --dur-fast:.28s;
-      --dur:.52s;
-      --dur-slow:.9s;
+    :root {
+      /* --- İYİLEŞTİRME: Daha modern ve yumuşak bir his için easing ve süre değerleri güncellendi. --- */
+      --brand-primary: #B99B6B; --brand-secondary: #A08C62; --text: #3a3a3a; --muted: #888; --border: #eee; --card: #fff; --shell: #f9f8f6;
+      --elev-1: 0 4px 15px rgba(0,0,0,.05); --elev-2: 0 8px 30px rgba(0,0,0,.07); --elev-3: 0 12px 40px rgba(0,0,0,.10);
+      
+      /* --- YENİ: Daha yumuşak bir easing fonksiyonu eklendi. --- */
+      --ease-gentle: cubic-bezier(0.25, 0.1, 0.25, 1);
+      --ease-std: cubic-bezier(.22,.61,.36,1);
+      --ease-emph: cubic-bezier(.16,1,.3,1);
+      
+      /* --- GÜNCELLEME: Süreler daha hızlı ve akıcı bir deneyim için kısaltıldı. --- */
+      --dur-fast: .25s;
+      --dur: .45s;
+      --dur-slow: .8s;
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
@@ -54,8 +56,9 @@
     @media(min-width:1024px){.card-inner{padding:40px}}
 
     .top{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px}
-    .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;letter-spacing:-.02em;font-family:'Playfair Display',serif;cursor:pointer;transition:transform var(--dur-fast) var(--ease-std)}
-    .brand:hover{transform:translateY(-1px)}
+    /* --- İYİLEŞTİRME: Marka logosu için daha yumuşak bir geçiş. --- */
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;letter-spacing:-.02em;font-family:'Playfair Display',serif;cursor:pointer;transition:transform var(--dur-fast) var(--ease-gentle)}
+    .brand:hover{transform:translateY(-1px) scale(1.02)} /* Hafif bir büyüme efekti eklendi */
     .logo{width:32px;height:32px;display:block}
 
     .cta{border:none;border-radius:10px;padding:10px 20px;font-weight:700;font-size:15px;color:#fff;background:var(--text);cursor:pointer;transition:transform var(--dur-fast) var(--ease-emph), box-shadow var(--dur-fast) var(--ease-std)}
@@ -71,7 +74,8 @@
     .shot{
       width:100%;aspect-ratio:1/1;object-fit:cover;padding:16px;background:#fff;border:1px solid var(--border);
       border-radius:28px;transform:rotate(-5deg);box-shadow:0 28px 70px rgba(0,0,0,.15);
-      transition:opacity var(--dur) var(--ease-std), transform var(--dur) var(--ease-std), box-shadow var(--dur) var(--ease-std)
+      /* --- İYİLEŞTİRME: Easing fonksiyonu daha yumuşak olanla değiştirildi. --- */
+      transition:opacity var(--dur) var(--ease-gentle), transform var(--dur) var(--ease-gentle), box-shadow var(--dur) var(--ease-gentle)
     }
     .shot.is-loading{opacity:.3;filter:saturate(.9)}
     .shot:hover{transform:rotate(-4deg) scale(1.01);box-shadow:0 36px 84px rgba(0,0,0,.18)}
@@ -83,7 +87,8 @@
     .searchbar{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:999px;padding:12px 16px;box-shadow:var(--elev-1);transition:box-shadow var(--dur-fast) var(--ease-std), transform var(--dur-fast) var(--ease-std)}
     .searchbar:focus-within{box-shadow:0 10px 36px rgba(0,0,0,.08);transform:translateY(-1px)}
     .searchbar input{flex:1;border:none;background:transparent;outline:none;font-size:16px;color:var(--text);caret-color:var(--text)}
-    .searchbar input::placeholder{color:#aaa}
+    .searchbar input::placeholder{color:#aaa; transition: color var(--dur-fast) var(--ease-std);} /* Placeholder için geçiş eklendi */
+    .searchbar:focus-within input::placeholder { color: #ccc; } /* Focus olunca placeholder rengi değişecek */
     .icon-btn{width:44px;height:44px;border-radius:999px;border:none;display:grid;place-items:center;background:var(--text);color:#fff;cursor:pointer;transition:transform var(--dur-fast) var(--ease-emph), box-shadow var(--dur-fast) var(--ease-std)}
     .icon-btn:hover{transform:translateY(-1px);box-shadow:var(--elev-2)}
 
@@ -93,7 +98,7 @@
     .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--border)}.btn.ghost:hover{border-color:#ccc;background:#fafafa}
 
     /* Suggestions */
-    .suggest{position:absolute;left:0;right:0;top:100%;margin-top:12px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--elev-2);max-height:320px;overflow:auto;text-align:left;color:var(--text);z-index:70;opacity:0;transform:translateY(-4px);pointer-events:none;transition:opacity var(--dur) var(--ease-std), transform var(--dur) var(--ease-std)}
+    .suggest{position:absolute;left:0;right:0;top:100%;margin-top:12px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--elev-2);max-height:320px;overflow:auto;text-align:left;color:var(--text);z-index:70;opacity:0;transform:translateY(-4px);pointer-events:none;transition:opacity var(--dur-fast) var(--ease-gentle), transform var(--dur-fast) var(--ease-gentle)} /* Easing ve süre güncellendi */
     .suggest.show{opacity:1;transform:translateY(0);pointer-events:auto}
     .s-item{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;transition:background var(--dur-fast) var(--ease-std)}
     .s-item:hover{background:#f6f6f6}
@@ -114,13 +119,14 @@
     .toggle.active{background:var(--brand-primary)}
     .toggle.active .dot{transform:translateX(20px)}
 
-    /* Perfume cards — no fade, just transform/hover */
-    .pf{display:flex;flex-direction:column;gap:12px;border-radius:18px;padding:12px;border:1px solid transparent;box-shadow:var(--elev-1);background:#fff;transition:box-shadow var(--dur) var(--ease-std), transform var(--dur) var(--ease-emph), border-color var(--dur) var(--ease-std);overflow:hidden}
+    /* Perfume cards */
+    .pf{display:flex;flex-direction:column;gap:12px;border-radius:18px;padding:12px;border:1px solid transparent;box-shadow:var(--elev-1);background:#fff;transition:box-shadow var(--dur) var(--ease-gentle), transform var(--dur) var(--ease-gentle), border-color var(--dur) var(--ease-std);overflow:hidden}
     .pf:hover{transform:translate3d(0,-6px,0);box-shadow:var(--elev-3);border-color:rgba(185,155,107,.35)}
     .pf-img{width:100%;aspect-ratio:1/1;border-radius:12px;object-fit:cover;background:#e2e8f0;margin:0;transition:transform var(--dur) var(--ease-std)}
-    .pf:hover .pf-img{transform:scale(1.01)}
-    .pf-brand{font-size:12px;letter-spacing:.4px;text-transform:uppercase;color:var(--brand-primary);font-weight:700}
-    .pf-name{font-family:'Playfair Display',serif;font-size:18px;line-height:1.25;font-weight:700}
+    .pf:hover .pf-img{transform:scale(1.02)} /* Büyüme efekti hafifletildi */
+    .pf-brand{font-size:12px;letter-spacing:.4px;text-transform:uppercase;color:var(--brand-primary);font-weight:700; transition: color var(--dur-fast) var(--ease-std);} /* Renk geçişi eklendi */
+    .pf-name{font-family:'Playfair Display',serif;font-size:18px;line-height:1.25;font-weight:700; transition: color var(--dur-fast) var(--ease-std);} /* Renk geçişi eklendi */
+    .pf:hover .pf-name { color: var(--brand-primary); } /* Hover'da isim rengi değişecek */
     .badge{background:var(--brand-primary);color:#fff;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:700;margin-left:auto;white-space:nowrap}
     .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
     .chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);background:var(--shell);padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600;color:var(--text);transition:background var(--dur-fast) var(--ease-std), border-color var(--dur-fast) var(--ease-std), transform var(--dur-fast) var(--ease-std)}
@@ -547,6 +553,11 @@
     let cards      = Array.from(windowEl.children);
     if (!cards.length) return;
 
+    // --- YENİ: Carousel kartlarına geçiş efekti ekleniyor ---
+    cards.forEach(card => {
+      card.style.transition = 'transform 0.4s var(--ease-gentle), box-shadow 0.4s var(--ease-gentle)';
+    });
+
     // keyboard nav
     windowEl.setAttribute('tabindex', '0');
 
@@ -595,7 +606,6 @@
       const target = Math.max(0, Math.min(i, positions.length - 1));
       const targetLeft = positions[target];
       const distance   = Math.abs(windowEl.scrollLeft - targetLeft);
-      // 550ms taban + mesafeye göre ek süre, üst limit 1000ms
       const dur = Math.min(1000, 550 + distance * 0.35);
       animateScrollTo(windowEl, targetLeft, dur);
     }
@@ -612,31 +622,30 @@
       nextBtn.disabled = windowEl.scrollLeft >= last - 1;
     }
 
-    // Daha yumuşak, daha küçük hareket (isteğe bağlı yumuşatma uygulanmış)
+    // --- İYİLEŞTİRME: focusEffect fonksiyonu CSS transition'larından faydalanacak şekilde güncellendi. ---
     function focusEffect(){
-      const center = windowEl.scrollLeft + windowEl.clientWidth / 2;
-      for (const card of cards){
-        const rect = card.getBoundingClientRect();
-        const cx   = card.offsetLeft + rect.width / 2;
-        const d    = Math.abs(cx - center);
-        const range= rect.width * 0.9;
-        const t    = Math.max(0, 1 - d / range); // 0..1
+      raf(() => { // requestAnimationFrame ile daha pürüzsüz
+        const center = windowEl.scrollLeft + windowEl.clientWidth / 2;
+        for (const card of cards){
+          const rect = card.getBoundingClientRect();
+          const cx   = card.offsetLeft + rect.width / 2;
+          const d    = Math.abs(cx - center);
+          const range= windowEl.clientWidth / 2; // Etki alanı pencere genişliğine göre ayarlandı
+          const t    = Math.max(0, 1 - d / range); // 0..1
 
-        const scale = 0.99 + t * 0.015;  // daha küçük scale
-        const lift  = -1.2 * t;          // daha küçük lift
+          const scale = 0.98 + t * 0.025; // Daha ince bir ölçeklendirme
+          const lift  = -4 * t;          // Daha az kaldırma
 
-        card.style.transform = `translateY(${lift}px) scale(${scale})`;
-        card.style.boxShadow = t > 0.45 ? 'var(--elev-3)' : 'var(--elev-1)';
-      }
+          card.style.transform = `translateY(${lift}px) scale(${scale})`;
+          card.style.boxShadow = t > 0.5 ? 'var(--elev-3)' : 'var(--elev-1)';
+        }
+      });
     }
 
     prevBtn.onclick = prev;
     nextBtn.onclick = next;
 
-    windowEl.addEventListener('scroll', () => {
-      toggleBtns();
-      focusEffect();
-    }, { passive: true });
+    windowEl.addEventListener('scroll', focusEffect, { passive: true }); // scroll olayında direkt focusEffect çağrılıyor
 
     windowEl.addEventListener('keydown', e => {
       if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
