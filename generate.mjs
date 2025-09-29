@@ -320,6 +320,14 @@ function pick(obj, keys){ const o={}; for(const k of keys){ if(Object.prototype.
     console.log('• Kopyalandı:', PUBLIC_DIR, '→', OUT_DIR);
   }
 
+// Kökten tekil statik dosyalar (varsa) → dist/
+for (const f of ['ads.txt', '404.html']) {
+  if (fs.existsSync(f)) {
+    fs.copyFileSync(f, path.join(OUT_DIR, f));
+    console.log('• Kopyalandı:', f, '→', path.join(OUT_DIR, f));
+   }
+ }
+  
   // Tekil sayfalar
   let n = 0;
   for(const perf of data){
