@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-7LCE4Z60ZB"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -17,11 +16,9 @@
   <meta name="google-adsense-account" content="ca-pub-9033780165680589">
   <link rel="canonical" href="https://www.simscent.com/"/>
 
-  <!-- Favicon / app icons (logo dosyalarını repoya ekle) -->
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
 
-  <!-- Fonts & icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
@@ -49,7 +46,15 @@
 
     .top{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px}
     .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;letter-spacing:-.02em;font-family:'Playfair Display',serif;cursor:pointer}
-    .logo{width:32px;height:32px;display:block;background:transparent;border:none;box-shadow:none;border-radius:0}
+    /* LOGO: /assets/logo.svg dosyasını arka plan olarak çeker */
+    .logo{
+      width:32px; height:32px;
+      display:block;
+      background:transparent;
+      border:none;
+      box-shadow:none;
+      border-radius:0;
+    }
 
     .cta{border:none;border-radius:8px;padding:10px 20px;font-weight:700;font-size:15px;color:#fff;background:var(--text);cursor:pointer}
 
@@ -172,6 +177,7 @@
       <div class="brand">
         <img class="logo" src="/assets/logo.svg" alt="simscent" width="32" height="32">simscent
       </div>
+
       <button class="cta" id="signupBtn">Kayıt Ol</button>
     </div>
 
@@ -202,26 +208,6 @@
       </div>
     </section>
 
-    <section class="section" id="featured" style="display:none">
-      <h3>Öne Çıkan Koleksiyonlar</h3>
-      <div class="featured-wrap">
-        <div id="featuredGrid" class="featured-grid"></div>
-        <button id="featPrev" class="carousel-btn prev" aria-label="Önceki">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-        <button id="featNext" class="carousel-btn next" aria-label="Sonraki">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-      </div>
-    </section>
-
-    <!-- 1) SONUÇLAR -->
-    <section class="section" id="results">
-      <h3 style="font-weight:800;font-size:22px;margin-bottom:12px;font-family:'Playfair Display',serif">Sonuçlar</h3>
-      <div id="out"><div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Keşfetmeye Başla</h4><p style="color:var(--muted);margin-top:4px">Başlamak için yukarıdan bir parfüm arayın veya “Beni Şaşırt!” butonunu kullanın.</p></div></div>
-    </section>
-
-    <!-- 2) TERCİHLER (Sonuçlar'dan sonra) -->
     <section class="section" id="upload-section" style="display:none">
       <h3 style="font-weight:800;font-size:22px;margin-bottom:16px;font-family:'Playfair Display',serif">Tercihler</h3>
       <div class="card" style="box-shadow:none;border:1px solid var(--border);padding:16px" id="prefs">
@@ -235,10 +221,22 @@
       </div>
     </section>
 
-    <!-- 3) BENZERİ PARFÜMLER (Tercihler'den sonra) -->
-    <section class="section" id="similars" style="display:none">
-      <h3 id="similarsTitle" style="font-weight:800;font-size:22px;margin-bottom:12px;font-family:'Playfair Display',serif">Benzeri Parfümler</h3>
-      <div id="simOut"></div>
+    <section class="section" id="featured" style="display:none">
+      <h3>Öne Çıkan Koleksiyonlar</h3>
+      <div class="featured-wrap">
+        <div id="featuredGrid" class="featured-grid"></div>
+        <button id="featPrev" class="carousel-btn prev" aria-label="Önceki">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button id="featNext" class="carousel-btn next" aria-label="Sonraki">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <section class="section" id="results">
+      <h3 style="font-weight:800;font-size:22px;margin-bottom:12px;font-family:'Playfair Display',serif">Sonuçlar</h3>
+      <div id="out"><div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Keşfetmeye Başla</h4><p style="color:var(--muted);margin-top:4px">Başlamak için yukarıdan bir parfüm arayın veya “Beni Şaşırt!” butonunu kullanın.</p></div></div>
     </section>
 
   </div></div>
@@ -274,6 +272,7 @@
   };
 
   const LABELS = {Daily:'Günlük',Business:'İş',Evening:'Akşam','Night Out':'Gece',Leisure:'Rahat',Sport:'Spor',Spring:'İlkbahar',Summer:'Yaz',Fall:'Sonbahar',Winter:'Kış',Classic:'Klasik',Masculine:'Maskülen',Feminine:'Feminen',Modern:'Modern'};
+  // 'styler' yerine geçerli Material ikon adı 'style'
   const ICONS  = {Daily:'sunny',Business:'work',Evening:'nights_stay','Night Out':'nightlife',Leisure:'weekend',Sport:'directions_run',Spring:'local_florist',Summer:'sunny',Fall:'eco',Winter:'ac_unit',Classic:'account_balance',Masculine:'man',Feminine:'woman',Modern:'auto_awesome', style:'style'};
   const FAMILY_TR = {Animal:'Hayvansı',Aquatic:'Akvatik',Chypre:'Şipre',Citrus:'Narenciye',Creamy:'Kremamsı',Earthy:'Topraksı',Floral:'Çiçeksi','Fougère':'Fujer',Fresh:'Ferahlık',Fruity:'Meyvemsi',Gourmand:'Gurme',Green:'Yeşil',Leathery:'Deri',Oriental:'Oryantal',Powdery:'Pudramsı',Resinous:'Reçineli',Smoky:'Dumanlı',Spicy:'Baharatlı',Sweet:'Tatlı',Synthetic:'Sentetik',Woody:'Odunsu'};
   const ACCORD_TR = {'woody':'Odunsu','aromatic':'Aromatik','fresh spicy':'Taze Baharatlı','citrus':'Narenciye','amber':'Amber','warm spicy':'Sıcak Baharatlı','green':'Yeşil','sweet':'Tatlı','musky':'Misk','fruity':'Meyvemsi','powdery':'Pudramsı','vanilla':'Vanilya','floral':'Çiçeksi','white floral':'Beyaz Çiçeksi','rose':'Gül','oud':'Öd','smoky':'Dumanlı','leather':'Deri','earthy':'Topraksı','animalic':'Hayvansı','aquatic':'Akvatik','patchouli':'Paçuli','iris':'İris','balsamic':'Balsamik','tobacco':'Tütün','cinnamon':'Tarçın','spicy':'Baharatlı','resinous':'Reçineli','chypre':'Şipre','fougère':'Fujer','gourmand':'Gurme','creamy':'Kremamsı','synthetic':'Sentetik','fresh':'Ferah'};
@@ -420,9 +419,9 @@
         </div>
         <div class='pf-name' style="margin-top:4px">${p.fullName||''}</div>
       </div>`;
-    if(!isRef){
-      el.style.cursor='pointer';
-      on(el,'click',() => setReferenceAndFindSimilar(p, true));
+    if(!isRef){ 
+      el.style.cursor='pointer'; 
+      on(el,'click',() => setReferenceAndFindSimilar(p, true)); 
     }
     return el;
   }
@@ -514,23 +513,23 @@
       const avg=w? s/w : 0; return {perfume:p, similarity: Math.pow(avg,3)};
     }).filter(x=>x.similarity!==-1).sort((a,b)=>b.similarity-a.similarity);
   }
-
-  // UPDATED: render reference in #results, similars in #similars
+  
   function render(ref,sims){
     state.currentRef=ref;
-
-    // 1) Referans detayları (Sonuçlar)
     const out=q('#out'); out.innerHTML='';
     out.appendChild(renderRefDetail(ref));
 
-    // 2) Benzeri Parfümler başlığı ve içerik (Tercihler'den sonra)
-    const simSec = q('#similars');
-    const simTitle = q('#similarsTitle');
-    const simOut = q('#simOut');
-    simOut.innerHTML = '';
+    // Move preferences section to be after reference perfume details
+    const prefsSection = q('#upload-section');
+    prefsSection.style.marginTop = '24px';
+    out.appendChild(prefsSection);
 
     if(sims.length){
-      simTitle.textContent = `${ref.fullName || 'Seçtiğiniz Parfüm'} Benzeri Parfümler`;
+      const titleText = `${ref.fullName || 'Seçtiğiniz Parfüm'} Benzeri Parfümler`;
+      const h2=document.createElement('div');
+      Object.assign(h2.style,{fontWeight:'800',fontSize:'22px',margin:'40px 0 16px',fontFamily:"'Playfair Display',serif"});
+      h2.textContent = titleText;
+      out.appendChild(h2);
 
       const carouselContainer=document.createElement('div'); carouselContainer.className='carousel-container';
       carouselContainer.innerHTML=`
@@ -539,19 +538,12 @@
         <button class="carousel-btn next" aria-label="Sonraki"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>`;
       const windowEl=carouselContainer.querySelector('.carousel-window');
       sims.forEach(s=>windowEl.appendChild(renderCard(s,'sim')));
-      simOut.appendChild(carouselContainer);
-      simSec.style.display = 'block';
+      out.appendChild(carouselContainer);
       setupCarousel(carouselContainer);
-    } else {
-      simSec.style.display = 'none';
     }
   }
 
-  // When navigating to collections, hide similars (since no single ref)
-  function hideSimilars(){ const sec = document.getElementById('similars'); if(sec) sec.style.display='none'; const out = document.getElementById('simOut'); if(out) out.innerHTML=''; }
-
   function showPerfumerResults(name) {
-    hideSimilars();
     const out = q('#out'); out.innerHTML = '';
     const results = state.data.filter(p => p.Perfumer && p.Perfumer.toLowerCase().includes(name.toLowerCase()));
     const header = document.createElement('div'); header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;';
@@ -580,7 +572,6 @@
   }
 
   function showBrandResults(brandName) {
-    hideSimilars();
     const out = q('#out'); out.innerHTML = '';
     const results = state.data.filter(p => p.Brand && p.Brand.toLowerCase() === brandName.toLowerCase());
     const header = document.createElement('div'); header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;';
@@ -609,7 +600,6 @@
   }
 
   function showAccordResults(accordName) {
-    hideSimilars();
     const out = q('#out'); out.innerHTML = '';
     const results = state.data
       .filter(p => p['Main Accords'] && p['Main Accords'].toLowerCase().includes(accordName.toLowerCase()))
@@ -641,7 +631,6 @@
   }
 
   function showNoteResults(noteName) {
-    hideSimilars();
     const out = q('#out'); out.innerHTML = '';
     const results = state.data.filter(p => p['Fragrance Notes'] && p['Fragrance Notes'].toLowerCase().includes(noteName.toLowerCase()));
     const header = document.createElement('div'); header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;';
@@ -718,25 +707,25 @@
     });
 
     const input=q('#searchInput'); const btn=q('#searchBtn'); const suggest=q('#suggestions'); let deb=null;
-    on(input,'input',()=>{
-      clearTimeout(deb);
+    on(input,'input',()=>{ 
+      clearTimeout(deb); 
       deb=setTimeout(()=>{
-        const qv=input.value.trim();
+        const qv=input.value.trim(); 
         if(!qv||!state.fuse){ suggest.style.display='none'; return;}
-        const res=state.fuse.search(qv).slice(0,8);
+        const res=state.fuse.search(qv).slice(0,8); 
         if(!res.length){suggest.style.display='none';return;}
         suggest.innerHTML=res.map(r=>{
-          const it=r.item; const t=thumbURL(it);
-          const yr= it['Release Year']!=null && it['Release Year']!=='' ? String(it['Release Year']) : '';
+          const it=r.item; const t=thumbURL(it); 
+          const yr= it['Release Year']!=null && it['Release Year']!=='' ? String(it['Release Year']) : ''; 
           const right=(it.Brand||yr)? `(${[it.Brand, yr].filter(Boolean).join(', ')})` : '';
           return `<div class='s-item' data-index='${r.refIndex}' aria-label='${it.fullName} ${right}'>
             <img class='s-thumb' src='${t}' alt='' loading='lazy' onerror="this.onerror=null;this.src='https://placehold.co/40x40/e2e8f0/64748b?text=?'"/>
             <div class='s-name'>${it.fullName}</div>
             <div class='s-brand'>${right}</div>
           </div>`;
-        }).join('');
-        suggest.style.display='block';
-      },140);
+        }).join(''); 
+        suggest.style.display='block'; 
+      },140); 
     });
     on(suggest,'click',e=>{ const el=e.target.closest('.s-item'); if(!el) return; const idx = parseInt(el.dataset.index, 10); if(!isNaN(idx) && state.data[idx]) { setReferenceAndFindSimilar(state.data[idx], true); } suggest.style.display='none'; });
     on(document,'click',e=>{ if(!suggest.contains(e.target) && e.target!==input) suggest.style.display='none'; });
@@ -832,9 +821,16 @@
 
   function resetToHome(pushState = true) {
     state.currentRef = null; q('#searchInput').value = '';
+
+    // Move preferences section back to its original place before clearing #out
+    const prefsSection = q('#upload-section');
+    if (prefsSection.parentElement.id === 'out') {
+        const featuredSection = q('#featured');
+        featuredSection.insertAdjacentElement('beforebegin', prefsSection);
+        prefsSection.style.marginTop = ''; // Reset custom margin
+    }
     q('#upload-section').style.display = 'none';
-    q('#similars').style.display = 'none'; // hide similar section on home
-    const simOutEl = document.getElementById('simOut'); if (simOutEl) simOutEl.innerHTML='';
+
     document.title = 'simscent — Ana Sayfa';
     setMeta('description', 'Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul.');
     const homePath = '/';
@@ -877,7 +873,6 @@
       setHeroFromPerfume(rnd);
 
       q('#upload-section').style.display = 'none';
-      q('#similars').style.display = 'none';
       q('#out').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Koleksiyon Yüklendi</h4><p style="color:var(--muted);margin-top:4px">Bir parfüm arayabilir veya "Beni Şaşırt!" butonunu kullanabilirsiniz.</p></div>`;
       showToast(`✅ ${data.length} parfüm başarıyla yüklendi.`,'ok');
 
