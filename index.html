@@ -9,17 +9,17 @@
     gtag('js', new Date());
     gtag('config', 'G-7LCE4Z60ZB');
   </script>
+
+  <!-- App icons -->
   <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
+
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>simscent — Ana Sayfa</title>
   <meta name="description" content="Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul."/>
   <meta name="google-adsense-account" content="ca-pub-9033780165680589">
   <link rel="canonical" href="https://www.simscent.com/"/>
-
-  <!-- Favicon / app icons (logo dosyalarını repoya ekle) -->
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="alternate icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
 
   <!-- Fonts & icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -30,8 +30,13 @@
 
   <style>
     :root{
-      --brand-primary:#B99B6B;--brand-secondary:#A08C62;--text:#3a3a3a;--muted:#888;--border:#eee;--card:#fff;--shell:#f9f8f6;
-      --elev-1:0 4px 15px rgba(0,0,0,.05);--elev-2:0 8px 30px rgba(0,0,0,.07);--elev-3:0 12px 40px rgba(0,0,0,.1)
+      --brand-primary:#B99B6B; --brand-secondary:#A08C62;
+      /* adaptive accent (defaults to brand) */
+      --accent: var(--brand-primary);
+      --on-accent:#111;
+
+      --text:#3a3a3a; --muted:#888; --border:#eee; --card:#fff; --shell:#f9f8f6;
+      --elev-1:0 4px 15px rgba(0,0,0,.05); --elev-2:0 8px 30px rgba(0,0,0,.07); --elev-3:0 12px 40px rgba(0,0,0,.1)
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
@@ -49,24 +54,16 @@
 
     .top{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px}
     .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;letter-spacing:-.02em;font-family:'Playfair Display',serif;cursor:pointer}
-    /* LOGO: /assets/logo.svg dosyasını arka plan olarak çeker */
-    .logo{
-      width:32px; height:32px;
-      display:block;
-      background:transparent;
-      border:none;
-      box-shadow:none;
-      border-radius:0;
-    }
+    .logo{width:32px;height:32px;display:block;background:transparent;border:none;box-shadow:none;border-radius:0}
 
     .cta{border:none;border-radius:8px;padding:10px 20px;font-weight:700;font-size:15px;color:#fff;background:var(--text);cursor:pointer}
 
     .hero{display:grid;grid-template-columns:1fr;gap:40px;align-items:center;margin-top:20px}
     @media(min-width:980px){.hero{grid-template-columns:420px 1fr;gap:60px}}
     .shot-wrap{position:relative}
-    .blob,.blob2{position:absolute;border-radius:28px}
-    .blob{width:120px;height:120px;background:rgba(185,155,107,.15);left:-18px;top:-16px;opacity:.8}
-    .blob2{width:130px;height:130px;background:rgba(185,155,107,.1);left:220px;bottom:-10px;opacity:.6}
+    .blob,.blob2{position:absolute;border-radius:28px;transition:background-color .35s ease}
+    .blob{width:120px;height:120px;left:-18px;top:-16px;opacity:.85; background:rgba(185,155,107,.20)}
+    .blob2{width:130px;height:130px;left:220px;bottom:-10px;opacity:.65; background:rgba(185,155,107,.12)}
 
     .shot{
       width:100%;aspect-ratio:1/1;object-fit:cover;padding:16px;background:#fff;border:1px solid var(--border);
@@ -103,15 +100,16 @@
     @media(min-width:768px){.lbl{font-size:18px}}
     .toggle{position:relative;width:44px;height:26px;background:#e2e8f0;border-radius:999px;transition:background .25s ease;cursor:pointer;flex-shrink:0}
     .toggle .dot{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:999px;background:#fff;box-shadow:0 2px 6px rgba(2,6,23,.15);transition:transform .25s ease}
-    .toggle.active{background:var(--brand-primary)}
+    .toggle.active{background:var(--accent)}
     .toggle.active .dot{transform:translateX(18px)}
 
     .pf{display:flex;flex-direction:column;gap:12px;border-radius:18px;padding:12px;border:1px solid transparent;box-shadow:var(--elev-1);background:#fff;transition:box-shadow .28s cubic-bezier(.25,.8,.25,1),transform .28s cubic-bezier(.25,.8,.25,1),border-color .28s;overflow:hidden}
-    .pf:hover{transform:translate3d(0,-6px,0);box-shadow:var(--elev-3);border-color:rgba(185,155,107,.35)}
+    .pf:hover{transform:translate3d(0,-6px,0);box-shadow:var(--elev-3);border-color:color-mix(in srgb, var(--accent) 35%, transparent)}
     .pf-img{width:100%;aspect-ratio:1/1;border-radius:12px;object-fit:cover;background:#e2e8f0;margin:0}
     .pf-brand{font-size:12px;letter-spacing:.4px;text-transform:uppercase;color:var(--brand-primary);font-weight:700}
     .pf-name{font-family:'Playfair Display',serif;font-size:18px;line-height:1.25;font-weight:700}
-    .badge{background:var(--brand-primary);color:#fff;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:700;margin-left:auto;white-space:nowrap}
+    .badge{background:var(--accent);color:var(--on-accent);padding:6px 14px;border-radius:999px;font-size:12px;font-weight:700;margin-left:auto;white-space:nowrap;transition:background-color .35s,color .35s}
+
     .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
     .chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);background:var(--shell);padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600;color:var(--text)}
 
@@ -120,7 +118,7 @@
     .ring{position:relative;width:54px;height:54px;margin:0 auto 6px}
     .svg{width:54px;height:54px;transform:rotate(-90deg)}
     .bg{fill:none;stroke:#eef2f7;stroke-width:6}
-    .fg{fill:none;stroke:var(--brand-primary);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .6s}
+    .fg{fill:none;stroke:var(--accent);stroke-width:6;stroke-linecap:round;transition:stroke .35s, stroke-dashoffset .6s}
     .val{position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:13px}
 
     .ref-card-grid{display:grid;grid-template-columns:1fr;gap:28px;align-items:start}
@@ -157,11 +155,11 @@
     .fc-body{display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center}
     .fc-img{width:72px;height:72px;border-radius:12px;object-fit:cover;background:#e2e8f0}
 
-    .brand-link, .perfumer-link, .note-link, .accord-link {font-weight: 600;color: var(--brand-secondary);transition: color .2s;cursor: pointer;}
-    .brand-link:hover, .perfumer-link:hover, .note-link:hover, .accord-link:hover {color: var(--brand-primary);text-decoration: underline;}
+    .brand-link, .perfumer-link, .note-link, .accord-link {font-weight:600;color:var(--brand-secondary);transition:color .2s;cursor:pointer}
+    .brand-link:hover, .perfumer-link:hover, .note-link:hover, .accord-link:hover {color:var(--brand-primary);text-decoration:underline}
     .pf-brand.brand-link:hover { color: var(--brand-secondary); }
-    .chip.note-link:hover, .chip.accord-link:hover {background-color: #e2e8f0;border-color: #d1d5db;color: var(--text);}
-    .chip.accord-link { cursor: pointer; transition: all .2s; }
+    .chip.note-link:hover, .chip.accord-link:hover {background-color:#e2e8f0;border-color:#d1d5db;color:var(--text)}
+    .chip.accord-link { cursor:pointer; transition:all .2s; }
 
     .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,16px);background:var(--text);color:#fff;padding:12px 18px;border-radius:12px;box-shadow:var(--elev-2);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:9999;font-weight:700;font-size:15px;letter-spacing:.2px}
     .toast.show{opacity:1;transform:translate(-50%,0)}
@@ -180,14 +178,14 @@
       <div class="brand">
         <img class="logo" src="/assets/logo.svg" alt="simscent" width="32" height="32">simscent
       </div>
-
       <button class="cta" id="signupBtn">Kayıt Ol</button>
     </div>
 
     <section id="hero" class="hero">
       <div class="shot-wrap">
         <div class="blob"></div>
-        <img id="heroShot" class="shot" src="https://images.unsplash.com/photo-1617839400561-d55457a29da2?q=80&w=930&auto=format&fit=crop" alt="parfüm"/>
+        <!-- enable CORS for pixel-read when possible -->
+        <img id="heroShot" crossorigin="anonymous" class="shot" src="https://images.unsplash.com/photo-1617839400561-d55457a29da2?q=80&w=930&auto=format&fit=crop" alt="parfüm"/>
         <div class="blob2"></div>
       </div>
       <div>
@@ -275,7 +273,6 @@
   };
 
   const LABELS = {Daily:'Günlük',Business:'İş',Evening:'Akşam','Night Out':'Gece',Leisure:'Rahat',Sport:'Spor',Spring:'İlkbahar',Summer:'Yaz',Fall:'Sonbahar',Winter:'Kış',Classic:'Klasik',Masculine:'Maskülen',Feminine:'Feminen',Modern:'Modern'};
-  // 'styler' yerine geçerli Material ikon adı 'style'
   const ICONS  = {Daily:'sunny',Business:'work',Evening:'nights_stay','Night Out':'nightlife',Leisure:'weekend',Sport:'directions_run',Spring:'local_florist',Summer:'sunny',Fall:'eco',Winter:'ac_unit',Classic:'account_balance',Masculine:'man',Feminine:'woman',Modern:'auto_awesome', style:'style'};
   const FAMILY_TR = {Animal:'Hayvansı',Aquatic:'Akvatik',Chypre:'Şipre',Citrus:'Narenciye',Creamy:'Kremamsı',Earthy:'Topraksı',Floral:'Çiçeksi','Fougère':'Fujer',Fresh:'Ferahlık',Fruity:'Meyvemsi',Gourmand:'Gurme',Green:'Yeşil',Leathery:'Deri',Oriental:'Oryantal',Powdery:'Pudramsı',Resinous:'Reçineli',Smoky:'Dumanlı',Spicy:'Baharatlı',Sweet:'Tatlı',Synthetic:'Sentetik',Woody:'Odunsu'};
   const ACCORD_TR = {'woody':'Odunsu','aromatic':'Aromatik','fresh spicy':'Taze Baharatlı','citrus':'Narenciye','amber':'Amber','warm spicy':'Sıcak Baharatlı','green':'Yeşil','sweet':'Tatlı','musky':'Misk','fruity':'Meyvemsi','powdery':'Pudramsı','vanilla':'Vanilya','floral':'Çiçeksi','white floral':'Beyaz Çiçeksi','rose':'Gül','oud':'Öd','smoky':'Dumanlı','leather':'Deri','earthy':'Topraksı','animalic':'Hayvansı','aquatic':'Akvatik','patchouli':'Paçuli','iris':'İris','balsamic':'Balsamik','tobacco':'Tütün','cinnamon':'Tarçın','spicy':'Baharatlı','resinous':'Reçineli','chypre':'Şipre','fougère':'Fujer','gourmand':'Gurme','creamy':'Kremamsı','synthetic':'Sentetik','fresh':'Ferah'};
@@ -422,9 +419,9 @@
         </div>
         <div class='pf-name' style="margin-top:4px">${p.fullName||''}</div>
       </div>`;
-    if(!isRef){ 
-      el.style.cursor='pointer'; 
-      on(el,'click',() => setReferenceAndFindSimilar(p, true)); 
+    if(!isRef){
+      el.style.cursor='pointer';
+      on(el,'click',() => setReferenceAndFindSimilar(p, true));
     }
     return el;
   }
@@ -634,7 +631,7 @@
     const backBtn = document.createElement('button'); backBtn.className = 'btn ghost'; backBtn.textContent = 'Geri Dön'; on(backBtn,'click',()=>findSimilar(false));
     header.appendChild(title); header.appendChild(backBtn); out.appendChild(header);
     if (!results.length){ out.innerHTML += `<p>Bu notayı içeren sonuç bulunamadı.</p>`; return; }
-    const grid = document.createElement('div'); grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;';
+    const grid = document.createElement('div'); grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;'; 
     results.forEach(p => {
       const year = p['Release Year'] || '';
       const img = p['Image URL'] || `https://placehold.co/240x240/e2e8f0/64748b?text=${encodeURIComponent((p.Brand||'?').slice(0,1))}`;
@@ -692,6 +689,91 @@
     }
   }
 
+  /* ======================= Adaptive Accent (guardrailed) ======================= */
+  const BRAND = '#B99B6B';
+  const hex = v => '#'+v.map(x=>x.toString(16).padStart(2,'0')).join('');
+  const hexToRgb = h => h.replace('#','').match(/.{2}/g).map(x=>parseInt(x,16));
+  const rgbToHsl = (r,g,b)=>{ r/=255; g/=255; b/=255;
+    const max=Math.max(r,g,b), min=Math.min(r,g,b);
+    let h,s,l=(max+min)/2;
+    if(max===min){ h=s=0; } else {
+      const d=max-min;
+      s=l>0.5? d/(2-max-min) : d/(max+min);
+      switch(max){ case r:h=(g-b)/d+(g<b?6:0);break; case g:h=(b-r)/d+2;break; case b:h=(r-g)/d+4;break; }
+      h/=6;
+    }
+    return {h,s,l};
+  };
+  const mix = (hexA, hexB, t=0.5) => {
+    const [ar,ag,ab]=hexToRgb(hexA), [br,bg,bb]=hexToRgb(hexB);
+    return hex([ Math.round(ar*(1-t)+br*t), Math.round(ag*(1-t)+bg*t), Math.round(ab*(1-t)+bb*t) ]);
+  };
+  const luminance = (r,g,b)=>{
+    const srgb=[r,g,b].map(v=>{v/=255; return v<=0.03928? v/12.92 : Math.pow((v+0.055)/1.055,2.4);});
+    return 0.2126*srgb[0]+0.7152*srgb[1]+0.0722*srgb[2];
+  };
+  const pickText = (r,g,b)=>{
+    const L = luminance(r,g,b);
+    const cWhite = (1.05)/(L+0.05);
+    const cBlack = (L+0.05)/0.05;
+    return cWhite >= cBlack ? '#fff' : '#111';
+  };
+  const hexToRgba = (h,a=1)=>{ const [r,g,b]=hexToRgb(h); return `rgba(${r},${g},${b},${a})`; };
+
+  async function medianColorFromURL(url){
+    return new Promise((resolve,reject)=>{
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = ()=>{
+        try{
+          const canvas = document.createElement('canvas');
+          const w = 48, h = 48;
+          canvas.width=w; canvas.height=h;
+          const ctx = canvas.getContext('2d',{ willReadFrequently:true });
+          ctx.drawImage(img,0,0,w,h);
+          const { data } = ctx.getImageData(0,0,w,h);
+          const Rs=[],Gs=[],Bs=[];
+          for(let i=0;i<data.length;i+=4){
+            Rs.push(data[i]); Gs.push(data[i+1]); Bs.push(data[i+2]);
+          }
+          const med = arr => { const a=arr.sort((x,y)=>x-y); const m=Math.floor(a.length/2); return a.length%2?a[m]:Math.round((a[m-1]+a[m])/2); };
+          const r = med(Rs), g = med(Gs), b = med(Bs);
+          const text = pickText(r,g,b);
+          resolve({ r,g,b, hex: hex([r,g,b]), text });
+        }catch(e){ reject(e); }
+      };
+      img.onerror = ()=>reject(new Error('image load / CORS'));
+      img.src = url;
+    });
+  }
+
+  async function applySmartAccent(rootEl, imgUrl){
+    try{
+      let { r,g,b, hex:accent, text } = await medianColorFromURL(imgUrl);
+      const { s, l } = rgbToHsl(r,g,b);
+
+      // guardrails: too light/dark/gray → blend with brand
+      const tooLight = l > 0.85, tooDark = l < 0.15, tooGray = s < 0.18;
+      if (tooLight || tooDark || tooGray) accent = mix(accent, BRAND, 0.5);
+
+      rootEl.style.setProperty('--accent', accent);
+      rootEl.style.setProperty('--on-accent', text);
+
+      // tint blobs subtly
+      const b1 = hexToRgba(accent, .20);
+      const b2 = hexToRgba(accent, .12);
+      const blob = document.querySelector('.blob');
+      const blob2 = document.querySelector('.blob2');
+      if (blob)  blob.style.backgroundColor = b1;
+      if (blob2) blob2.style.backgroundColor = b2;
+    }catch(_){
+      // fallback: brand color
+      rootEl.style.setProperty('--accent', BRAND);
+      rootEl.style.setProperty('--on-accent', '#111');
+    }
+  }
+  /* =================== /Adaptive Accent =================== */
+
   function wireEvents(){
     on(q('.brand'), 'click', resetToHome);
 
@@ -746,6 +828,10 @@
     const toggleFab=()=>{ if(window.scrollY>280){ fab.classList.add('show'); } else { fab.classList.remove('show'); } };
     on(window,'scroll',toggleFab,{passive:true}); toggleFab();
     on(fab,'click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+    // update accent whenever the hero image loads
+    const hero = q('#heroShot');
+    on(hero, 'load', () => applySmartAccent(document.documentElement, hero.currentSrc || hero.src));
   }
 
   function handleRealRouting(){
@@ -792,6 +878,9 @@
 
     pickFeatured(3);
     renderFeatured();
+
+    // also try to adapt accent using the reference image if present
+    if (ref['Image URL']) applySmartAccent(document.documentElement, ref['Image URL']);
   }
 
   function findSimilar(scroll=true){
