@@ -345,7 +345,15 @@ Sitemap: ${DOMAIN}/sitemap.xml`;
   write(path.join(OUT_DIR,'robots.txt'), robots);
 
   // Cloudflare Pages: SPA fallback ve cache header'ları
-  write(path.join(OUT_DIR,'_redirects'), '/* /index.html 200\n');
+  write(path.join(OUT_DIR,'_redirects'), `
+/assets/*           /assets/:splat        200
+/perfumes_data.json /perfumes_data.json   200
+/sitemap.xml        /sitemap.xml          200
+/robots.txt         /robots.txt           200
+/ads.txt            /ads.txt              200
+/*                  /index.html           200
+`.trim() + '\n');
+
   write(path.join(OUT_DIR,'_headers'), `
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
