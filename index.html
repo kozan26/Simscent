@@ -17,7 +17,7 @@
   <meta name="google-adsense-account" content="ca-pub-9033780165680589">
   <link rel="canonical" href="https://www.simscent.com/"/>
 
-  <!-- Favicon / app icons -->
+  <!-- Favicon / app icons (logo dosyalarını repoya ekle) -->
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
 
@@ -49,7 +49,15 @@
 
     .top{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px}
     .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;letter-spacing:-.02em;font-family:'Playfair Display',serif;cursor:pointer}
-    .logo{width:32px;height:32px;display:block;background:transparent;border:none;box-shadow:none;border-radius:0}
+    /* LOGO: /assets/logo.svg dosyasını arka plan olarak çeker */
+    .logo{
+      width:32px; height:32px;
+      display:block;
+      background:transparent;
+      border:none;
+      box-shadow:none;
+      border-radius:0;
+    }
 
     .cta{border:none;border-radius:8px;padding:10px 20px;font-weight:700;font-size:15px;color:#fff;background:var(--text);cursor:pointer}
 
@@ -89,7 +97,6 @@
     .section{padding:32px 0;border-top:1px dashed #e5e7eb}
     @media(min-width:768px){.section{padding:48px 0}}
 
-    /* Prefs */
     #prefs .pref-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:12px 16px}
     .row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;min-height:48px;border:1px solid #f1f5f9;border-radius:14px;background:#fff}
     .lbl{font-size:16px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -107,18 +114,6 @@
     .badge{background:var(--brand-primary);color:#fff;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:700;margin-left:auto;white-space:nowrap}
     .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
     .chip{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);background:var(--shell);padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600;color:var(--text)}
-    .chip.small{font-size:12px;padding:4px 10px}
-
-    .prefs-head{position:sticky;top:8px;z-index:5;background:linear-gradient(0deg,var(--shell),var(--shell));padding-bottom:8px;margin-bottom:12px}
-    .prefs-head-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .prefs-actions{display:flex;align-items:center;gap:10px}
-    .link-reset{appearance:none;background:transparent;border:none;color:var(--brand-secondary);font-weight:700;cursor:pointer}
-    .link-reset:hover{text-decoration:underline}
-    .collapse-btn{appearance:none;border:1px solid var(--border);background:#fff;width:34px;height:34px;border-radius:999px;display:grid;place-items:center;cursor:pointer}
-    @media(min-width:768px){.collapse-btn{display:none}}
-
-    /* Collapse behavior (mobile) */
-    #upload-section.collapsed #prefs{display:none}
 
     .scores{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:18px;padding-top:16px;border-top:1px solid var(--border)}
     @media(min-width:480px){.scores{grid-template-columns:repeat(4,1fr)}}
@@ -168,10 +163,6 @@
     .chip.note-link:hover, .chip.accord-link:hover {background-color: #e2e8f0;border-color: #d1d5db;color: var(--text);}
     .chip.accord-link { cursor: pointer; transition: all .2s; }
 
-    /* Similars update visual */
-    #simOut{transition:opacity .25s}
-    #simOut.updating{opacity:.35;filter:saturate(.95)}
-
     .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,16px);background:var(--text);color:#fff;padding:12px 18px;border-radius:12px;box-shadow:var(--elev-2);opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:9999;font-weight:700;font-size:15px;letter-spacing:.2px}
     .toast.show{opacity:1;transform:translate(-50%,0)}
     .toast.err{background:linear-gradient(135deg,#ef4444,#b91c1c)}
@@ -180,47 +171,6 @@
     .fab.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
 
     [data-debug-outline] *{outline:1px dashed rgba(100,116,139,.35)}
-
-    /* === Layout polish (spacing & rhythm) — overrides === */
-    :root{
-      --space-1: 6px; --space-2:10px; --space-3:16px; --space-4:24px; --space-5:32px; --space-6:40px;
-      --radius-card:24px;
-    }
-    .section{padding:var(--space-4) 0;border-top:1px dashed #e5e7eb}
-    @media (min-width:768px){.section{padding:var(--space-5) 0}}
-    .section:first-of-type{border-top:0}
-    .card{border-radius:var(--radius-card)}
-    .card-inner{padding:24px 16px}
-    @media (min-width:768px){.card-inner{padding:32px}}
-    @media (min-width:1024px){.card-inner{padding:40px}}
-    #results h3{margin-bottom:var(--space-2)}
-    #out > .card{margin-top:var(--space-2)}
-    #upload-section{padding-top:0}
-    .prefs-head{
-      position:sticky; top:8px; margin:-8px -8px var(--space-2); padding:10px 12px;
-      border:1px solid var(--border); border-radius:12px; background:linear-gradient(0deg,#fbfaf8,#fbfaf8);
-    }
-    @media (min-width:768px){.prefs-head{margin:0 0 var(--space-2); border-radius:14px}}
-    #prefs{margin-top:var(--space-2)}
-    #prefs .row{min-height:48px; padding:10px 12px}
-    #similars{padding-top:var(--space-4)}
-    #simOut{
-      background:var(--card); border:1px solid var(--border); border-radius:var(--radius-card);
-      padding:14px; box-shadow:var(--elev-1); margin-top:var(--space-2); transition:opacity .25s;
-    }
-    @media (min-width:768px){#simOut{padding:18px}}
-    #simOut .carousel-window{padding-bottom:10px}
-    #simOut .pf{margin:10px 16px 10px 0}
-    .carousel-btn.prev{left:-14px}
-    .carousel-btn.next{right:-14px}
-    @media (min-width:1024px){
-      .carousel-btn.prev{left:-22px}
-      .carousel-btn.next{right:-22px}
-    }
-    .ref-card-grid{gap:18px}
-    @media (min-width:920px){.ref-card-grid{gap:40px}}
-    .detail-section{padding-top:16px; margin-top:16px}
-    .ref-card-title{margin-top:2px}
   </style>
 </head>
 <body>
@@ -230,6 +180,7 @@
       <div class="brand">
         <img class="logo" src="/assets/logo.svg" alt="simscent" width="32" height="32">simscent
       </div>
+
       <button class="cta" id="signupBtn">Kayıt Ol</button>
     </div>
 
@@ -260,6 +211,19 @@
       </div>
     </section>
 
+    <section class="section" id="upload-section" style="display:none">
+      <h3 style="font-weight:800;font-size:22px;margin-bottom:16px;font-family:'Playfair Display',serif">Tercihler</h3>
+      <div class="card" style="box-shadow:none;border:1px solid var(--border);padding:16px" id="prefs">
+        <h4 style="font-weight:700;font-size:18px;margin-bottom:16px;font-family:'Playfair Display',serif">Benzerlik Ağırlıkları</h4>
+        <div class="pref-grid">
+          <div class="row"><span class="lbl">Kullanım Amacı</span><div class="toggle active" data-pref="usage"><div class="dot"></div></div></div>
+          <div class="row"><span class="lbl">Mevsim</span><div class="toggle active" data-pref="season"><div class="dot"></div></div></div>
+          <div class="row"><span class="lbl">Stil</span><div class="toggle active" data-pref="style"><div class="dot"></div></div></div>
+          <div class="row"><span class="lbl">Koku Ailesi</span><div class="toggle active" data-pref="family"><div class="dot"></div></div></div>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="featured" style="display:none">
       <h3>Öne Çıkan Koleksiyonlar</h3>
       <div class="featured-wrap">
@@ -273,57 +237,9 @@
       </div>
     </section>
 
-    <!-- 1) SONUÇLAR -->
     <section class="section" id="results">
       <h3 style="font-weight:800;font-size:22px;margin-bottom:12px;font-family:'Playfair Display',serif">Sonuçlar</h3>
       <div id="out"><div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Keşfetmeye Başla</h4><p style="color:var(--muted);margin-top:4px">Başlamak için yukarıdan bir parfüm arayın veya “Beni Şaşırt!” butonunu kullanın.</p></div></div>
-    </section>
-
-    <!-- 2) EŞLEŞME ÖNCELİKLERİ -->
-    <section class="section" id="upload-section" style="display:none">
-      <div class="prefs-head">
-        <div class="prefs-head-top">
-          <h3 style="font-weight:800;font-size:22px;font-family:'Playfair Display',serif;margin:0">Eşleşme Öncelikleri</h3>
-          <div class="prefs-actions">
-            <span class="chip small" id="prefsActiveChip">4 aktif</span>
-            <button class="link-reset" id="prefReset" type="button">Sıfırla</button>
-            <button class="collapse-btn" id="prefCollapseBtn" type="button" aria-expanded="true" aria-label="Öncelikleri daralt/aç">
-              <span class="material-symbols-outlined">expand_less</span>
-            </button>
-          </div>
-        </div>
-        <div style="display:flex;align-items:center;gap:10px;margin-top:8px;color:var(--muted);font-size:13px">
-          <span class="chip small">Benzeri Parfümler için geçerli</span>
-          <span>Bu ayarları değiştir, benzerler anında güncellensin.</span>
-        </div>
-      </div>
-
-      <div class="card" style="box-shadow:none;border:1px solid var(--border);padding:16px" id="prefs">
-        <div class="pref-grid">
-          <div class="row" title="Gündelik/Gece gibi kullanım senaryolarını daha çok öne çıkar.">
-            <span class="lbl">Kullanım Amacı</span>
-            <div class="toggle active" data-pref="usage" aria-label="Kullanım Amacına önem ver"><div class="dot"></div></div>
-          </div>
-          <div class="row" title="Mevsim uyumunu daha çok öne çıkar.">
-            <span class="lbl">Mevsim</span>
-            <div class="toggle active" data-pref="season" aria-label="Mevsime önem ver"><div class="dot"></div></div>
-          </div>
-          <div class="row" title="Klasik/Modern gibi stil uyumunu daha çok öne çıkar.">
-            <span class="lbl">Stil</span>
-            <div class="toggle active" data-pref="style" aria-label="Stile önem ver"><div class="dot"></div></div>
-          </div>
-          <div class="row" title="Odunsu, Çiçeksi vb. koku ailelerini daha çok öne çıkar.">
-            <span class="lbl">Koku Ailesi</span>
-            <div class="toggle active" data-pref="family" aria-label="Koku Ailesine önem ver"><div class="dot"></div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3) BENZERİ PARFÜMLER -->
-    <section class="section" id="similars" style="display:none">
-      <h3 id="similarsTitle" style="font-weight:800;font-size:22px;margin-bottom:12px;font-family:'Playfair Display',serif">Benzeri Parfümler</h3>
-      <div id="simOut"></div>
     </section>
 
   </div></div>
@@ -359,12 +275,13 @@
   };
 
   const LABELS = {Daily:'Günlük',Business:'İş',Evening:'Akşam','Night Out':'Gece',Leisure:'Rahat',Sport:'Spor',Spring:'İlkbahar',Summer:'Yaz',Fall:'Sonbahar',Winter:'Kış',Classic:'Klasik',Masculine:'Maskülen',Feminine:'Feminen',Modern:'Modern'};
+  // 'styler' yerine geçerli Material ikon adı 'style'
   const ICONS  = {Daily:'sunny',Business:'work',Evening:'nights_stay','Night Out':'nightlife',Leisure:'weekend',Sport:'directions_run',Spring:'local_florist',Summer:'sunny',Fall:'eco',Winter:'ac_unit',Classic:'account_balance',Masculine:'man',Feminine:'woman',Modern:'auto_awesome', style:'style'};
   const FAMILY_TR = {Animal:'Hayvansı',Aquatic:'Akvatik',Chypre:'Şipre',Citrus:'Narenciye',Creamy:'Kremamsı',Earthy:'Topraksı',Floral:'Çiçeksi','Fougère':'Fujer',Fresh:'Ferahlık',Fruity:'Meyvemsi',Gourmand:'Gurme',Green:'Yeşil',Leathery:'Deri',Oriental:'Oryantal',Powdery:'Pudramsı',Resinous:'Reçineli',Smoky:'Dumanlı',Spicy:'Baharatlı',Sweet:'Tatlı',Synthetic:'Sentetik',Woody:'Odunsu'};
   const ACCORD_TR = {'woody':'Odunsu','aromatic':'Aromatik','fresh spicy':'Taze Baharatlı','citrus':'Narenciye','amber':'Amber','warm spicy':'Sıcak Baharatlı','green':'Yeşil','sweet':'Tatlı','musky':'Misk','fruity':'Meyvemsi','powdery':'Pudramsı','vanilla':'Vanilya','floral':'Çiçeksi','white floral':'Beyaz Çiçeksi','rose':'Gül','oud':'Öd','smoky':'Dumanlı','leather':'Deri','earthy':'Topraksı','animalic':'Hayvansı','aquatic':'Akvatik','patchouli':'Paçuli','iris':'İris','balsamic':'Balsamik','tobacco':'Tütün','cinnamon':'Tarçın','spicy':'Baharatlı','resinous':'Reçineli','chypre':'Şipre','fougère':'Fujer','gourmand':'Gurme','creamy':'Kremamsı','synthetic':'Sentetik','fresh':'Ferah'};
 
   const toPct=(v)=>{const n=Number(v);return !isFinite(n)?0:(n<11?Math.round(n*10):Math.round(n))};
-  function showToast(msg,type='ok'){ const t=q('#toast'); if(!t){ if(DEBUG) console.log('[toast]', msg); return; } t.textContent=msg; t.className=`toast ${type||'ok'} show`; clearTimeout(window.__toastTimer); window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2000); }
+  function showToast(msg,type='ok'){ const t=q('#toast'); if(!t){ if(DEBUG) console.log('[toast]', msg); return; } t.textContent=msg; t.className=`toast ${type||'ok'} show`; clearTimeout(window.__toastTimer); window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2600); }
   function setMeta(name, content){
     let m = document.querySelector(`meta[name="${name}"]`);
     if (!m) { m = document.createElement('meta'); m.name = name; document.head.appendChild(m); }
@@ -505,9 +422,9 @@
         </div>
         <div class='pf-name' style="margin-top:4px">${p.fullName||''}</div>
       </div>`;
-    if(!isRef){
-      el.style.cursor='pointer';
-      on(el,'click',() => setReferenceAndFindSimilar(p, true));
+    if(!isRef){ 
+      el.style.cursor='pointer'; 
+      on(el,'click',() => setReferenceAndFindSimilar(p, true)); 
     }
     return el;
   }
@@ -599,38 +516,16 @@
       const avg=w? s/w : 0; return {perfume:p, similarity: Math.pow(avg,3)};
     }).filter(x=>x.similarity!==-1).sort((a,b)=>b.similarity-a.similarity);
   }
-
-  /* ------- UI helpers for prefs ------- */
-  function activePrefCount(){ return qa('#prefs .toggle.active').length; }
-  function updatePrefUI(){
-    const n = activePrefCount();
-    const chip = document.getElementById('prefsActiveChip');
-    if(chip) chip.textContent = `${n} aktif`;
-    const btn = document.getElementById('prefCollapseBtn');
-    if(btn) btn.setAttribute('aria-expanded', String(!document.getElementById('upload-section').classList.contains('collapsed')));
-  }
-  function beginSimUpdate(){
-    const el = document.getElementById('simOut');
-    if(el){ el.classList.add('updating'); }
-  }
-
-  // Render: reference in #results, similars after prefs (#similars)
   function render(ref,sims){
     state.currentRef=ref;
-
-    // 1) Referans detayları
     const out=q('#out'); out.innerHTML='';
     out.appendChild(renderRefDetail(ref));
-
-    // 2) Benzerler
-    const simSec = q('#similars');
-    const simTitle = q('#similarsTitle');
-    const simOut = q('#simOut');
-    simOut.innerHTML = '';
-    simOut.style.opacity = .35;
-
     if(sims.length){
-      simTitle.textContent = `${ref.fullName || 'Seçtiğiniz Parfüm'} Benzeri Parfümler`;
+      const titleText = `${ref.fullName || 'Seçtiğiniz Parfüm'} Benzeri Parfümler`;
+      const h2=document.createElement('div');
+      Object.assign(h2.style,{fontWeight:'800',fontSize:'22px',margin:'40px 0 16px',fontFamily:"'Playfair Display',serif"});
+      h2.textContent = titleText;
+      out.appendChild(h2);
 
       const carouselContainer=document.createElement('div'); carouselContainer.className='carousel-container';
       carouselContainer.innerHTML=`
@@ -639,19 +534,12 @@
         <button class="carousel-btn next" aria-label="Sonraki"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>`;
       const windowEl=carouselContainer.querySelector('.carousel-window');
       sims.forEach(s=>windowEl.appendChild(renderCard(s,'sim')));
-      simOut.appendChild(carouselContainer);
-      simSec.style.display = 'block';
+      out.appendChild(carouselContainer);
       setupCarousel(carouselContainer);
-    } else {
-      simSec.style.display = 'none';
     }
-    requestAnimationFrame(()=>{ simOut.classList.remove('updating'); simOut.style.opacity = 1; });
   }
 
-  function hideSimilars(){ const sec = document.getElementById('similars'); if(sec) sec.style.display='none'; const out = document.getElementById('simOut'); if(out) out.innerHTML=''; }
-
   function showPerfumerResults(name) {
-    hideSimilars();
     const out = q('#out'); out.innerHTML = '';
     const results = state.data.filter(p => p.Perfumer && p.Perfumer.toLowerCase().includes(name.toLowerCase()));
     const header = document.createElement('div'); header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;';
@@ -680,7 +568,6 @@
   }
 
   function showBrandResults(brandName) {
-    hideSimilars();
     const out = q('#out'); out.innerHTML = '';
     const results = state.data.filter(p => p.Brand && p.Brand.toLowerCase() === brandName.toLowerCase());
     const header = document.createElement('div'); header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;';
@@ -709,7 +596,6 @@
   }
 
   function showAccordResults(accordName) {
-    hideSimilars();
     const out = q('#out'); out.innerHTML = '';
     const results = state.data
       .filter(p => p['Main Accords'] && p['Main Accords'].toLowerCase().includes(accordName.toLowerCase()))
@@ -741,7 +627,6 @@
   }
 
   function showNoteResults(noteName) {
-    hideSimilars();
     const out = q('#out'); out.innerHTML = '';
     const results = state.data.filter(p => p['Fragrance Notes'] && p['Fragrance Notes'].toLowerCase().includes(noteName.toLowerCase()));
     const header = document.createElement('div'); header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;';
@@ -810,58 +695,33 @@
   function wireEvents(){
     on(q('.brand'), 'click', resetToHome);
 
-    // Toggle click: update, animate, toast
     qa('#prefs .row').forEach(row=>{
       on(row,'click',(e)=>{
         const toggle = e.target.closest('.toggle') || row.querySelector('.toggle');
-        if(toggle) {
-          toggle.classList.toggle('active');
-          updatePrefUI();
-          beginSimUpdate();
-          showToast('Öneriler güncellendi','info');
-          findSimilar(false);
-        }
+        if(toggle) { toggle.classList.toggle('active'); findSimilar(false); }
       });
     });
 
-    const collapseBtn = document.getElementById('prefCollapseBtn');
-    on(collapseBtn,'click',()=>{
-      const sec = document.getElementById('upload-section');
-      sec.classList.toggle('collapsed');
-      updatePrefUI();
-      const icon = collapseBtn.querySelector('.material-symbols-outlined');
-      icon.textContent = sec.classList.contains('collapsed') ? 'expand_more' : 'expand_less';
-    });
-
-    const resetBtn = document.getElementById('prefReset');
-    on(resetBtn,'click',()=>{
-      qa('#prefs .toggle').forEach(t=>t.classList.add('active'));
-      updatePrefUI();
-      beginSimUpdate();
-      showToast('Ayarlar sıfırlandı','info');
-      findSimilar(false);
-    });
-
     const input=q('#searchInput'); const btn=q('#searchBtn'); const suggest=q('#suggestions'); let deb=null;
-    on(input,'input',()=>{
-      clearTimeout(deb);
+    on(input,'input',()=>{ 
+      clearTimeout(deb); 
       deb=setTimeout(()=>{
-        const qv=input.value.trim();
+        const qv=input.value.trim(); 
         if(!qv||!state.fuse){ suggest.style.display='none'; return;}
-        const res=state.fuse.search(qv).slice(0,8);
+        const res=state.fuse.search(qv).slice(0,8); 
         if(!res.length){suggest.style.display='none';return;}
         suggest.innerHTML=res.map(r=>{
-          const it=r.item; const t=thumbURL(it);
-          const yr= it['Release Year']!=null && it['Release Year']!=='' ? String(it['Release Year']) : '';
+          const it=r.item; const t=thumbURL(it); 
+          const yr= it['Release Year']!=null && it['Release Year']!=='' ? String(it['Release Year']) : ''; 
           const right=(it.Brand||yr)? `(${[it.Brand, yr].filter(Boolean).join(', ')})` : '';
           return `<div class='s-item' data-index='${r.refIndex}' aria-label='${it.fullName} ${right}'>
             <img class='s-thumb' src='${t}' alt='' loading='lazy' onerror="this.onerror=null;this.src='https://placehold.co/40x40/e2e8f0/64748b?text=?'"/>
             <div class='s-name'>${it.fullName}</div>
             <div class='s-brand'>${right}</div>
           </div>`;
-        }).join('');
-        suggest.style.display='block';
-      },140);
+        }).join(''); 
+        suggest.style.display='block'; 
+      },140); 
     });
     on(suggest,'click',e=>{ const el=e.target.closest('.s-item'); if(!el) return; const idx = parseInt(el.dataset.index, 10); if(!isNaN(idx) && state.data[idx]) { setReferenceAndFindSimilar(state.data[idx], true); } suggest.style.display='none'; });
     on(document,'click',e=>{ if(!suggest.contains(e.target) && e.target!==input) suggest.style.display='none'; });
@@ -926,7 +786,6 @@
       style: q('.toggle[data-pref="style"]').classList.contains('active'),
       family: q('.toggle[data-pref="family"]').classList.contains('active')
     };
-    beginSimUpdate();
     const sims = similarities(ref, prefs).slice(0, 10);
     render(ref, sims);
     if (scroll) q('#results').scrollIntoView({ behavior: 'smooth' });
@@ -959,8 +818,6 @@
   function resetToHome(pushState = true) {
     state.currentRef = null; q('#searchInput').value = '';
     q('#upload-section').style.display = 'none';
-    q('#similars').style.display = 'none';
-    const simOutEl = document.getElementById('simOut'); if (simOutEl) simOutEl.innerHTML='';
     document.title = 'simscent — Ana Sayfa';
     setMeta('description', 'Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul.');
     const homePath = '/';
@@ -975,11 +832,7 @@
     if (pushState) window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  function showPrefs(){
-    const sec = q('#upload-section');
-    sec.style.display = 'block';
-    updatePrefUI();
-  }
+  function showPrefs(){ q('#upload-section').style.display = 'block'; }
   function thumbURL(item){ const brand=(item.Brand||'?')+''; const letter=encodeURIComponent(brand.slice(0,1)); return item['Image URL']||`https://placehold.co/40x40/e2e8f0/64748b?text=${letter}`; }
   function setHeroFromPerfume(p){
     const shot = q('#heroShot'); const img = p['Image URL'] || '';
@@ -993,7 +846,7 @@
 
   async function loadInitialData() {
     try {
-      const response = await fetch('/perfumes_data.json');
+      const response = await fetch('/perfumes_data.json'); // kökten yükle
       if (!response.ok) throw new Error(`HTTP hatası! Durum: ${response.status}`);
       const text = await response.text();
       const txt = text.replace(/:\s*NaN/gi,': null');
@@ -1007,7 +860,6 @@
       setHeroFromPerfume(rnd);
 
       q('#upload-section').style.display = 'none';
-      q('#similars').style.display = 'none';
       q('#out').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Koleksiyon Yüklendi</h4><p style="color:var(--muted);margin-top:4px">Bir parfüm arayabilir veya "Beni Şaşırt!" butonunu kullanabilirsiniz.</p></div>`;
       showToast(`✅ ${data.length} parfüm başarıyla yüklendi.`,'ok');
 
