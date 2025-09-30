@@ -80,34 +80,25 @@
     .section{padding:32px 0;border-top:1px dashed #e5e7eb}
     @media(min-width:768px){.section{padding:48px 0}}
 
-    /* --- PREFERENCE CARD STYLES --- */
-    .pref-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
-    .pref-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:20px;cursor:pointer;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;gap:16px}
-    .pref-card:hover{transform:translateY(-4px);box-shadow:var(--elev-2)}
-    .pref-card-header{display:flex;align-items:center;gap:16px}
-    .pref-card-icon{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;background-color:var(--shell);color:var(--text)}
-    .pref-card-icon .material-symbols-outlined{font-size:26px}
-    .pref-card-title-wrap{display:flex;align-items:center;gap:8px}
-    .pref-card-title{font-size:18px;font-weight:700;line-height:1.3}
-    .pref-card-desc{color:var(--muted);font-size:15px;margin-top:-2px}
-    .pref-card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:16px;border-top:1px solid var(--shell)}
-    .pref-card-count{font-size:14px;font-weight:600;color:var(--muted)}
-    .pref-card-count::before{content:"●";color:#cbd5e1;margin-right:8px}
-    .pref-card-status{font-size:14px;font-weight:700;padding:6px 14px;border-radius:8px;background-color:var(--shell);color:var(--muted);border:1px solid var(--border)}
+    /* --- INLINE TOGGLE STYLES --- */
+    #prefs .pref-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(250px, 1fr));gap:12px 16px}
+    .row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;min-height:48px;border:1px solid #f1f5f9;border-radius:14px;background:#fff;cursor:pointer}
+    .lbl-wrap{display:flex;align-items:center;gap:8px;overflow:hidden}
+    .lbl{font-size:16px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    @media(min-width:768px){.lbl{font-size:18px}}
     
-    .toggle{margin-left:auto;position:relative;width:44px;height:26px;background:#e2e8f0;border-radius:999px;transition:background .25s ease;flex-shrink:0}
+    .toggle{position:relative;width:44px;height:26px;background:#e2e8f0;border-radius:999px;transition:background .25s ease;flex-shrink:0}
     .toggle .dot{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:999px;background:#fff;box-shadow:0 2px 6px rgba(2,6,23,.15);transition:transform .25s ease}
     .toggle.active{background:var(--brand-primary)}
     .toggle.active .dot{transform:translateX(18px)}
-    .pref-card.active .pref-card-status{background-color:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
 
     /* --- TOOLTIP STYLES --- */
-    .tooltip-trigger{position:relative;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background-color:var(--shell);color:var(--muted);border-radius:50%;font-weight:700;font-size:13px;line-height:1;cursor:help;user-select:none}
+    .tooltip-trigger{position:relative;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background-color:var(--shell);color:var(--muted);border-radius:50%;font-weight:700;font-size:13px;line-height:1;cursor:help;user-select:none;flex-shrink:0}
     .tooltip-trigger::before, .tooltip-trigger::after{position:absolute;left:50%;transform:translateX(-50%);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:100}
     .tooltip-trigger::after{content:attr(data-tooltip);bottom:100%;margin-bottom:12px;background-color:var(--text);color:#fff;padding:8px 12px;border-radius:8px;font-size:14px;font-weight:500;line-height:1.5;text-align:center;width:240px}
     .tooltip-trigger::before{content:'';bottom:100%;margin-bottom:2px;border:5px solid transparent;border-top-color:var(--text)}
     .tooltip-trigger:hover::before, .tooltip-trigger:hover::after{opacity:1;transform:translateX(-50%) translateY(-4px)}
-
+    
     .pf{display:flex;flex-direction:column;gap:12px;border-radius:18px;padding:12px;border:1px solid transparent;box-shadow:var(--elev-1);background:#fff;transition:box-shadow .28s cubic-bezier(.25,.8,.25,1),transform .28s cubic-bezier(.25,.8,.25,1),border-color .28s;overflow:hidden}
     .pf:hover{transform:translate3d(0,-6px,0);box-shadow:var(--elev-3);border-color:rgba(185,155,107,.35)}
     .pf-img{width:100%;aspect-ratio:1/1;border-radius:12px;object-fit:cover;background:#e2e8f0;margin:0}
@@ -237,73 +228,35 @@
 
     <section class="section" id="upload-section" style="display:none">
       <h3>Benzerlik Kriterleri</h3>
-      <div id="prefs" class="pref-grid">
-        <div class="pref-card active" data-pref="usage">
-          <div class="pref-card-header">
-            <div class="pref-card-icon"><span class="material-symbols-outlined">work</span></div>
-            <div>
-              <div class="pref-card-title-wrap">
-                <div class="pref-card-title">Kullanım Amacı</div>
-                <span class="tooltip-trigger" data-tooltip="Parfümün giyileceği ortamı tanımlar. Örn: Günlük, iş, gece.">?</span>
-              </div>
-              <div class="pref-card-desc">İş, günlük, spor gibi durumlar</div>
+      <div class="card" style="box-shadow:none;border:1px solid var(--border);padding:16px">
+        <div id="prefs" class="pref-grid">
+          <div class="row active" data-pref="usage">
+            <div class="lbl-wrap">
+              <span class="lbl">Kullanım Amacı</span>
+              <span class="tooltip-trigger" data-tooltip="Parfümün giyileceği ortamı tanımlar. Örn: Günlük, iş, gece.">?</span>
             </div>
             <div class="toggle active"><div class="dot"></div></div>
           </div>
-          <div class="pref-card-footer">
-            <div class="pref-card-count">6 özellik</div>
-            <div class="pref-card-status">Aktif</div>
-          </div>
-        </div>
-        <div class="pref-card active" data-pref="season">
-          <div class="pref-card-header">
-            <div class="pref-card-icon"><span class="material-symbols-outlined">calendar_month</span></div>
-            <div>
-              <div class="pref-card-title-wrap">
-                <div class="pref-card-title">Mevsim</div>
-                <span class="tooltip-trigger" data-tooltip="Parfümün uygun olduğu mevsimi belirtir. Örn: Yaz, kış, ilkbahar.">?</span>
-              </div>
-              <div class="pref-card-desc">Mevsimsel uygunluk kriterleri</div>
+          <div class="row active" data-pref="season">
+            <div class="lbl-wrap">
+              <span class="lbl">Mevsim</span>
+              <span class="tooltip-trigger" data-tooltip="Parfümün uygun olduğu mevsimi belirtir. Örn: Yaz, kış, ilkbahar.">?</span>
             </div>
             <div class="toggle active"><div class="dot"></div></div>
           </div>
-          <div class="pref-card-footer">
-            <div class="pref-card-count">4 özellik</div>
-            <div class="pref-card-status">Aktif</div>
-          </div>
-        </div>
-        <div class="pref-card active" data-pref="style">
-          <div class="pref-card-header">
-            <div class="pref-card-icon"><span class="material-symbols-outlined">palette</span></div>
-            <div>
-              <div class="pref-card-title-wrap">
-                <div class="pref-card-title">Stil</div>
-                <span class="tooltip-trigger" data-tooltip="Parfümün genel karakterini ve tarzını ifade eder. Örn: Klasik, modern, maskülen.">?</span>
-              </div>
-              <div class="pref-card-desc">Klasik, modern, feminen gibi tarzlar</div>
+          <div class="row active" data-pref="style">
+            <div class="lbl-wrap">
+              <span class="lbl">Stil</span>
+              <span class="tooltip-trigger" data-tooltip="Parfümün genel karakterini ve tarzını ifade eder. Örn: Klasik, modern, maskülen.">?</span>
             </div>
             <div class="toggle active"><div class="dot"></div></div>
           </div>
-          <div class="pref-card-footer">
-            <div class="pref-card-count">4 özellik</div>
-            <div class="pref-card-status">Aktif</div>
-          </div>
-        </div>
-        <div class="pref-card active" data-pref="family">
-          <div class="pref-card-header">
-            <div class="pref-card-icon"><span class="material-symbols-outlined">eco</span></div>
-            <div>
-              <div class="pref-card-title-wrap">
-                <div class="pref-card-title">Koku Ailesi</div>
-                <span class="tooltip-trigger" data-tooltip="Parfümün ana koku grubunu belirtir. Örn: Odunsu, narenciye, çiçeksi.">?</span>
-              </div>
-              <div class="pref-card-desc">Ana koku aileleri ve tonları</div>
+          <div class="row active" data-pref="family">
+            <div class="lbl-wrap">
+              <span class="lbl">Koku Ailesi</span>
+              <span class="tooltip-trigger" data-tooltip="Parfümün ana koku grubunu belirtir. Örn: Odunsu, narenciye, çiçeksi.">?</span>
             </div>
             <div class="toggle active"><div class="dot"></div></div>
-          </div>
-          <div class="pref-card-footer">
-            <div class="pref-card-count">21 özellik</div>
-            <div class="pref-card-status">Aktif</div>
           </div>
         </div>
       </div>
@@ -748,16 +701,13 @@
   function wireEvents(){
     on(q('.brand'), 'click', resetToHome);
 
-    qa('#prefs .pref-card').forEach(card=>{
-      on(card, 'click', (e) => {
+    qa('#prefs .row').forEach(row => {
+      on(row, 'click', (e) => {
         if (e.target.closest('.tooltip-trigger')) return;
         
-        card.classList.toggle('active');
-        const toggle = card.querySelector('.toggle');
+        row.classList.toggle('active');
+        const toggle = row.querySelector('.toggle');
         if (toggle) toggle.classList.toggle('active');
-        
-        const status = card.querySelector('.pref-card-status');
-        if (status) status.textContent = card.classList.contains('active') ? 'Aktif' : 'Pasif';
         
         findSimilar(false);
       });
@@ -850,12 +800,11 @@
 
     showPrefs();
 
-    // --- BUG FIX: Corrected selectors to read from the .pref-card ---
     const prefs = {
-      usage: q('.pref-card[data-pref="usage"]').classList.contains('active'),
-      season: q('.pref-card[data-pref="season"]').classList.contains('active'),
-      style: q('.pref-card[data-pref="style"]').classList.contains('active'),
-      family: q('.pref-card[data-pref="family"]').classList.contains('active')
+      usage: q('.row[data-pref="usage"]').classList.contains('active'),
+      season: q('.row[data-pref="season"]').classList.contains('active'),
+      style: q('.row[data-pref="style"]').classList.contains('active'),
+      family: q('.row[data-pref="family"]').classList.contains('active')
     };
     
     const sims = similarities(ref, prefs).slice(0, 10);
@@ -951,7 +900,7 @@
     nextFeatured:()=>{ const {pairs}=state.featured; const count=3; const pages=Math.max(1, Math.ceil(Math.min(pairs.length,10)/count)); state.featured.page=(state.featured.page+1)%pages; pickFeatured(count); renderFeatured(); }
   };
 
-  function init(){ wireEvents(); loadInitialUI(); loadInitialData(); }
+  function init(){ wireEvents(); loadInitialData(); }
   init();
 })();
 </script>
