@@ -1,0 +1,13 @@
+---
+const { post } = Astro.props;
+const url = `/posts/${post.slug}/`;
+const img = post.data.heroImage ?? 'https://placehold.co/640x360/e2e8f0/64748b?text=Blog';
+---
+<a class="post" href={url}>
+  <img src={img} alt={post.data.title}/>
+  <div>
+    <h2>{post.data.title}</h2>
+    <small>{new Date(post.data.date).toLocaleDateString('tr-TR')}</small>
+    {post.data.description && <p style="color:var(--muted);margin-top:6px">{post.data.description}</p>}
+  </div>
+</a>
