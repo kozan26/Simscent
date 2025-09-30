@@ -1,11 +1,14 @@
 {
-  "name": "simscent",
-  "private": true,
+  "name": "simscent-blog",
+  "type": "module",
+  "version": "1.0.0",
   "scripts": {
-    "build": "node generate.mjs"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
   },
-  "devDependencies": {
-    "wrangler": "^3.80.0"
-  },
-  "engines": { "node": ">=18" }
+  "dependencies": {
+    "astro": "^4.15.0",
+    "@astrojs/mdx": "^3.1.0"
+  }
 }
