@@ -1,0 +1,93 @@
+---
+const { title = 'Blog — simscent', description = 'Simscent blog', ogImage } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{title}</title>
+  <meta name="description" content={description} />
+
+  <!-- Analytics (same as main site) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7LCE4Z60ZB"></script>
+  <script>
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js',new Date()); gtag('config','G-7LCE4Z60ZB');
+  </script>
+
+  <!-- Favicon -->
+  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+
+  <!-- Fonts & icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
+
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content={title}/>
+  <meta property="og:description" content={description}/>
+  {ogImage && <meta property="og:image" content={ogImage}/>}
+
+  <style>
+    :root{
+      --brand-primary:#B99B6B;--brand-secondary:#A08C62;--text:#3a3a3a;--muted:#888;--border:#eee;--card:#fff;--shell:#f9f8f6;
+      --elev-1:0 4px 15px rgba(0,0,0,.05);--elev-2:0 8px 30px rgba(0,0,0,.07);--elev-3:0 12px 40px rgba(0,0,0,.1)
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;color:var(--text);line-height:1.6;background:var(--shell)}
+    body::before{content:"";position:fixed;inset:0;background-image:radial-gradient(hsla(0,0%,82%,.2) 1px,transparent 1px);background-size:20px 20px;opacity:.35;pointer-events:none}
+
+    .wrap{max-width:1100px;margin:26px auto;padding:16px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:24px;box-shadow:var(--elev-2);overflow:hidden}
+    header{display:flex;align-items:center;justify-content:space-between;padding:18px 18px 0 18px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:22px;letter-spacing:-.02em;font-family:'Playfair Display',serif}
+    .brand img{width:28px;height:28px}
+    nav a{color:var(--text);text-decoration:none;font-weight:700;border:1px solid var(--border);padding:8px 12px;border-radius:10px}
+    nav a:hover{background:#fff}
+
+    .hero{display:grid;grid-template-columns:1fr;gap:20px;align-items:center;padding:26px}
+    @media(min-width:900px){.hero{grid-template-columns:420px 1fr;gap:42px}}
+
+    .title{font-family:'Playfair Display',serif;font-size:clamp(34px,5vw,56px);font-weight:800;letter-spacing:-.04em;line-height:1.05;color:#222;margin-bottom:10px}
+    .desc{color:var(--muted);font-size:17px;max-width:720px}
+
+    .grid{display:grid;grid-template-columns:1fr;gap:18px;padding:26px}
+    @media(min-width:700px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1100px){.grid{grid-template-columns:repeat(3,1fr)}}
+
+    .post{display:flex;flex-direction:column;gap:12px;border:1px solid var(--border);border-radius:16px;background:#fff;box-shadow:var(--elev-1);padding:14px;transition:transform .2s, box-shadow .2s}
+    .post:hover{transform:translateY(-2px);box-shadow:var(--elev-3);border-color:rgba(185,155,107,.35)}
+    .post img{width:100%;aspect-ratio:16/9;border-radius:12px;object-fit:cover;background:#e2e8f0}
+    .post h2{font-family:'Playfair Display',serif;font-size:20px;line-height:1.25}
+    .post small{color:var(--muted)}
+
+    .prose{padding:26px;max-width:820px}
+    .prose h1,.prose h2,.prose h3{font-family:'Playfair Display',serif;color:#222}
+    .prose h1{font-size:clamp(32px,5vw,48px);margin:.2em 0 .4em}
+    .prose h2{font-size:28px;margin:1.2em 0 .6em}
+    .prose p{margin:.75em 0}
+    .prose blockquote{border-left:4px solid var(--brand-primary);padding-left:14px;margin:1em 0;color:#555}
+    .prose img{max-width:100%;border-radius:16px;border:1px solid var(--border);box-shadow:var(--elev-1)}
+    .tag{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);background:var(--shell);padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700;color:var(--text)}
+    footer{padding:18px;text-align:center;color:var(--muted);border-top:1px dashed #e5e7eb}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="card">
+      <header>
+        <a class="brand" href="/"><img src="/assets/logo.svg" alt="simscent"/>simscent</a>
+        <nav>
+          <a href="https://www.simscent.com/">Ana Sayfa</a>
+        </nav>
+      </header>
+
+      <slot />
+      <footer>© {new Date().getFullYear()} simscent · Blog</footer>
+    </div>
+  </main>
+</body>
+</html>
