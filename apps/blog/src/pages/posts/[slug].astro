@@ -12,7 +12,7 @@ const post = await getEntry('blog', slug);
 if (!post) throw new Error('Yazı bulunamadı.');
 
 const { title, description, date, heroImage, tags = [] } = post.data;
-const { Content } = await post.render(); // ← ÖNEMLİ: render() ve Content
+const { Content } = await post.render(); // ← ÖNEMLİ
 ---
 
 <BaseLayout title={`${title} — simscent`} description={description} ogImage={heroImage}>
@@ -21,17 +21,14 @@ const { Content } = await post.render(); // ← ÖNEMLİ: render() ve Content
     <h1>{title}</h1>
     {description && <p style="color:var(--muted)">{description}</p>}
     {heroImage && <p><img src={heroImage} alt={title}/></p>}
-
     <article>
-      <Content />   {/* ← Markdown içeriği burada render edilir */}
+      <Content />   {/* ← Markdown burada render edilir */}
     </article>
-
     {tags.length ? (
       <p style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap">
         {tags.map(t => <span class="tag">#{t}</span>)}
       </p>
     ) : null}
-
     <p style="margin-top:22px"><a href="/">← Tüm yazılar</a></p>
   </section>
 </BaseLayout>
