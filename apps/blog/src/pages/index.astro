@@ -1,69 +1,127 @@
 ---
+// apps/blog/src/pages/index.astro
+
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 import { getCollection } from 'astro:content';
 
-// Fetch and sort all posts once
-const allPosts = (await getCollection('blog'))
-  .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date));
+const posts = (await getCollection('blog'))
+	.sort((a,b) => +new Date(b.data.date) - +new Date(a.data.date));
 
-// --- 1. IMPROVED HERO LOGIC ---
-// Prioritize a post with `featured: true` in its frontmatter.
-// If none is featured, fall back to the latest one (your original logic).
-const heroPost = allPosts.find(post => post.data.featured) ?? allPosts[0];
+const heroPost = posts[0]; // İlk yazıyı hero yap
+const otherPosts = posts.slice(1); // Geri kalanları grid'de göster
 
-// --- 2. AVOID CONTENT DUPLICATION ---
-// Create a new list for the grid that excludes the hero post, so it doesn't appear twice.
-const gridPosts = allPosts.filter(post => post.slug !== heroPost?.slug);
-
-// --- 3. BETTER IMAGE & ACCESSIBILITY ---
-const heroImg = heroPost?.data.heroImage ?? 'https://images.unsplash.com/photo-1617839400561-d55457a29da2?q=80&w=1200&auto=format&fit=crop';
-// Use the post title as a fallback for the alt text, making it more descriptive.
-const heroAlt = heroPost?.data.heroImageAlt ?? heroPost?.data.title ?? 'simscent blog için öne çıkan görsel';
-
-// SEO data for reuse
-const pageTitle = "Blog — simscent";
-const pageDescription = "Parfüm seçimi, notalar, akorlar ve koleksiyonlar hakkında kısa, pratik yazılar.";
+const heroImg = heroPost?.data.heroImage ?? 'https://images.unsplash.com/photo-1557175344-7e0749564f43?q=80&w=1800&auto=format&fit=crop';
 ---
-<BaseLayout title={pageTitle} description={pageDescription}>
-  
-  <script type="application/ld+json" slot="head">
-    {
-      "@context": "https://schema.org",
-      "@type": "Blog",
-      "name": "simscent Blog",
-      "url": Astro.url.href,
-      "description": pageDescription,
-      "publisher": {
-        "@type": "Organization",
-        "name": "simscent",
-        "logo": {
-          "@type": "ImageObject",
-          "url": new URL("/assets/logo.svg", Astro.url).href 
-        }
-      }
-    }
-  </script>
+<BaseLayout 
+    title="Blog — simscent" 
+    description="Parfüm seçimi, notalar, akorlar ve koleksiyonlar hakkında kısa, pratik yazılar."
+>
+    <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        {heroPost && (
+            <a href={`/posts/${heroPost.slug}/`} class="hero-section">
+                <div class="gradient-overlay"></div>
+                <img src={heroImg} alt={heroPost.data.title} class="hero-image"/>
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        {heroPost.data.title}
+                    </h1>
+                    <p class="hero-description">
+                        {heroPost.data.description}
+                    </p>
+                    <div class="hero-button">
+                        Read More
+                    </div>
+                </div>
+            </a>
+        )}
 
-  <section class="hero">
-    {heroPost && <img class="hero-img" src={heroImg} alt={heroAlt} loading="eager" />}
-    <div>
-      <h1>Blog</h1>
-      <p>{pageDescription}</p>
-      {heroPost && (
-        <a class="hero-cta" href={`/posts/${heroPost.slug}/`}>
-          {heroPost.data.featured ? 'Öne Çıkan Yazı' : 'Son Yazı'}: {heroPost.data.title} →
-        </a>
-      )}
+        <h2 class="recent-articles-title">Recent Articles</h2>
+        <div class="articles-grid">
+            {otherPosts.map(p => <PostCard post={p} />)}
+        </div>
     </div>
-  </section>
-
-  <section class="grid">
-    {allPosts.length > 0 ? (
-      // We now map over `gridPosts` to show the rest of the articles
-      gridPosts.map(p => <div class="col"><PostCard post={p} /></div>)
-    ) : (
-      <p class="no-posts-message">Henüz burada hiç yazı yok. Yeni içerikler için takipte kalın!</p>
-    )}
-  </section>
 </BaseLayout>
+
+<style>
+    .hero-section {
+        position: relative;
+        display: flex;
+        min-height: 480px;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-end;
+        gap: 1.5rem;
+        overflow: hidden;
+        border-radius: 1rem; /* rounded-xl */
+        padding: 3rem;
+        text-decoration: none;
+    }
+    .hero-image {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+    }
+    .gradient-overlay {
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.4), transparent);
+        z-index: 2;
+    }
+    .hero-content {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        color: white;
+    }
+    .hero-title {
+        font-size: 2.8rem; /* text-5xl */
+        font-weight: 900;
+        max-width: 40rem; /* max-w-2xl */
+    }
+    .hero-description {
+        font-size: 1.125rem; /* text-lg */
+        color: rgba(255,255,255,0.9);
+        max-width: 40rem; /* max-w-2xl */
+    }
+    .hero-button {
+        display: inline-block;
+        margin-top: 1rem;
+        padding: 0.75rem 2rem;
+        background-color: var(--primary);
+        color: white;
+        border-radius: 0.5rem;
+        font-weight: 700;
+        transition: background-color 0.2s;
+    }
+    .hero-section:hover .hero-button {
+        background-color: #c88d5a;
+    }
+    .recent-articles-title {
+        margin-top: 4rem;
+        font-size: 2rem; /* text-3xl */
+        font-weight: 700;
+        color: #000;
+    }
+    .articles-grid {
+        margin-top: 2rem;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 3rem 2rem;
+    }
+    @media (min-width: 640px) {
+        .articles-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    @media (min-width: 1024px) {
+        .articles-grid {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+</style>
