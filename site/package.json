@@ -1,9 +1,16 @@
 {
   "name": "simscent-site",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.2",
   "scripts": {
-    "build": "mkdir -p dist && cp -r index.html perfumes_data.json assets _redirects dist/ 2>/dev/null || true",
-    "preview": "npx serve dist -l 4173"
+    "build": "npm run _clean && npm run _mkdist && npm run _copy",
+    "preview": "npx http-server dist -p 4173 -c-1",
+    "_clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "_mkdist": "node -e \"require('fs').mkdirSync('dist',{recursive:true})\"",
+    "_copy": "shx cp -f index.html dist/ && shx cp -f _redirects dist/ && shx cp -rf assets dist/ || true && shx cp -f perfumes_data.json dist/ || true && shx cp -f _headers dist/ || true"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "shx": "^0.3.4"
   }
 }
