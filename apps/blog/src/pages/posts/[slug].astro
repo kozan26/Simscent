@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, getEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map(p => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const post = await getEntry('blog', slug);
+const { title, description, date, heroImage, tags = [] } = post.data;
+---
+<BaseLayout title={`${title} — simscent`} description={description} ogImage={heroImage}>
+  <section class="prose">
+    <p class="tag">{new Date(date).toLocaleDateString('tr-TR')}</p>
+    <h1>{title}</h1>
+    {description && <p style="color:var(--muted)">{description}</p>}
+    {heroImage && <p><img src={heroImage} alt={title}/></p>}
+    <article>
+      <post.render />
+    </article>
+    {tags.length ? (
+      <p style="margin-top:18px;display:flex;gap:8px;flex-wrap:wrap">
+        {tags.map(t => <span class="tag">#{t}</span>)}
+      </p>
+    ) : null}
+    <p style="margin-top:22px"><a href="/">← Tüm yazılar</a></p>
+  </section>
+</BaseLayout>
