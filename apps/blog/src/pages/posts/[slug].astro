@@ -1,143 +1,24 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { CollectionEntry, getCollection } from 'astro:content';
+import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
-  return posts.map(p => ({ params: { slug: p.slug } }));
+  return posts.map((p) => ({ params: { slug: p.slug }, props: { post: p } }));
 }
 
-// --- 1. ENHANCED DATA FETCHING ---
-const { slug } = Astro.params;
-const allPosts = await getCollection('blog');
-const post = allPosts.find(p => p.slug === slug);
-
-if (!post) {
-  // Instead of a generic error, return a 404 page in production
-  return new Response(null, { status: 404, statusText: 'Not Found' });
-}
-
-// Destructure all needed data, including new fields like author and modDate
-const { title, description, date, modDate, heroImage, heroImageAlt, author, tags = [] } = post.data;
-const { Content, headings } = await post.render();
-
-// --- 2. FIND RELATED POSTS ---
-// Find posts that share tags with the current one, boosting engagement.
-const relatedPosts = allPosts
-  .filter(p => {
-    // Exclude the current post and find posts with at least one common tag
-    if (p.slug === post.slug || !p.data.tags) return false;
-    return p.data.tags.some(tag => tags.includes(tag));
-  })
-  .slice(0, 3); // Show up to 3 related posts
-
-// SEO Metadata
-const formattedDate = new Date(date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
-const pageTitle = `${title} — simscent Blog`;
+const { post } = Astro.props;
+const { Content } = await post.render();
+const heroImg = post.data.heroImage ?? 'https://images.unsplash.com/photo-1523292562811-8fa7962a78c8?q=80&w=1600&auto=format&fit=crop';
 ---
-
-<BaseLayout title={pageTitle} description={description} ogImage={heroImage}>
-
-  <script type="application/ld+json" slot="head">
-    {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": title,
-      "description": description,
-      "image": new URL(heroImage, Astro.site).href,
-      "datePublished": new Date(date).toISOString(),
-      "dateModified": new Date(modDate || date).toISOString(),
-      "author": {
-        "@type": "Person",
-        "name": author || "simscent Ekibi"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "simscent",
-        "logo": {
-          "@type": "ImageObject",
-          "url": new URL("/assets/logo.svg", Astro.site).href
-        }
-      }
-    }
-  </script>
+<BaseLayout title={`${post.data.title} — simscent`} description={post.data.description}>
+  <section class="hero" style="min-height:380px">
+    <div class="hero-img" style={`background-image:url('${heroImg}')`}></div>
+    <h1>{post.data.title}</h1>
+    {post.data.description && <p>{post.data.description}</p>}
+  </section>
 
   <article class="prose">
-    <div class="post-header">
-      <p class="post-meta">
-        <span>Yayınlanma: {formattedDate}</span>
-        {modDate && <span>· Güncelleme: {new Date(modDate).toLocaleDateString('tr-TR')}</span>}
-        {author && <span>· Yazar: {author}</span>}
-      </p>
-      <h1>{title}</h1>
-      {description && <p class="description">{description}</p>}
-    </div>
-
-    {heroImage && (
-      <figure class="hero-figure">
-        <img src={heroImage} alt={heroImageAlt || title} />
-        <figcaption>Parfüm notaları ve seçimi üzerine bir yazı.</figcaption>
-      </figure>
-    )}
-
-    {headings.length > 2 && (
-      <nav class="toc">
-        <h2>İçindekiler</h2>
-        <ul>
-          {headings.filter(h => h.depth <= 3).map(heading => (
-            <li class={`depth-${heading.depth}`}>
-              <a href={`#${heading.slug}`}>{heading.text}</a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    )}
-
-    <div class="content-body">
-      <Content />
-    </div>
-
-    {tags.length > 0 && (
-      <div class="tags-list">
-        {tags.map(t => <a href={`/blog/tags/${t}`} class="tag">#{t}</a>)}
-      </div>
-    )}
-
-    <a href="/blog/" class="back-link">← Tüm Yazılar</a>
+    <Content />
   </article>
-
-  {relatedPosts.length > 0 && (
-    <aside class="related-posts">
-      <h3>Benzer Yazılar</h3>
-      <ul>
-        {relatedPosts.map(p => (
-          <li>
-            <a href={`/posts/${p.slug}/`}>
-              {p.data.title}
-              <small>{new Date(p.data.date).toLocaleDateString('tr-TR')}</small>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </aside>
-  )}
 </BaseLayout>
-
-<style>
-  .prose { max-width: 720px; margin: 0 auto; padding: 2rem 1rem; }
-  .post-header { border-bottom: 1px solid var(--border, #eee); margin-bottom: 2rem; }
-  .post-meta { font-size: 0.9rem; color: var(--muted, #888); }
-  .post-meta span:not(:last-child) { margin-right: 0.5rem; }
-  .description { color: var(--muted, #666); font-size: 1.1rem; }
-  .hero-figure { margin: 2rem 0; }
-  .hero-figure img { width: 100%; border-radius: 12px; }
-  .hero-figure figcaption { text-align: center; font-size: 0.85rem; color: #999; margin-top: 0.5rem; }
-  .tags-list { margin-top: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
-  .tag { background: var(--shell, #f8f8f8); padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.9rem; text-decoration: none; }
-  .back-link { display: inline-block; margin-top: 2rem; }
-  .toc { border: 1px solid var(--border, #eee); background: var(--shell, #f8f8f8); padding: 1rem 1.5rem; border-radius: 8px; margin: 2rem 0; }
-  .toc h2 { margin-top: 0; }
-  .toc ul { list-style: none; padding-left: 0; }
-  .toc li.depth-3 { padding-left: 1.5rem; }
-  .related-posts { margin-top: 3rem; padding-top: 2rem; border-top: 1px dashed var(--border, #eee); }
-</style>
