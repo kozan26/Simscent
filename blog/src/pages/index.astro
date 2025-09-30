@@ -1,0 +1,41 @@
+---
+const posts = await Astro.glob('./posts/*.md');
+const sortedPosts = posts.sort((a, b) => 
+  new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
+);
+---
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Blog — simscent</title>
+  <!-- Same styles as PostLayout header -->
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <a href="https://simscent.com" class="brand">simscent</a>
+      <nav>
+        <a href="https://simscent.com">Ana Sayfa</a>
+        <a href="/">Blog</a>
+      </nav>
+    </div>
+  </header>
+  
+  <main class="container">
+    <h1>Koku Dünyasından Hikayeler</h1>
+    <div class="blog-grid">
+      {sortedPosts.map(post => (
+        <article class="article-card">
+          <a href={post.url}>
+            <span class="category">{post.frontmatter.category}</span>
+            <h2>{post.frontmatter.title}</h2>
+            <p>{post.frontmatter.description}</p>
+            <span class="read-more">Devamını Oku →</span>
+          </a>
+        </article>
+      ))}
+    </div>
+  </main>
+</body>
+</html>
