@@ -278,6 +278,11 @@
   const FAMILY_TR = {Animal:'Hayvansı',Aquatic:'Akvatik',Chypre:'Şipre',Citrus:'Narenciye',Creamy:'Kremamsı',Earthy:'Topraksı',Floral:'Çiçeksi','Fougère':'Fujer',Fresh:'Ferahlık',Fruity:'Meyvemsi',Gourmand:'Gurme',Green:'Yeşil',Leathery:'Deri',Oriental:'Oryantal',Powdery:'Pudramsı',Resinous:'Reçineli',Smoky:'Dumanlı',Spicy:'Baharatlı',Sweet:'Tatlı',Synthetic:'Sentetik',Woody:'Odunsu'};
   const ACCORD_TR = {'woody':'Odunsu','aromatic':'Aromatik','fresh spicy':'Taze Baharatlı','citrus':'Narenciye','amber':'Amber','warm spicy':'Sıcak Baharatlı','green':'Yeşil','sweet':'Tatlı','musky':'Misk','fruity':'Meyvemsi','powdery':'Pudramsı','vanilla':'Vanilya','floral':'Çiçeksi','white floral':'Beyaz Çiçeksi','rose':'Gül','oud':'Öd','smoky':'Dumanlı','leather':'Deri','earthy':'Topraksı','animalic':'Hayvansı','aquatic':'Akvatik','patchouli':'Paçuli','iris':'İris','balsamic':'Balsamik','tobacco':'Tütün','cinnamon':'Tarçın','spicy':'Baharatlı','resinous':'Reçineli','chypre':'Şipre','fougère':'Fujer','gourmand':'Gurme','creamy':'Kremamsı','synthetic':'Sentetik','fresh':'Ferah'};
 
+  // === YENİ: Başlıklarda akord adını TR göstermek için yardımcı ===
+  function trAccord(name){
+    return ACCORD_TR[name?.toLowerCase?.()] || name;
+  }
+
   const toPct=(v)=>{const n=Number(v);return !isFinite(n)?0:(n<11?Math.round(n*10):Math.round(n))};
   function showToast(msg,type='ok'){ const t=q('#toast'); if(!t){ if(DEBUG) console.log('[toast]', msg); return; } t.textContent=msg; t.className=`toast ${type||'ok'} show`; clearTimeout(window.__toastTimer); window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2600); }
   function setMeta(name, content){
@@ -608,6 +613,7 @@
     refOut.appendChild(grid); q('#results').scrollIntoView({ behavior: 'smooth' });
   }
 
+  // === GÜNCEL: Başlık TR; filtre/sort İngilizce anahtarlarla ===
   function showAccordResults(accordName) {
     const refOut = q('#refDetailOut'); refOut.innerHTML = '';
     q('#upload-section').style.display = 'none';
@@ -617,10 +623,15 @@
       .filter(p => p['Main Accords'] && p['Main Accords'].toLowerCase().includes(accordName.toLowerCase()))
       .sort((a,b) => (b[accordName] || 0) - (a[accordName] || 0) )
       .slice(0,20);
+
     const header = document.createElement('div'); header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;';
-    const title = document.createElement('h3'); title.style.cssText = "font-weight:800;font-size:22px;font-family:'Playfair Display',serif;"; title.textContent = `'${accordName}' Akorduna Sahip Parfümler (${results.length})`;
+    const title = document.createElement('h3'); title.style.cssText = "font-weight:800;font-size:22px;font-family:'Playfair Display',serif;";
+    const trLabel = trAccord(accordName);
+    title.textContent = `'${trLabel}' Akorduna Sahip Parfümler (${results.length})`;
+
     const backBtn = document.createElement('button'); backBtn.className = 'btn ghost'; backBtn.textContent = 'Geri Dön'; on(backBtn,'click',()=>findSimilar(false));
     header.appendChild(title); header.appendChild(backBtn); refOut.appendChild(header);
+
     if (!results.length){ refOut.innerHTML += `<p>Bu akorda sahip sonuç bulunamadı.</p>`; return; }
     const grid = document.createElement('div'); grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;';
     results.forEach(p => {
