@@ -49,7 +49,15 @@
 
     .top{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px}
     .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;letter-spacing:-.02em;font-family:'Playfair Display',serif;cursor:pointer}
-    .logo{width:32px;height:32px;display:block;background:transparent;border:none;box-shadow:none;border-radius:0}
+    /* LOGO: /assets/logo.svg dosyasını arka plan olarak çeker */
+    .logo{
+      width:32px; height:32px;
+      display:block;
+      background:transparent;
+      border:none;
+      box-shadow:none;
+      border-radius:0;
+    }
 
     .cta{border:none;border-radius:8px;padding:10px 20px;font-weight:700;font-size:15px;color:#fff;background:var(--text);cursor:pointer}
 
@@ -60,8 +68,10 @@
     .blob{width:120px;height:120px;background:rgba(185,155,107,.15);left:-18px;top:-16px;opacity:.8}
     .blob2{width:130px;height:130px;background:rgba(185,155,107,.1);left:220px;bottom:-10px;opacity:.6}
 
-    .shot{width:100%;aspect-ratio:1/1;object-fit:cover;padding:16px;background:#fff;border:1px solid var(--border);
-      border-radius:28px;transform:rotate(-6deg);box-shadow:0 28px 70px rgba(0,0,0,.15)}
+    .shot{
+      width:100%;aspect-ratio:1/1;object-fit:cover;padding:16px;background:#fff;border:1px solid var(--border);
+      border-radius:28px;transform:rotate(-6deg);box-shadow:0 28px 70px rgba(0,0,0,.15)
+    }
 
     .title{font-family:'Playfair Display',serif;font-size:clamp(38px,5.6vw,60px);font-weight:800;letter-spacing:-.04em;line-height:1.05;color:#222;margin-bottom:16px}
     .desc{color:var(--muted);max-width:760px;font-size:17px}
@@ -95,19 +105,6 @@
     .toggle .dot{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:999px;background:#fff;box-shadow:0 2px 6px rgba(2,6,23,.15);transition:transform .25s ease}
     .toggle.active{background:var(--brand-primary)}
     .toggle.active .dot{transform:translateX(18px)}
-
-    /* RIGHT WRAPPER FOR TOGGLE + HELP */
-    .row .right{display:flex;align-items:center;gap:8px}
-
-    /* HELP ICON + TOOLTIP */
-    .help{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;
-      border:1px solid var(--border);background:var(--shell);color:var(--muted);font-weight:800;font-size:12px;cursor:help;position:relative;flex-shrink:0}
-    .help:focus-visible{outline:2px solid var(--brand-primary);outline-offset:2px}
-    .help .tt{position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%) scale(.98);
-      background:#111;color:#fff;padding:8px 10px;border-radius:8px;box-shadow:var(--elev-2);font-size:12px;line-height:1.35;
-      min-width:200px;max-width:280px;opacity:0;pointer-events:none;transition:opacity .15s,transform .15s;z-index:50;white-space:normal}
-    .help:hover .tt, .help:focus .tt{opacity:1;transform:translateX(-50%) scale(1)}
-    .help .tt::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#111}
 
     .pf{display:flex;flex-direction:column;gap:12px;border-radius:18px;padding:12px;border:1px solid transparent;box-shadow:var(--elev-1);background:#fff;transition:box-shadow .28s cubic-bezier(.25,.8,.25,1),transform .28s cubic-bezier(.25,.8,.25,1),border-color .28s;overflow:hidden}
     .pf:hover{transform:translate3d(0,-6px,0);box-shadow:var(--elev-3);border-color:rgba(185,155,107,.35)}
@@ -183,6 +180,7 @@
       <div class="brand">
         <img class="logo" src="/assets/logo.svg" alt="simscent" width="32" height="32">simscent
       </div>
+
       <button class="cta" id="signupBtn">Kayıt Ol</button>
     </div>
 
@@ -213,6 +211,19 @@
       </div>
     </section>
 
+    <section class="section" id="upload-section" style="display:none">
+      <h3 style="font-weight:800;font-size:22px;margin-bottom:16px;font-family:'Playfair Display',serif">Tercihler</h3>
+      <div class="card" style="box-shadow:none;border:1px solid var(--border);padding:16px" id="prefs">
+        <h4 style="font-weight:700;font-size:18px;margin-bottom:16px;font-family:'Playfair Display',serif">Benzerlik Ağırlıkları</h4>
+        <div class="pref-grid">
+          <div class="row"><span class="lbl">Kullanım Amacı</span><div class="toggle active" data-pref="usage"><div class="dot"></div></div></div>
+          <div class="row"><span class="lbl">Mevsim</span><div class="toggle active" data-pref="season"><div class="dot"></div></div></div>
+          <div class="row"><span class="lbl">Stil</span><div class="toggle active" data-pref="style"><div class="dot"></div></div></div>
+          <div class="row"><span class="lbl">Koku Ailesi</span><div class="toggle active" data-pref="family"><div class="dot"></div></div></div>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="featured" style="display:none">
       <h3>Öne Çıkan Koleksiyonlar</h3>
       <div class="featured-wrap">
@@ -229,56 +240,6 @@
     <section class="section" id="results">
       <h3 style="font-weight:800;font-size:22px;margin-bottom:12px;font-family:'Playfair Display',serif">Sonuçlar</h3>
       <div id="out"><div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Keşfetmeye Başla</h4><p style="color:var(--muted);margin-top:4px">Başlamak için yukarıdan bir parfüm arayın veya “Beni Şaşırt!” butonunu kullanın.</p></div></div>
-    </section>
-
-    <!-- MOVED: upload-section is now after #results in static DOM -->
-    <section class="section" id="upload-section" style="display:none">
-      <h3 style="font-weight:800;font-size:22px;margin-bottom:16px;font-family:'Playfair Display',serif">Tercihler</h3>
-      <div class="card" style="box-shadow:none;border:1px solid var(--border);padding:16px" id="prefs">
-        <h4 style="font-weight:700;font-size:18px;margin-bottom:16px;font-family:'Playfair Display',serif">Benzerlik Ağırlıkları</h4>
-        <div class="pref-grid">
-          <div class="row">
-            <span class="lbl">Kullanım Amacı</span>
-            <div class="right">
-              <div class="toggle active" data-pref="usage"><div class="dot"></div></div>
-              <span class="help" tabindex="0" role="button" aria-label="Kullanım Amacı hakkında bilgi">
-                ?
-                <span class="tt">Eşleşmede kullanım amacı (günlük, iş, akşam vb.) vektörlerini dikkate alır. Açıkken benzer kullanım senaryoları daha fazla ağırlıklandırılır.</span>
-              </span>
-            </div>
-          </div>
-          <div class="row">
-            <span class="lbl">Mevsim</span>
-            <div class="right">
-              <div class="toggle active" data-pref="season"><div class="dot"></div></div>
-              <span class="help" tabindex="0" role="button" aria-label="Mevsim hakkında bilgi">
-                ?
-                <span class="tt">Mevsim (ilkbahar, yaz, sonbahar, kış) profillerini benzerlik hesabına katar. Açıkken seçtiğiniz parfüme yakın mevsim dağılımı önceliklenir.</span>
-              </span>
-            </div>
-          </div>
-          <div class="row">
-            <span class="lbl">Stil</span>
-            <div class="right">
-              <div class="toggle active" data-pref="style"><div class="dot"></div></div>
-              <span class="help" tabindex="0" role="button" aria-label="Stil hakkında bilgi">
-                ?
-                <span class="tt">Stil (klasik, modern, maskülen, feminen) eksenlerini dahil eder. Açıkken aynı stil eğilimlerine sahip parfümler öne çıkar.</span>
-              </span>
-            </div>
-          </div>
-          <div class="row">
-            <span class="lbl">Koku Ailesi</span>
-            <div class="right">
-              <div class="toggle active" data-pref="family"><div class="dot"></div></div>
-              <span class="help" tabindex="0" role="button" aria-label="Koku Ailesi hakkında bilgi">
-                ?
-                <span class="tt">Ana koku aileleri (odunsu, narenciye, çiçeksi vb.) yoğunluklarını baz alır. Açıkken akord/aile benzerliği güçlü olanlar üst sıralara gelir.</span>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
 
   </div></div>
@@ -306,9 +267,6 @@
     featured: { pairs: [], topMap: new Map(), topList: [], picks: [], page: 0 }
   };
 
-  // Remember original home position for upload-section (Tercihler)
-  let prefsHome = { parent: null, next: null };
-
   const KEYS = {
     usage:['Daily','Business','Evening','Night Out','Leisure','Sport'],
     season:['Spring','Summer','Fall','Winter'],
@@ -317,6 +275,7 @@
   };
 
   const LABELS = {Daily:'Günlük',Business:'İş',Evening:'Akşam','Night Out':'Gece',Leisure:'Rahat',Sport:'Spor',Spring:'İlkbahar',Summer:'Yaz',Fall:'Sonbahar',Winter:'Kış',Classic:'Klasik',Masculine:'Maskülen',Feminine:'Feminen',Modern:'Modern'};
+  // 'styler' yerine geçerli Material ikon adı 'style'
   const ICONS  = {Daily:'sunny',Business:'work',Evening:'nights_stay','Night Out':'nightlife',Leisure:'weekend',Sport:'directions_run',Spring:'local_florist',Summer:'sunny',Fall:'eco',Winter:'ac_unit',Classic:'account_balance',Masculine:'man',Feminine:'woman',Modern:'auto_awesome', style:'style'};
   const FAMILY_TR = {Animal:'Hayvansı',Aquatic:'Akvatik',Chypre:'Şipre',Citrus:'Narenciye',Creamy:'Kremamsı',Earthy:'Topraksı',Floral:'Çiçeksi','Fougère':'Fujer',Fresh:'Ferahlık',Fruity:'Meyvemsi',Gourmand:'Gurme',Green:'Yeşil',Leathery:'Deri',Oriental:'Oryantal',Powdery:'Pudramsı',Resinous:'Reçineli',Smoky:'Dumanlı',Spicy:'Baharatlı',Sweet:'Tatlı',Synthetic:'Sentetik',Woody:'Odunsu'};
   const ACCORD_TR = {'woody':'Odunsu','aromatic':'Aromatik','fresh spicy':'Taze Baharatlı','citrus':'Narenciye','amber':'Amber','warm spicy':'Sıcak Baharatlı','green':'Yeşil','sweet':'Tatlı','musky':'Misk','fruity':'Meyvemsi','powdery':'Pudramsı','vanilla':'Vanilya','floral':'Çiçeksi','white floral':'Beyaz Çiçeksi','rose':'Gül','oud':'Öd','smoky':'Dumanlı','leather':'Deri','earthy':'Topraksı','animalic':'Hayvansı','aquatic':'Akvatik','patchouli':'Paçuli','iris':'İris','balsamic':'Balsamik','tobacco':'Tütün','cinnamon':'Tarçın','spicy':'Baharatlı','resinous':'Reçineli','chypre':'Şipre','fougère':'Fujer','gourmand':'Gurme','creamy':'Kremamsı','synthetic':'Sentetik','fresh':'Ferah'};
@@ -463,13 +422,12 @@
         </div>
         <div class='pf-name' style="margin-top:4px">${p.fullName||''}</div>
       </div>`;
-    if(!isRef){
-      el.style.cursor='pointer';
-      on(el,'click',() => setReferenceAndFindSimilar(p, true));
+    if(!isRef){ 
+      el.style.cursor='pointer'; 
+      on(el,'click',() => setReferenceAndFindSimilar(p, true)); 
     }
     return el;
   }
-
   function renderRefDetail(p){
     const img=p['Image URL']||`https://placehold.co/480x480/e2e8f0/64748b?text=${encodeURIComponent((p.Brand||'?').slice(0,1))}`;
     const lon=toPct(p.Longevity), scent=toPct(p.Scent), sil=toPct(p.Sillage), val=toPct(p['Value for Money']);
@@ -536,21 +494,6 @@
     return el;
   }
 
-  // --- NEW: helpers to place "Tercihler" between Ref Detail and Similar list ---
-  function movePrefsIntoResults(){
-    const sec = q('#upload-section');
-    const out = q('#out');
-    sec.style.display = 'block';
-    out.appendChild(sec);
-  }
-  function restorePrefsHome(){
-    const sec = q('#upload-section');
-    if(!prefsHome.parent) return;
-    prefsHome.parent.insertBefore(sec, prefsHome.next || null);
-    sec.style.display = 'none';
-  }
-  // ---------------------------------------------------------------------------
-
   function setupCarousel(container){
     const windowEl=container.querySelector('.carousel-window');
     const prevBtn=container.querySelector('.carousel-btn.prev');
@@ -575,11 +518,8 @@
   }
   function render(ref,sims){
     state.currentRef=ref;
-    const out=q('#out');
-    restorePrefsHome();
-    out.innerHTML='';
+    const out=q('#out'); out.innerHTML='';
     out.appendChild(renderRefDetail(ref));
-    movePrefsIntoResults();
     if(sims.length){
       const titleText = `${ref.fullName || 'Seçtiğiniz Parfüm'} Benzeri Parfümler`;
       const h2=document.createElement('div');
@@ -600,7 +540,7 @@
   }
 
   function showPerfumerResults(name) {
-    const out = q('#out'); restorePrefsHome(); out.innerHTML = '';
+    const out = q('#out'); out.innerHTML = '';
     const results = state.data.filter(p => p.Perfumer && p.Perfumer.toLowerCase().includes(name.toLowerCase()));
     const header = document.createElement('div'); header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;';
     const title = document.createElement('h3'); title.style.cssText = "font-weight:800;font-size:22px;font-family:'Playfair Display',serif;"; title.textContent = `${name} Koleksiyonu (${results.length})`;
@@ -628,7 +568,7 @@
   }
 
   function showBrandResults(brandName) {
-    const out = q('#out'); restorePrefsHome(); out.innerHTML = '';
+    const out = q('#out'); out.innerHTML = '';
     const results = state.data.filter(p => p.Brand && p.Brand.toLowerCase() === brandName.toLowerCase());
     const header = document.createElement('div'); header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;';
     const title = document.createElement('h3'); title.style.cssText = "font-weight:800;font-size:22px;font-family:'Playfair Display',serif;"; title.textContent = `${brandName} Koleksiyonu (${results.length})`;
@@ -656,7 +596,7 @@
   }
 
   function showAccordResults(accordName) {
-    const out = q('#out'); restorePrefsHome(); out.innerHTML = '';
+    const out = q('#out'); out.innerHTML = '';
     const results = state.data
       .filter(p => p['Main Accords'] && p['Main Accords'].toLowerCase().includes(accordName.toLowerCase()))
       .sort((a,b) => (b[accordName] || 0) - (a[accordName] || 0) )
@@ -687,7 +627,7 @@
   }
 
   function showNoteResults(noteName) {
-    const out = q('#out'); restorePrefsHome(); out.innerHTML = '';
+    const out = q('#out'); out.innerHTML = '';
     const results = state.data.filter(p => p['Fragrance Notes'] && p['Fragrance Notes'].toLowerCase().includes(noteName.toLowerCase()));
     const header = document.createElement('div'); header.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;';
     const title = document.createElement('h3'); title.style.cssText = "font-weight:800;font-size:22px;font-family:'Playfair Display',serif;"; title.textContent = `'${noteName}' Notalı Parfümler (${results.length})`;
@@ -763,25 +703,25 @@
     });
 
     const input=q('#searchInput'); const btn=q('#searchBtn'); const suggest=q('#suggestions'); let deb=null;
-    on(input,'input',()=>{
-      clearTimeout(deb);
+    on(input,'input',()=>{ 
+      clearTimeout(deb); 
       deb=setTimeout(()=>{
-        const qv=input.value.trim();
+        const qv=input.value.trim(); 
         if(!qv||!state.fuse){ suggest.style.display='none'; return;}
-        const res=state.fuse.search(qv).slice(0,8);
+        const res=state.fuse.search(qv).slice(0,8); 
         if(!res.length){suggest.style.display='none';return;}
         suggest.innerHTML=res.map(r=>{
-          const it=r.item; const t=thumbURL(it);
-          const yr= it['Release Year']!=null && it['Release Year']!=='' ? String(it['Release Year']) : '';
+          const it=r.item; const t=thumbURL(it); 
+          const yr= it['Release Year']!=null && it['Release Year']!=='' ? String(it['Release Year']) : ''; 
           const right=(it.Brand||yr)? `(${[it.Brand, yr].filter(Boolean).join(', ')})` : '';
           return `<div class='s-item' data-index='${r.refIndex}' aria-label='${it.fullName} ${right}'>
             <img class='s-thumb' src='${t}' alt='' loading='lazy' onerror="this.onerror=null;this.src='https://placehold.co/40x40/e2e8f0/64748b?text=?'"/>
             <div class='s-name'>${it.fullName}</div>
             <div class='s-brand'>${right}</div>
           </div>`;
-        }).join('');
-        suggest.style.display='block';
-      },140);
+        }).join(''); 
+        suggest.style.display='block'; 
+      },140); 
     });
     on(suggest,'click',e=>{ const el=e.target.closest('.s-item'); if(!el) return; const idx = parseInt(el.dataset.index, 10); if(!isNaN(idx) && state.data[idx]) { setReferenceAndFindSimilar(state.data[idx], true); } suggest.style.display='none'; });
     on(document,'click',e=>{ if(!suggest.contains(e.target) && e.target!==input) suggest.style.display='none'; });
@@ -838,7 +778,6 @@
 
     if (location.pathname !== newPath) history.pushState({ perfume: ref.fullName }, '', newPath);
 
-    // ensure prefs visible; placement is handled in render()
     showPrefs();
 
     const prefs = {
@@ -878,6 +817,7 @@
 
   function resetToHome(pushState = true) {
     state.currentRef = null; q('#searchInput').value = '';
+    q('#upload-section').style.display = 'none';
     document.title = 'simscent — Ana Sayfa';
     setMeta('description', 'Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul.');
     const homePath = '/';
@@ -888,9 +828,6 @@
       const rnd = state.data[idx];
       setHeroFromPerfume(rnd);
     }
-
-    restorePrefsHome();
-
     q('#out').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Koleksiyon Yüklendi</h4><p style="color:var(--muted);margin-top:4px">Bir parfüm arayabilir veya "Beni Şaşırt!" butonunu kullanabilirsiniz.</p></div>`;
     if (pushState) window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -909,7 +846,7 @@
 
   async function loadInitialData() {
     try {
-      const response = await fetch('/perfumes_data.json');
+      const response = await fetch('/perfumes_data.json'); // kökten yükle
       if (!response.ok) throw new Error(`HTTP hatası! Durum: ${response.status}`);
       const text = await response.text();
       const txt = text.replace(/:\s*NaN/gi,': null');
@@ -941,15 +878,7 @@
     nextFeatured:()=>{ const {pairs}=state.featured; const count=3; const pages=Math.max(1, Math.ceil(Math.min(pairs.length,10)/count)); state.featured.page=(state.featured.page+1)%pages; pickFeatured(count); renderFeatured(); }
   };
 
-  function init(){
-    const sec = q('#upload-section');
-    prefsHome.parent = sec.parentNode;
-    prefsHome.next = sec.nextSibling;
-
-    wireEvents();
-    loadInitialUI();
-    loadInitialData();
-  }
+  function init(){ wireEvents(); loadInitialUI(); loadInitialData(); }
   init();
 })();
 </script>
