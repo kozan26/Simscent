@@ -3,23 +3,67 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PostCard from '../components/PostCard.astro';
 import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('blog'))
-  .sort((a,b) => +new Date(b.data.date) - +new Date(a.data.date));
+// Fetch and sort all posts once
+const allPosts = (await getCollection('blog'))
+  .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date));
 
-const hero = posts[0]; // son yazıyı hero’da vitrin yap
-const heroImg = hero?.data.heroImage ?? 'https://images.unsplash.com/photo-1617839400561-d55457a29da2?q=80&w=1200&auto=format&fit=crop';
+// --- 1. IMPROVED HERO LOGIC ---
+// Prioritize a post with `featured: true` in its frontmatter.
+// If none is featured, fall back to the latest one (your original logic).
+const heroPost = allPosts.find(post => post.data.featured) ?? allPosts[0];
+
+// --- 2. AVOID CONTENT DUPLICATION ---
+// Create a new list for the grid that excludes the hero post, so it doesn't appear twice.
+const gridPosts = allPosts.filter(post => post.slug !== heroPost?.slug);
+
+// --- 3. BETTER IMAGE & ACCESSIBILITY ---
+const heroImg = heroPost?.data.heroImage ?? 'https://images.unsplash.com/photo-1617839400561-d55457a29da2?q=80&w=1200&auto=format&fit=crop';
+// Use the post title as a fallback for the alt text, making it more descriptive.
+const heroAlt = heroPost?.data.heroImageAlt ?? heroPost?.data.title ?? 'simscent blog için öne çıkan görsel';
+
+// SEO data for reuse
+const pageTitle = "Blog — simscent";
+const pageDescription = "Parfüm seçimi, notalar, akorlar ve koleksiyonlar hakkında kısa, pratik yazılar.";
 ---
-<BaseLayout title="Blog — simscent" description="Parfüm seçimi, notalar, akorlar ve koleksiyonlar hakkında kısa, pratik yazılar.">
+<BaseLayout title={pageTitle} description={pageDescription}>
+  
+  <script type="application/ld+json" slot="head">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "simscent Blog",
+      "url": Astro.url.href,
+      "description": pageDescription,
+      "publisher": {
+        "@type": "Organization",
+        "name": "simscent",
+        "logo": {
+          "@type": "ImageObject",
+          "url": new URL("/assets/logo.svg", Astro.url).href 
+        }
+      }
+    }
+  </script>
+
   <section class="hero">
-    <img class="hero-img" src={heroImg} alt="Simscent Blog" />
+    {heroPost && <img class="hero-img" src={heroImg} alt={heroAlt} loading="eager" />}
     <div>
       <h1>Blog</h1>
-      <p>Parfüm seçimi, notalar, akorlar ve koleksiyonlar hakkında kısa, pratik yazılar.</p>
-      {hero && <a class="hero-cta" href={`/posts/${hero.slug}/`}>Son yazı: {hero.data.title} →</a>}
+      <p>{pageDescription}</p>
+      {heroPost && (
+        <a class="hero-cta" href={`/posts/${heroPost.slug}/`}>
+          {heroPost.data.featured ? 'Öne Çıkan Yazı' : 'Son Yazı'}: {heroPost.data.title} →
+        </a>
+      )}
     </div>
   </section>
 
   <section class="grid">
-    {posts.map(p => <div class="col"><PostCard post={p} /></div>)}
+    {allPosts.length > 0 ? (
+      // We now map over `gridPosts` to show the rest of the articles
+      gridPosts.map(p => <div class="col"><PostCard post={p} /></div>)
+    ) : (
+      <p class="no-posts-message">Henüz burada hiç yazı yok. Yeni içerikler için takipte kalın!</p>
+    )}
   </section>
 </BaseLayout>
