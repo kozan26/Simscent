@@ -80,18 +80,33 @@
     .section{padding:32px 0;border-top:1px dashed #e5e7eb}
     @media(min-width:768px){.section{padding:48px 0}}
 
-    #prefs .pref-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(200px, 1fr));gap:12px 16px}
-    .row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;min-height:48px;border:1px solid #f1f5f9;border-radius:14px;background:#fff;position:relative}
-    .lbl{font-size:16px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    @media(min-width:768px){.lbl{font-size:18px}}
-    .toggle{position:relative;width:44px;height:26px;background:#e2e8f0;border-radius:999px;transition:background .25s ease;cursor:pointer;flex-shrink:0}
+    /* --- PREFERENCE CARD STYLES --- */
+    .pref-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+    .pref-card{background:#fff;border:1px solid var(--border);border-radius:20px;padding:20px;cursor:pointer;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;gap:16px}
+    .pref-card:hover{transform:translateY(-4px);box-shadow:var(--elev-2)}
+    .pref-card-header{display:flex;align-items:center;gap:16px}
+    .pref-card-icon{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;background-color:var(--shell);color:var(--text)}
+    .pref-card-icon .material-symbols-outlined{font-size:26px}
+    .pref-card-title-wrap{display:flex;align-items:center;gap:8px}
+    .pref-card-title{font-size:18px;font-weight:700;line-height:1.3}
+    .pref-card-desc{color:var(--muted);font-size:15px;margin-top:-2px}
+    .pref-card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:16px;border-top:1px solid var(--shell)}
+    .pref-card-count{font-size:14px;font-weight:600;color:var(--muted)}
+    .pref-card-count::before{content:"●";color:#cbd5e1;margin-right:8px}
+    .pref-card-status{font-size:14px;font-weight:700;padding:6px 14px;border-radius:8px;background-color:var(--shell);color:var(--muted);border:1px solid var(--border)}
+    
+    .toggle{margin-left:auto;position:relative;width:44px;height:26px;background:#e2e8f0;border-radius:999px;transition:background .25s ease;flex-shrink:0}
     .toggle .dot{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:999px;background:#fff;box-shadow:0 2px 6px rgba(2,6,23,.15);transition:transform .25s ease}
     .toggle.active{background:var(--brand-primary)}
     .toggle.active .dot{transform:translateX(18px)}
+    .pref-card.active .pref-card-status{background-color:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
 
-    /* Tooltip Styles - FINAL FIX */
-    [data-tooltip]::after{content:attr(data-tooltip);position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:6px;background-color:var(--text);color:#fff;padding:8px 12px;border-radius:8px;font-size:13px;font-weight:600;text-align:center;line-height:1.4;width:max-content;max-width:220px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:100}
-    [data-tooltip]:hover::after{opacity:1;transform:translateX(-50%) translateY(-4px)}
+    /* --- NEW TOOLTIP STYLES --- */
+    .tooltip-trigger{position:relative;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background-color:var(--shell);color:var(--muted);border-radius:50%;font-weight:700;font-size:13px;line-height:1;cursor:help;user-select:none}
+    .tooltip-trigger::before, .tooltip-trigger::after{position:absolute;left:50%;transform:translateX(-50%);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:100}
+    .tooltip-trigger::after{content:attr(data-tooltip);bottom:100%;margin-bottom:12px;background-color:var(--text);color:#fff;padding:8px 12px;border-radius:8px;font-size:14px;font-weight:500;line-height:1.5;text-align:center;width:240px}
+    .tooltip-trigger::before{content:'';bottom:100%;margin-bottom:2px;border:5px solid transparent;border-top-color:var(--text)}
+    .tooltip-trigger:hover::before, .tooltip-trigger:hover::after{opacity:1;transform:translateX(-50%) translateY(-4px)}
 
     .pf{display:flex;flex-direction:column;gap:12px;border-radius:18px;padding:12px;border:1px solid transparent;box-shadow:var(--elev-1);background:#fff;transition:box-shadow .28s cubic-bezier(.25,.8,.25,1),transform .28s cubic-bezier(.25,.8,.25,1),border-color .28s;overflow:hidden}
     .pf:hover{transform:translate3d(0,-6px,0);box-shadow:var(--elev-3);border-color:rgba(185,155,107,.35)}
@@ -221,25 +236,74 @@
     </section>
 
     <section class="section" id="upload-section" style="display:none">
-      <h3>Tercihler</h3>
-      <div class="card" style="box-shadow:none;border:1px solid var(--border);padding:16px" id="prefs">
-        <h4 style="font-weight:700;font-size:18px;margin-bottom:16px;font-family:'Playfair Display',serif">Benzerlik Ağırlıkları</h4>
-        <div class="pref-grid">
-          <div class="row" data-tooltip="Kullanım amacı benzerliğini dahil et/hariç bırak">
-            <span class="lbl">Kullanım Amacı</span>
-            <div class="toggle active" data-pref="usage"><div class="dot"></div></div>
+      <h3>Benzerlik Kriterleri</h3>
+      <div id="prefs" class="pref-grid">
+        <div class="pref-card active" data-pref="usage">
+          <div class="pref-card-header">
+            <div class="pref-card-icon"><span class="material-symbols-outlined">work</span></div>
+            <div>
+              <div class="pref-card-title-wrap">
+                <div class="pref-card-title">Kullanım Amacı</div>
+                <span class="tooltip-trigger" data-tooltip="Parfümün giyileceği ortamı tanımlar. Örn: Günlük, iş, gece.">?</span>
+              </div>
+              <div class="pref-card-desc">İş, günlük, spor gibi durumlar</div>
+            </div>
+            <div class="toggle active"><div class="dot"></div></div>
           </div>
-          <div class="row" data-tooltip="Mevsim benzerliğini dahil et/hariç bırak">
-            <span class="lbl">Mevsim</span>
-            <div class="toggle active" data-pref="season"><div class="dot"></div></div>
+          <div class="pref-card-footer">
+            <div class="pref-card-count">6 özellik</div>
+            <div class="pref-card-status">Aktif</div>
           </div>
-          <div class="row" data-tooltip="Stil benzerliğini dahil et/hariç bırak">
-            <span class="lbl">Stil</span>
-            <div class="toggle active" data-pref="style"><div class="dot"></div></div>
+        </div>
+        <div class="pref-card active" data-pref="season">
+          <div class="pref-card-header">
+            <div class="pref-card-icon"><span class="material-symbols-outlined">calendar_month</span></div>
+            <div>
+              <div class="pref-card-title-wrap">
+                <div class="pref-card-title">Mevsim</div>
+                <span class="tooltip-trigger" data-tooltip="Parfümün uygun olduğu mevsimi belirtir. Örn: Yaz, kış, ilkbahar.">?</span>
+              </div>
+              <div class="pref-card-desc">Mevsimsel uygunluk kriterleri</div>
+            </div>
+            <div class="toggle active"><div class="dot"></div></div>
           </div>
-          <div class="row" data-tooltip="Koku ailesi benzerliğini dahil et/hariç bırak">
-            <span class="lbl">Koku Ailesi</span>
-            <div class="toggle active" data-pref="family"><div class="dot"></div></div>
+          <div class="pref-card-footer">
+            <div class="pref-card-count">4 özellik</div>
+            <div class="pref-card-status">Aktif</div>
+          </div>
+        </div>
+        <div class="pref-card active" data-pref="style">
+          <div class="pref-card-header">
+            <div class="pref-card-icon"><span class="material-symbols-outlined">palette</span></div>
+            <div>
+              <div class="pref-card-title-wrap">
+                <div class="pref-card-title">Stil</div>
+                <span class="tooltip-trigger" data-tooltip="Parfümün genel karakterini ve tarzını ifade eder. Örn: Klasik, modern, maskülen.">?</span>
+              </div>
+              <div class="pref-card-desc">Klasik, modern, feminen gibi tarzlar</div>
+            </div>
+            <div class="toggle active"><div class="dot"></div></div>
+          </div>
+          <div class="pref-card-footer">
+            <div class="pref-card-count">4 özellik</div>
+            <div class="pref-card-status">Aktif</div>
+          </div>
+        </div>
+        <div class="pref-card active" data-pref="family">
+          <div class="pref-card-header">
+            <div class="pref-card-icon"><span class="material-symbols-outlined">eco</span></div>
+            <div>
+              <div class="pref-card-title-wrap">
+                <div class="pref-card-title">Koku Ailesi</div>
+                <span class="tooltip-trigger" data-tooltip="Parfümün ana koku grubunu belirtir. Örn: Odunsu, narenciye, çiçeksi.">?</span>
+              </div>
+              <div class="pref-card-desc">Ana koku aileleri ve tonları</div>
+            </div>
+            <div class="toggle active"><div class="dot"></div></div>
+          </div>
+          <div class="pref-card-footer">
+            <div class="pref-card-count">21 özellik</div>
+            <div class="pref-card-status">Aktif</div>
           </div>
         </div>
       </div>
@@ -287,7 +351,7 @@
   const FAMILY_TR = {Animal:'Hayvansı',Aquatic:'Akvatik',Chypre:'Şipre',Citrus:'Narenciye',Creamy:'Kremamsı',Earthy:'Topraksı',Floral:'Çiçeksi','Fougère':'Fujer',Fresh:'Ferahlık',Fruity:'Meyvemsi',Gourmand:'Gurme',Green:'Yeşil',Leathery:'Deri',Oriental:'Oryantal',Powdery:'Pudramsı',Resinous:'Reçineli',Smoky:'Dumanlı',Spicy:'Baharatlı',Sweet:'Tatlı',Synthetic:'Sentetik',Woody:'Odunsu'};
   const ACCORD_TR = {'woody':'Odunsu','aromatic':'Aromatik','fresh spicy':'Taze Baharatlı','citrus':'Narenciye','amber':'Amber','warm spicy':'Sıcak Baharatlı','green':'Yeşil','sweet':'Tatlı','musky':'Misk','fruity':'Meyvemsi','powdery':'Pudramsı','vanilla':'Vanilya','floral':'Çiçeksi','white floral':'Beyaz Çiçeksi','rose':'Gül','oud':'Öd','smoky':'Dumanlı','leather':'Deri','earthy':'Topraksı','animalic':'Hayvansı','aquatic':'Akvatik','patchouli':'Paçuli','iris':'İris','balsamic':'Balsamik','tobacco':'Tütün','cinnamon':'Tarçın','spicy':'Baharatlı','resinous':'Reçineli','chypre':'Şipre','fougère':'Fujer','gourmand':'Gurme','creamy':'Kremamsı','synthetic':'Sentetik','fresh':'Ferah'};
 
-  const toPct=(v)=>{const n=Number(v);return !isFinite(n)?0:(n<11?Math.round(n*10):Math.round(n))};
+  function toPct=(v)=>{const n=Number(v);return !isFinite(n)?0:(n<11?Math.round(n*10):Math.round(n))};
   function showToast(msg,type='ok'){ const t=q('#toast'); if(!t){ if(DEBUG) console.log('[toast]', msg); return; } t.textContent=msg; t.className=`toast ${type||'ok'} show`; clearTimeout(window.__toastTimer); window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2600); }
   function setMeta(name, content){
     let m = document.querySelector(`meta[name="${name}"]`);
@@ -686,10 +750,18 @@
   function wireEvents(){
     on(q('.brand'), 'click', resetToHome);
 
-    qa('#prefs .row').forEach(row=>{
-      on(row,'click',(e)=>{
-        const toggle = e.target.closest('.toggle') || row.querySelector('.toggle');
-        if(toggle) { toggle.classList.toggle('active'); findSimilar(false); }
+    qa('#prefs .pref-card').forEach(card=>{
+      on(card, 'click', (e) => {
+        if (e.target.closest('.tooltip-trigger')) return; // Don't toggle if clicking the tooltip trigger
+        
+        card.classList.toggle('active');
+        const toggle = card.querySelector('.toggle');
+        if (toggle) toggle.classList.toggle('active');
+        
+        const status = card.querySelector('.pref-card-status');
+        if (status) status.textContent = card.classList.contains('active') ? 'Aktif' : 'Pasif';
+        
+        findSimilar(false);
       });
     });
 
@@ -719,7 +791,6 @@
     on(input,'keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); suggest.style.display='none'; findSimilar(); }});
     on(btn,'click',()=>{ suggest.style.display='none'; findSimilar(); });
 
-    // Refactored click handling for various links
     const linkHandlers = {
       '.perfumer-link': (el) => showPerfumerResults(decodeURIComponent(el.dataset.perfumer)),
       '.brand-link': (el) => showBrandResults(decodeURIComponent(el.dataset.brand)),
@@ -782,10 +853,10 @@
     showPrefs();
 
     const prefs = {
-      usage: q('.toggle[data-pref="usage"]').classList.contains('active'),
-      season: q('.toggle[data-pref="season"]').classList.contains('active'),
-      style: q('.toggle[data-pref="style"]').classList.contains('active'),
-      family: q('.toggle[data-pref="family"]').classList.contains('active')
+      usage: q('.toggle[data-pref="usage"]').closest('.pref-card').classList.contains('active'),
+      season: q('.toggle[data-pref="season"]').closest('.pref-card').classList.contains('active'),
+      style: q('.toggle[data-pref="style"]').closest('.pref-card').classList.contains('active'),
+      family: q('.toggle[data-pref="family"]').closest('.pref-card').classList.contains('active')
     };
     const sims = similarities(ref, prefs).slice(0, 10);
     render(ref, sims);
