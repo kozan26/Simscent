@@ -5,16 +5,21 @@ import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog'))
   .sort((a,b) => +new Date(b.data.date) - +new Date(a.data.date));
+
+const hero = posts[0]; // son yazıyı hero’da vitrin yap
+const heroImg = hero?.data.heroImage ?? 'https://images.unsplash.com/photo-1617839400561-d55457a29da2?q=80&w=1200&auto=format&fit=crop';
 ---
-<BaseLayout title="Blog — simscent" description="Simscent blog">
+<BaseLayout title="Blog — simscent" description="Parfüm seçimi, notalar, akorlar ve koleksiyonlar hakkında kısa, pratik yazılar.">
   <section class="hero">
+    <img class="hero-img" src={heroImg} alt="Simscent Blog" />
     <div>
-      <h1 class="title">Blog</h1>
-      <p class="desc">Parfüm seçimi, notalar, akorlar ve koleksiyonlar hakkında kısa, pratik yazılar.</p>
+      <h1>Blog</h1>
+      <p>Parfüm seçimi, notalar, akorlar ve koleksiyonlar hakkında kısa, pratik yazılar.</p>
+      {hero && <a class="hero-cta" href={`/posts/${hero.slug}/`}>Son yazı: {hero.data.title} →</a>}
     </div>
   </section>
 
   <section class="grid">
-    {posts.map(p => <PostCard post={p} />)}
+    {posts.map(p => <div class="col"><PostCard post={p} /></div>)}
   </section>
 </BaseLayout>
