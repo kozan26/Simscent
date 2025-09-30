@@ -1,118 +1,71 @@
 ---
-// --- 1. PERFORMANCE: IMPORT ASTRO'S IMAGE COMPONENT ---
-// This will automatically optimize your local images for the best performance.
-import { Image } from 'astro:assets';
+// apps/blog/src/components/PostCard.astro
+
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	post: CollectionEntry<'blog'>;
+}
 
 const { post } = Astro.props;
 const url = `/posts/${post.slug}/`;
-
-// --- 2. ENHANCED METADATA ---
-// A more readable, professional date format.
-const formattedDate = new Date(post.data.date).toLocaleDateString('tr-TR', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric'
-});
-
-// Calculate estimated reading time to inform the user.
-const words = post.body.split(/\s+/).length;
-const readingTime = Math.ceil(words / 225); // Avg. reading speed is ~225 WPM
-
-// --- 3. CLEANER LAYOUT: TRUNCATE DESCRIPTION ---
-// Keep cards looking uniform by truncating long descriptions.
-let description = post.data.description ?? '';
-if (description.length > 100) {
-  description = description.slice(0, 100) + '...';
-}
-
-// Prepare image data with a better alt text fallback
-const img = post.data.heroImage;
-const alt = post.data.heroImageAlt ?? post.data.title;
-const isLocalImg = img && img.startsWith('/');
+const img = post.data.heroImage ?? 'https://placehold.co/1280x800/fdfbf7/6b5e51?text=simscent';
 ---
-<a class="card" href={url}>
-  <div class="card-image-wrapper">
-    {isLocalImg ? (
-      // Use Astro's <Image /> for optimized local images
-      <Image 
-        class="thumb" 
-        src={import(img)} 
-        alt={alt}
-        widths={[200, 400, 800]}
-        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        loading="lazy"
-        format="webp"
-      />
-    ) : (
-      // Fallback to a standard <img> for external URLs or placeholders
-      <img 
-        class="thumb" 
-        src={img ?? 'https://placehold.co/1280x800/e2e8f0/64748b?text=Blog'} 
-        alt={alt} 
-        loading="lazy"
-      />
-    )}
-  </div>
-  <div class="card-content">
-    <div class="meta">
-      <span>{formattedDate}</span>
-      <span class="separator">·</span>
-      <span>{readingTime} dk okuma</span>
+<a href={url} class="card-link group">
+    <div class="image-wrapper">
+        <img 
+            class="thumb" 
+            src={img} 
+            alt={post.data.title} 
+            loading="lazy"
+        />
     </div>
-    <h2 class="title">{post.data.title}</h2>
-    {description && <p class="description">{description}</p>}
-  </div>
+    <div class="content">
+        <h3 class="title">
+            {post.data.title}
+        </h3>
+        <p class="description">
+            {post.data.description}
+        </p>
+    </div>
 </a>
 
 <style>
-  .card {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--border, #eee);
-    border-radius: 16px;
-    overflow: hidden;
-    text-decoration: none;
-    color: var(--text, #3a3a3a);
-    background: var(--card, #fff);
-    box-shadow: var(--elev-1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--elev-2);
-  }
-  .card-image-wrapper {
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    background-color: #f0f0f0;
-  }
-  .thumb {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .card-content {
-    padding: 1rem 1.25rem;
-  }
-  .meta {
-    font-size: 0.85rem;
-    color: var(--muted, #888);
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-  }
-  .separator {
-    margin: 0 0.5rem;
-  }
-  .title {
-    font-size: 1.25rem;
-    font-family: 'Playfair Display', serif;
-    margin: 0 0 0.5rem;
-    color: #222;
-  }
-  .description {
-    color: var(--muted, #888);
-    font-size: 0.95rem;
-    line-height: 1.6;
-  }
+    .card-link {
+        display: flex;
+        flex-direction: column;
+        text-decoration: none;
+        transition: transform 0.2s ease-in-out;
+    }
+    .card-link:hover {
+        transform: translateY(-5px);
+    }
+    .image-wrapper {
+        aspect-ratio: 16 / 10; /* Or 4/3 */
+        width: 100%;
+        overflow: hidden;
+        border-radius: 1rem; /* rounded-xl */
+    }
+    .thumb {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .content {
+        margin-top: 1rem;
+    }
+    .title {
+        font-size: 1.125rem; /* text-lg */
+        font-weight: 700;
+        color: var(--text-light);
+    }
+    .group:hover .title {
+        color: var(--primary);
+    }
+    .description {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+    }
 </style>
