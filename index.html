@@ -101,7 +101,7 @@
     .toggle.active .dot{transform:translateX(18px)}
     .pref-card.active .pref-card-status{background-color:var(--brand-primary);color:#fff;border-color:var(--brand-primary)}
 
-    /* --- NEW TOOLTIP STYLES --- */
+    /* --- TOOLTIP STYLES --- */
     .tooltip-trigger{position:relative;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background-color:var(--shell);color:var(--muted);border-radius:50%;font-weight:700;font-size:13px;line-height:1;cursor:help;user-select:none}
     .tooltip-trigger::before, .tooltip-trigger::after{position:absolute;left:50%;transform:translateX(-50%);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:100}
     .tooltip-trigger::after{content:attr(data-tooltip);bottom:100%;margin-bottom:12px;background-color:var(--text);color:#fff;padding:8px 12px;border-radius:8px;font-size:14px;font-weight:500;line-height:1.5;text-align:center;width:240px}
@@ -351,7 +351,7 @@
   const FAMILY_TR = {Animal:'Hayvansı',Aquatic:'Akvatik',Chypre:'Şipre',Citrus:'Narenciye',Creamy:'Kremamsı',Earthy:'Topraksı',Floral:'Çiçeksi','Fougère':'Fujer',Fresh:'Ferahlık',Fruity:'Meyvemsi',Gourmand:'Gurme',Green:'Yeşil',Leathery:'Deri',Oriental:'Oryantal',Powdery:'Pudramsı',Resinous:'Reçineli',Smoky:'Dumanlı',Spicy:'Baharatlı',Sweet:'Tatlı',Synthetic:'Sentetik',Woody:'Odunsu'};
   const ACCORD_TR = {'woody':'Odunsu','aromatic':'Aromatik','fresh spicy':'Taze Baharatlı','citrus':'Narenciye','amber':'Amber','warm spicy':'Sıcak Baharatlı','green':'Yeşil','sweet':'Tatlı','musky':'Misk','fruity':'Meyvemsi','powdery':'Pudramsı','vanilla':'Vanilya','floral':'Çiçeksi','white floral':'Beyaz Çiçeksi','rose':'Gül','oud':'Öd','smoky':'Dumanlı','leather':'Deri','earthy':'Topraksı','animalic':'Hayvansı','aquatic':'Akvatik','patchouli':'Paçuli','iris':'İris','balsamic':'Balsamik','tobacco':'Tütün','cinnamon':'Tarçın','spicy':'Baharatlı','resinous':'Reçineli','chypre':'Şipre','fougère':'Fujer','gourmand':'Gurme','creamy':'Kremamsı','synthetic':'Sentetik','fresh':'Ferah'};
 
-  function toPct=(v)=>{const n=Number(v);return !isFinite(n)?0:(n<11?Math.round(n*10):Math.round(n))};
+  const toPct=(v)=>{const n=Number(v);return !isFinite(n)?0:(n<11?Math.round(n*10):Math.round(n))};
   function showToast(msg,type='ok'){ const t=q('#toast'); if(!t){ if(DEBUG) console.log('[toast]', msg); return; } t.textContent=msg; t.className=`toast ${type||'ok'} show`; clearTimeout(window.__toastTimer); window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2600); }
   function setMeta(name, content){
     let m = document.querySelector(`meta[name="${name}"]`);
@@ -619,7 +619,6 @@
     renderSimilar(sims);
   }
 
-  // --- Refactored Generic Category Grid Renderer ---
   function _renderCategoryGrid({ title, results, onBack }) {
     const refOut = q('#refDetailOut');
     refOut.innerHTML = '';
@@ -672,7 +671,6 @@
     q('#results').scrollIntoView({ behavior: 'smooth' });
   }
 
-  // --- Functions calling the generic renderer ---
   function showPerfumerResults(name) {
     _renderCategoryGrid({
       title: `${name} Koleksiyonu`,
@@ -693,7 +691,7 @@
     const results = state.data
       .filter(p => p['Main Accords'] && p['Main Accords'].toLowerCase().includes(accordName.toLowerCase()))
       .sort((a, b) => (b[accordName] || 0) - (a[accordName] || 0))
-      .slice(0, 50); // Limit results for broad categories like 'woody'
+      .slice(0, 50);
     _renderCategoryGrid({
       title: `'${ACCORD_TR[accordName.toLowerCase()] || accordName}' Akorduna Sahip Parfümler`,
       results: results,
@@ -752,7 +750,7 @@
 
     qa('#prefs .pref-card').forEach(card=>{
       on(card, 'click', (e) => {
-        if (e.target.closest('.tooltip-trigger')) return; // Don't toggle if clicking the tooltip trigger
+        if (e.target.closest('.tooltip-trigger')) return;
         
         card.classList.toggle('active');
         const toggle = card.querySelector('.toggle');
@@ -852,12 +850,14 @@
 
     showPrefs();
 
+    // --- BUG FIX: Corrected selectors to read from the .pref-card ---
     const prefs = {
-      usage: q('.toggle[data-pref="usage"]').closest('.pref-card').classList.contains('active'),
-      season: q('.toggle[data-pref="season"]').closest('.pref-card').classList.contains('active'),
-      style: q('.toggle[data-pref="style"]').closest('.pref-card').classList.contains('active'),
-      family: q('.toggle[data-pref="family"]').closest('.pref-card').classList.contains('active')
+      usage: q('.pref-card[data-pref="usage"]').classList.contains('active'),
+      season: q('.pref-card[data-pref="season"]').classList.contains('active'),
+      style: q('.pref-card[data-pref="style"]').classList.contains('active'),
+      family: q('.pref-card[data-pref="family"]').classList.contains('active')
     };
+    
     const sims = similarities(ref, prefs).slice(0, 10);
     render(ref, sims);
     if (scroll) q('#results').scrollIntoView({ behavior: 'smooth' });
