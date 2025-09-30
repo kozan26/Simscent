@@ -17,7 +17,7 @@
   <meta name="google-adsense-account" content="ca-pub-9033780165680589">
   <link rel="canonical" href="https://www.simscent.com/"/>
 
-  <!-- Favicon / app icons -->
+  <!-- Favicon / app icons (logo dosyalarını repoya ekle) -->
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
 
@@ -49,7 +49,15 @@
 
     .top{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px}
     .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;letter-spacing:-.02em;font-family:'Playfair Display',serif;cursor:pointer}
-    .logo{width:32px;height:32px;display:block;background:transparent;border:none;box-shadow:none;border-radius:0}
+    /* LOGO: /assets/logo.svg dosyasını arka plan olarak çeker */
+    .logo{
+      width:32px; height:32px;
+      display:block;
+      background:transparent;
+      border:none;
+      box-shadow:none;
+      border-radius:0;
+    }
 
     .cta{border:none;border-radius:8px;padding:10px 20px;font-weight:700;font-size:15px;color:#fff;background:var(--text);cursor:pointer}
 
@@ -81,6 +89,7 @@
 
     .suggest{display:none;position:absolute;left:0;right:0;top:100%;margin-top:12px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--elev-2);max-height:320px;overflow:auto;text-align:left;color:var(--text);z-index:70}
     .s-item{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer}
+    .suggest .s-item:hover,.s-item:hover{background:inherit!important;color:inherit!important;box-shadow:none!important;filter:none!important}
     .s-thumb{width:34px;height:34px;border-radius:9px;object-fit:cover;background:#e2e8f0;flex-shrink:0}
     .s-name{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .s-brand{color:var(--muted)!important;font-size:13px;margin-left:auto}
@@ -162,61 +171,6 @@
     .fab.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
 
     [data-debug-outline] *{outline:1px dashed rgba(100,116,139,.35)}
-
-    /* --- Prefs spacing refresh (overrides) --- */
-    #upload-section { scroll-margin-top: 24px; }
-    .prefs-card{
-      box-shadow: none;
-      border: 1px solid var(--border);
-      padding: 24px 20px;
-      border-radius: 16px;
-    }
-    @media (min-width: 768px){
-      .prefs-card{ padding: 28px; }
-    }
-    #prefs .pref-grid{
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 16px 18px;
-    }
-    #prefs .row{
-      padding: 16px;
-      min-height: 56px;
-      gap: 16px;
-      border: 1px solid #eef2f7;
-      border-radius: 14px;
-      background: #fff;
-    }
-    #prefs .row:hover{
-      border-color: #e2e8f0;
-      box-shadow: var(--elev-1);
-    }
-    #prefs .lbl{
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      white-space: normal;  /* nowrap kaldırıldı */
-      line-height: 1.35;
-      hyphens: auto;
-      word-break: break-word;
-    }
-    @media (min-width: 768px){
-      #prefs .lbl{ font-size: 17px; }
-    }
-    #prefs .toggle{
-      width: 52px;
-      height: 30px;
-    }
-    #prefs .toggle .dot{
-      width: 24px;
-      height: 24px;
-      top: 3px;
-      left: 3px;
-    }
-    #prefs .toggle.active .dot{
-      transform: translateX(22px);
-    }
-    #upload-section h3{ margin-bottom: 18px; }
-    #prefs h4{ margin-bottom: 12px; }
   </style>
 </head>
 <body>
@@ -226,6 +180,7 @@
       <div class="brand">
         <img class="logo" src="/assets/logo.svg" alt="simscent" width="32" height="32">simscent
       </div>
+
       <button class="cta" id="signupBtn">Kayıt Ol</button>
     </div>
 
@@ -256,7 +211,19 @@
       </div>
     </section>
 
-    <!-- FEATURED -->
+    <section class="section" id="upload-section" style="display:none">
+      <h3 style="font-weight:800;font-size:22px;margin-bottom:16px;font-family:'Playfair Display',serif">Tercihler</h3>
+      <div class="card" style="box-shadow:none;border:1px solid var(--border);padding:16px" id="prefs">
+        <h4 style="font-weight:700;font-size:18px;margin-bottom:16px;font-family:'Playfair Display',serif">Benzerlik Ağırlıkları</h4>
+        <div class="pref-grid">
+          <div class="row"><span class="lbl">Kullanım Amacı</span><div class="toggle active" data-pref="usage"><div class="dot"></div></div></div>
+          <div class="row"><span class="lbl">Mevsim</span><div class="toggle active" data-pref="season"><div class="dot"></div></div></div>
+          <div class="row"><span class="lbl">Stil</span><div class="toggle active" data-pref="style"><div class="dot"></div></div></div>
+          <div class="row"><span class="lbl">Koku Ailesi</span><div class="toggle active" data-pref="family"><div class="dot"></div></div></div>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="featured" style="display:none">
       <h3>Öne Çıkan Koleksiyonlar</h3>
       <div class="featured-wrap">
@@ -270,24 +237,9 @@
       </div>
     </section>
 
-    <!-- RESULTS comes BEFORE upload/prefs -->
     <section class="section" id="results">
       <h3 style="font-weight:800;font-size:22px;margin-bottom:12px;font-family:'Playfair Display',serif">Sonuçlar</h3>
       <div id="out"><div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Keşfetmeye Başla</h4><p style="color:var(--muted);margin-top:4px">Başlamak için yukarıdan bir parfüm arayın veya “Beni Şaşırt!” butonunu kullanın.</p></div></div>
-    </section>
-
-    <!-- UPLOAD/PREFS moved AFTER results -->
-    <section class="section" id="upload-section" style="display:none">
-      <h3 style="font-weight:800;font-size:22px;margin-bottom:16px;font-family:'Playfair Display',serif">Tercihler</h3>
-      <div class="card prefs-card" id="prefs">
-        <h4 style="font-weight:700;font-size:18px;margin-bottom:16px;font-family:'Playfair Display',serif">Benzerlik Ağırlıkları</h4>
-        <div class="pref-grid">
-          <div class="row"><span class="lbl">Kullanım Amacı</span><div class="toggle active" data-pref="usage"><div class="dot"></div></div></div>
-          <div class="row"><span class="lbl">Mevsim</span><div class="toggle active" data-pref="season"><div class="dot"></div></div></div>
-          <div class="row"><span class="lbl">Stil</span><div class="toggle active" data-pref="style"><div class="dot"></div></div></div>
-          <div class="row"><span class="lbl">Koku Ailesi</span><div class="toggle active" data-pref="family"><div class="dot"></div></div></div>
-        </div>
-      </div>
     </section>
 
   </div></div>
@@ -323,6 +275,7 @@
   };
 
   const LABELS = {Daily:'Günlük',Business:'İş',Evening:'Akşam','Night Out':'Gece',Leisure:'Rahat',Sport:'Spor',Spring:'İlkbahar',Summer:'Yaz',Fall:'Sonbahar',Winter:'Kış',Classic:'Klasik',Masculine:'Maskülen',Feminine:'Feminen',Modern:'Modern'};
+  // 'styler' yerine geçerli Material ikon adı 'style'
   const ICONS  = {Daily:'sunny',Business:'work',Evening:'nights_stay','Night Out':'nightlife',Leisure:'weekend',Sport:'directions_run',Spring:'local_florist',Summer:'sunny',Fall:'eco',Winter:'ac_unit',Classic:'account_balance',Masculine:'man',Feminine:'woman',Modern:'auto_awesome', style:'style'};
   const FAMILY_TR = {Animal:'Hayvansı',Aquatic:'Akvatik',Chypre:'Şipre',Citrus:'Narenciye',Creamy:'Kremamsı',Earthy:'Topraksı',Floral:'Çiçeksi','Fougère':'Fujer',Fresh:'Ferahlık',Fruity:'Meyvemsi',Gourmand:'Gurme',Green:'Yeşil',Leathery:'Deri',Oriental:'Oryantal',Powdery:'Pudramsı',Resinous:'Reçineli',Smoky:'Dumanlı',Spicy:'Baharatlı',Sweet:'Tatlı',Synthetic:'Sentetik',Woody:'Odunsu'};
   const ACCORD_TR = {'woody':'Odunsu','aromatic':'Aromatik','fresh spicy':'Taze Baharatlı','citrus':'Narenciye','amber':'Amber','warm spicy':'Sıcak Baharatlı','green':'Yeşil','sweet':'Tatlı','musky':'Misk','fruity':'Meyvemsi','powdery':'Pudramsı','vanilla':'Vanilya','floral':'Çiçeksi','white floral':'Beyaz Çiçeksi','rose':'Gül','oud':'Öd','smoky':'Dumanlı','leather':'Deri','earthy':'Topraksı','animalic':'Hayvansı','aquatic':'Akvatik','patchouli':'Paçuli','iris':'İris','balsamic':'Balsamik','tobacco':'Tütün','cinnamon':'Tarçın','spicy':'Baharatlı','resinous':'Reçineli','chypre':'Şipre','fougère':'Fujer','gourmand':'Gurme','creamy':'Kremamsı','synthetic':'Sentetik','fresh':'Ferah'};
@@ -469,9 +422,9 @@
         </div>
         <div class='pf-name' style="margin-top:4px">${p.fullName||''}</div>
       </div>`;
-    if(!isRef){
-      el.style.cursor='pointer';
-      on(el,'click',() => setReferenceAndFindSimilar(p, true));
+    if(!isRef){ 
+      el.style.cursor='pointer'; 
+      on(el,'click',() => setReferenceAndFindSimilar(p, true)); 
     }
     return el;
   }
@@ -544,7 +497,6 @@
   function setupCarousel(container){
     const windowEl=container.querySelector('.carousel-window');
     const prevBtn=container.querySelector('.carousel-btn.prev');
-    the_next:
     const nextBtn=container.querySelector('.carousel-btn.next');
     const cards=Array.from(windowEl.children);
     if(!cards.length) return;
@@ -751,25 +703,25 @@
     });
 
     const input=q('#searchInput'); const btn=q('#searchBtn'); const suggest=q('#suggestions'); let deb=null;
-    on(input,'input',()=>{
-      clearTimeout(deb);
+    on(input,'input',()=>{ 
+      clearTimeout(deb); 
       deb=setTimeout(()=>{
-        const qv=input.value.trim();
+        const qv=input.value.trim(); 
         if(!qv||!state.fuse){ suggest.style.display='none'; return;}
-        const res=state.fuse.search(qv).slice(0,8);
+        const res=state.fuse.search(qv).slice(0,8); 
         if(!res.length){suggest.style.display='none';return;}
         suggest.innerHTML=res.map(r=>{
-          const it=r.item; const t=thumbURL(it);
-          const yr= it['Release Year']!=null && it['Release Year']!=='' ? String(it['Release Year']) : '';
+          const it=r.item; const t=thumbURL(it); 
+          const yr= it['Release Year']!=null && it['Release Year']!=='' ? String(it['Release Year']) : ''; 
           const right=(it.Brand||yr)? `(${[it.Brand, yr].filter(Boolean).join(', ')})` : '';
           return `<div class='s-item' data-index='${r.refIndex}' aria-label='${it.fullName} ${right}'>
             <img class='s-thumb' src='${t}' alt='' loading='lazy' onerror="this.onerror=null;this.src='https://placehold.co/40x40/e2e8f0/64748b?text=?'"/>
             <div class='s-name'>${it.fullName}</div>
             <div class='s-brand'>${right}</div>
           </div>`;
-        }).join('');
-        suggest.style.display='block';
-      },140);
+        }).join(''); 
+        suggest.style.display='block'; 
+      },140); 
     });
     on(suggest,'click',e=>{ const el=e.target.closest('.s-item'); if(!el) return; const idx = parseInt(el.dataset.index, 10); if(!isNaN(idx) && state.data[idx]) { setReferenceAndFindSimilar(state.data[idx], true); } suggest.style.display='none'; });
     on(document,'click',e=>{ if(!suggest.contains(e.target) && e.target!==input) suggest.style.display='none'; });
