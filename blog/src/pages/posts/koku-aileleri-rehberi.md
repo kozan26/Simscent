@@ -6,7 +6,7 @@ date: "2025-09-18"
 category: "Rehber"
 author: "Ayşe Demir"
 readTime: 8
-image: "https://lh3.googleusercontent.com/gg/AAHar4eeGqPBeSubs0h0Vm7DmuTx1MpgWyKHIkoaZwtKWXLy-MEG06VDQ83fyB9VqLRubPjBkkbX_8NvxvxJ_VeZKzYjVO96qxoMJqB-ODWCr75TjE1OGG-_EKZRve_7NddL20XKr4dTs_5Bq8iH6oiZdJOu7BSKg9ZY-A-IA7hhtBgVw4uDwq1b5t9xtUhPWM6DiKqG5eWDqHRQ34oyuVu4Aj2zYcL9am-3WkkHcb2i95alIcwV0iSkHmWpwqk3hwS_Pb3c0EdZLJFpcMj1LTMQCRhgJWft70jh6NW37gLPP1drMMK3dD8UL8pIgnDUGBKwzDR2q98ybNYREHjS_A_x_8Fv=s1024&auto=format&fit=crop"
+image: "https://rb.gy/lrlt6u"
 ---
 
 Parfüm seçerken kendinizi kaybolmuş hissediyor musunuz? Yüzlerce seçenek arasında hangisinin size uygun olduğunu anlamak zor olabilir. İşte bu noktada **koku aileleri** devreye giriyor.
