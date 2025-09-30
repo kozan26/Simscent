@@ -1,4 +1,4 @@
-<img width="1024" height="1024" alt="image" src="https://github.com/user-attachments/assets/5fba76fb-13be-4d00-a44f-95b6dab9427e" />---
+---
 layout: ../../layouts/PostLayout.astro
 title: "Koku Aileleri Rehberi: Hangi Aroma Grubuna Aitsiniz?"
 description: "Woody, floral, oriental ve daha fazlası... Parfüm dünyasının temel koku ailelerini detaylı bir şekilde keşfedin."
@@ -6,7 +6,7 @@ date: "2025-09-18"
 category: "Rehber"
 author: "Ayşe Demir"
 readTime: 8
-image: ""
+image: "https://images.unsplash.com/photo-1588405748880-12d1d2a59d75?q=80&w=1200&auto=format&fit=crop"
 ---
 
 Parfüm seçerken kendinizi kaybolmuş hissediyor musunuz? Yüzlerce seçenek arasında hangisinin size uygun olduğunu anlamak zor olabilir. İşte bu noktada **koku aileleri** devreye giriyor.
