@@ -3,39 +3,238 @@ const posts = await Astro.glob('./posts/*.md');
 const sortedPosts = posts.sort((a, b) => 
   new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
 );
+const featuredPost = sortedPosts[0];
+const otherPosts = sortedPosts.slice(1);
 ---
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog — simscent</title>
-  <!-- Same styles as PostLayout header -->
+  <meta name="description" content="Parfüm kültürü, öneriler ve keşifler hakkında yazılarımızı okuyun.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --brand-primary:#B99B6B;--brand-secondary:#A08C62;--text:#3a3a3a;--muted:#888;
+      --border:#eee;--card:#fff;--shell:#f9f8f6;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'Inter',sans-serif;color:var(--text);line-height:1.7;background:#fafafa;overflow-x:hidden}
+    
+    /* Header */
+    header{background:rgba(255,255,255,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(185,155,107,.12);position:sticky;top:0;z-index:100}
+    .header-inner{max-width:1320px;margin:0 auto;padding:20px 24px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:24px;letter-spacing:-.03em;font-family:'Playfair Display',serif;text-decoration:none;color:var(--text);transition:transform .2s}
+    .brand:hover{transform:scale(1.02)}
+    .logo{width:36px;height:36px}
+    nav{display:flex;gap:32px;align-items:center}
+    nav a{text-decoration:none;color:var(--text);font-weight:600;font-size:15px;transition:all .2s;position:relative;padding:4px 0}
+    nav a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--brand-primary);transition:width .3s ease}
+    nav a:hover::after{width:100%}
+    .nav-active{color:var(--brand-primary)}
+    .nav-active::after{width:100%}
+
+    /* Hero */
+    .hero{position:relative;padding:120px 0 80px;overflow:hidden;background:linear-gradient(135deg,#f9f8f6 0%,#fefefe 100%)}
+    .hero::before{content:'';position:absolute;top:-50%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(185,155,107,.08) 0%,transparent 70%);border-radius:50%;animation:float 20s ease-in-out infinite}
+    .hero::after{content:'';position:absolute;bottom:-30%;left:-5%;width:500px;height:500px;background:radial-gradient(circle,rgba(185,155,107,.06) 0%,transparent 70%);border-radius:50%;animation:float 25s ease-in-out infinite reverse}
+    @keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-30px) rotate(5deg)}}
+    .hero-content{position:relative;z-index:2;max-width:900px;margin:0 auto;text-align:center;padding:0 24px}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(42px,6vw,72px);font-weight:800;letter-spacing:-.04em;line-height:1.08;margin-bottom:24px;background:linear-gradient(135deg,#3a3a3a 0%,#6b6b6b 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero p{color:var(--muted);font-size:clamp(17px,2vw,20px);max-width:620px;margin:0 auto;line-height:1.6}
+
+    /* Container */
+    .container{max-width:1320px;margin:0 auto;padding:60px 24px 80px}
+
+    /* Featured Article */
+    .featured{position:relative;display:grid;grid-template-columns:1fr;gap:0;background:#fff;border-radius:32px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.08);transition:all .4s cubic-bezier(.25,.8,.25,1);margin-bottom:80px;text-decoration:none;color:inherit}
+    @media(min-width:900px){.featured{grid-template-columns:1.2fr 1fr;min-height:560px}}
+    .featured:hover{transform:translateY(-8px);box-shadow:0 30px 80px rgba(0,0,0,.12)}
+    .featured-image-wrap{position:relative;overflow:hidden;min-height:400px}
+    @media(min-width:900px){.featured-image-wrap{min-height:auto}}
+    .featured-image{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+    .featured:hover .featured-image{transform:scale(1.05)}
+    .featured-content{padding:48px;display:flex;flex-direction:column;justify-content:center}
+    @media(min-width:900px){.featured-content{padding:60px}}
+    .featured-badge{background:var(--brand-primary);color:#fff;padding:8px 18px;border-radius:999px;font-weight:800;font-size:11px;display:inline-block;margin-bottom:24px;text-transform:uppercase;letter-spacing:1px;box-shadow:0 4px 12px rgba(185,155,107,.3);width:fit-content}
+    .featured-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,42px);font-weight:800;line-height:1.15;margin-bottom:20px;color:#1a1a1a}
+    .featured-excerpt{color:#666;font-size:17px;line-height:1.7;margin-bottom:32px}
+    .featured-meta{display:flex;align-items:center;gap:16px;color:var(--muted);font-size:14px;flex-wrap:wrap}
+    .featured-cta{display:inline-flex;align-items:center;gap:10px;background:#1a1a1a;color:#fff;padding:16px 32px;border-radius:12px;font-weight:700;border:none;font-size:15px;box-shadow:0 8px 20px rgba(0,0,0,.15);transition:all .3s;width:fit-content}
+    .featured:hover .featured-cta{background:var(--brand-primary);transform:translateX(4px)}
+
+    /* Section Header */
+    .section-header{text-align:center;margin-bottom:60px}
+    .section-title{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,44px);font-weight:800;margin-bottom:12px}
+    .section-subtitle{color:var(--muted);font-size:17px}
+
+    /* Blog Grid */
+    .blog-grid{display:grid;grid-template-columns:1fr;gap:32px}
+    @media(min-width:640px){.blog-grid{grid-template-columns:repeat(2,1fr);gap:28px}}
+    @media(min-width:1024px){.blog-grid{grid-template-columns:repeat(3,1fr);gap:32px}}
+
+    /* Article Card */
+    .article-card{background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.06);transition:all .35s cubic-bezier(.4,0,.2,1);text-decoration:none;color:inherit;display:flex;flex-direction:column;border:1px solid rgba(0,0,0,.04)}
+    .article-card:hover{transform:translateY(-10px) scale(1.01);box-shadow:0 20px 50px rgba(0,0,0,.12);border-color:rgba(185,155,107,.2)}
+    .article-image-wrap{position:relative;overflow:hidden;aspect-ratio:16/10;background:#e2e8f0}
+    .article-image{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+    .article-card:hover .article-image{transform:scale(1.08) rotate(1deg)}
+    .category-badge{position:absolute;top:16px;left:16px;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);color:var(--brand-secondary);padding:6px 16px;border-radius:999px;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.8px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+    .article-content{padding:28px;flex:1;display:flex;flex-direction:column}
+    .article-meta{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--muted);margin-bottom:16px}
+    .article-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;line-height:1.3;margin-bottom:12px;color:#1a1a1a}
+    .article-excerpt{color:#666;font-size:15px;line-height:1.65;margin-bottom:20px;flex:1}
+    .read-more{color:var(--brand-secondary);font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:all .3s;margin-top:auto}
+    .read-more svg{transition:transform .3s}
+    .article-card:hover .read-more{color:var(--brand-primary)}
+    .article-card:hover .read-more svg{transform:translateX(4px)}
+
+    /* Footer */
+    footer{margin-top:60px;padding:60px 24px 40px;background:#fff;border-top:1px solid rgba(0,0,0,.06)}
+    .footer-content{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:40px;text-align:center}
+    @media(min-width:768px){.footer-content{grid-template-columns:1.5fr 1fr 1fr;text-align:left;gap:60px}}
+    .footer-brand{font-family:'Playfair Display',serif;font-size:28px;font-weight:800;margin-bottom:12px}
+    .footer-desc{color:var(--muted);font-size:14px;line-height:1.6}
+    .footer-section h4{font-weight:700;margin-bottom:16px;font-size:14px;text-transform:uppercase;letter-spacing:.8px}
+    .footer-links{display:flex;flex-direction:column;gap:10px}
+    .footer-links a{color:var(--muted);text-decoration:none;font-size:14px;transition:color .2s}
+    .footer-links a:hover{color:var(--brand-primary)}
+    .footer-bottom{margin-top:40px;padding-top:30px;border-top:1px solid rgba(0,0,0,.06);text-align:center;color:var(--muted);font-size:13px}
+
+    @media(max-width:639px){
+      nav{display:none}
+      .hero{padding:80px 0 60px}
+    }
+  </style>
 </head>
 <body>
   <header>
     <div class="header-inner">
-      <a href="https://simscent.com" class="brand">simscent</a>
+      <a href="https://simscent.com" class="brand">
+        <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="45" fill="none" stroke="#B99B6B" stroke-width="3"/>
+          <path d="M50 25 L50 75 M35 40 L50 25 L65 40" stroke="#B99B6B" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        simscent
+      </a>
       <nav>
         <a href="https://simscent.com">Ana Sayfa</a>
-        <a href="/">Blog</a>
+        <a href="/" class="nav-active">Blog</a>
       </nav>
     </div>
   </header>
-  
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Koku Dünyasından<br/>Hikayeler</h1>
+      <p>Parfüm kültürü, öneriler ve keşifler hakkında ilham veren yazılarımızı okuyun.</p>
+    </div>
+  </section>
+
   <main class="container">
-    <h1>Koku Dünyasından Hikayeler</h1>
+    {featuredPost && (
+      <a href={featuredPost.url} class="featured">
+        <div class="featured-image-wrap">
+          {featuredPost.frontmatter.image && (
+            <img class="featured-image" src={featuredPost.frontmatter.image} alt={featuredPost.frontmatter.title} />
+          )}
+        </div>
+        <div class="featured-content">
+          <span class="featured-badge">✨ Öne Çıkan</span>
+          <h2 class="featured-title">{featuredPost.frontmatter.title}</h2>
+          <p class="featured-excerpt">{featuredPost.frontmatter.description}</p>
+          <div class="featured-meta">
+            {featuredPost.frontmatter.author && <span>{featuredPost.frontmatter.author}</span>}
+            {featuredPost.frontmatter.date && (
+              <>
+                <span>•</span>
+                <time datetime={featuredPost.frontmatter.date}>
+                  {new Date(featuredPost.frontmatter.date).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' })}
+                </time>
+              </>
+            )}
+            {featuredPost.frontmatter.readTime && (
+              <>
+                <span>•</span>
+                <span>{featuredPost.frontmatter.readTime} dakika</span>
+              </>
+            )}
+          </div>
+        </div>
+      </a>
+    )}
+
+    <div class="section-header">
+      <h2 class="section-title">Son Yazılar</h2>
+      <p class="section-subtitle">Parfüm dünyasından güncel içerikler</p>
+    </div>
+
     <div class="blog-grid">
-      {sortedPosts.map(post => (
-        <article class="article-card">
-          <a href={post.url}>
-            <span class="category">{post.frontmatter.category}</span>
-            <h2>{post.frontmatter.title}</h2>
-            <p>{post.frontmatter.description}</p>
-            <span class="read-more">Devamını Oku →</span>
-          </a>
-        </article>
+      {otherPosts.map(post => (
+        <a href={post.url} class="article-card">
+          <div class="article-image-wrap">
+            {post.frontmatter.image && (
+              <img class="article-image" src={post.frontmatter.image} alt={post.frontmatter.title} />
+            )}
+            {post.frontmatter.category && (
+              <span class="category-badge">{post.frontmatter.category}</span>
+            )}
+          </div>
+          <div class="article-content">
+            <div class="article-meta">
+              {post.frontmatter.date && (
+                <time datetime={post.frontmatter.date}>
+                  {new Date(post.frontmatter.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                </time>
+              )}
+              {post.frontmatter.readTime && (
+                <>
+                  <span>•</span>
+                  <span>{post.frontmatter.readTime} dk</span>
+                </>
+              )}
+            </div>
+            <h3 class="article-title">{post.frontmatter.title}</h3>
+            <p class="article-excerpt">{post.frontmatter.description}</p>
+            <span class="read-more">
+              Devamını Oku
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
       ))}
     </div>
   </main>
+
+  <footer>
+    <div class="footer-content">
+      <div>
+        <div class="footer-brand">simscent</div>
+        <p class="footer-desc">İmza kokunu keşfet. Benzersiz tercihlerinle eşleşen parfümleri bul.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Keşfet</h4>
+        <div class="footer-links">
+          <a href="https://simscent.com">Ana Sayfa</a>
+          <a href="/">Blog</a>
+          <a href="https://simscent.com#results">Koleksiyon</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Destek</h4>
+        <div class="footer-links">
+          <a href="mailto:info@simscent.com">İletişim</a>
+          <a href="https://simscent.com">Hakkımızda</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 simscent. Tüm hakları saklıdır.</p>
+    </div>
+  </footer>
 </body>
 </html>
