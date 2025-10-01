@@ -6,7 +6,7 @@ date: "2025-10-01"
 category: "Rehber"
 author: "Ozan Kılıç"
 readTime: 10
-image: "https://www.chanel.com/puls-img/c_limit,w_2800/q_auto:good,dpr_auto,f_auto/1749219729629-bdchubinterpretationsdesktopherojpg_1298x2880.jpg&auto=format&fit=crop"
+image: "https://www.chanel.com/puls-img/c_limit,w_2800/q_auto:good,dpr_auto,f_auto/1749219729629-bdchubinterpretationsdesktopherojpg_1298x2880.jpg"
 ---
 
 # Bleu de Chanel Rehberiniz: EDT, EDP, Parfum ve L'Exclusif Arasındaki Mükemmel Seçimi Yapın
