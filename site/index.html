@@ -1,52 +1,108 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+  <!-- Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-7LCE4Z60ZB"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-7LCE4Z60ZB');
+    gtag('js', new Date()); gtag('config', 'G-7LCE4Z60ZB');
   </script>
-  <link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>simscent — Ana Sayfa</title>
   <meta name="description" content="Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul."/>
   <meta name="google-adsense-account" content="ca-pub-9033780165680589">
   <link rel="canonical" href="https://www.simscent.com/"/>
 
+  <!-- Icons -->
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="alternate icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
 
+  <!-- Fonts / Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,500..700,0..1,-50..200"/>
-  <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+
+  <!-- Perf hints -->
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1617839400561-d55457a29da2?q=80&w=930&auto=format&fit=crop">
+  <link rel="preload" href="/perfumes_data.json" as="fetch" crossorigin>
+
+  <!-- SEO: SearchAction -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"simscent",
+    "url":"https://www.simscent.com/",
+    "potentialAction":{
+      "@type":"SearchAction",
+      "target":"https://www.simscent.com/?q={search_term_string}",
+      "query-input":"required name=search_term_string"
+    }
+  }
+  </script>
 
   <style>
     :root{
-      --brand-primary:#B99B6B;--brand-secondary:#A08C62;--text:#3a3a3a;--muted:#888;--border:#eee;--card:#fff;--shell:#f9f8f6;
-      --elev-1:0 4px 15px rgba(0,0,0,.05);--elev-2:0 8px 30px rgba(0,0,0,.07);--elev-3:0 12px 40px rgba(0,0,0,.1)
+      /* brand & surfaces */
+      --brand-primary:#a88a55; --brand-secondary:#8b784e;
+      --text:#3a3a3a; --muted:#7a828f; --border:#e9eef5; --card:#fff; --shell:#f9f8f6;
+      --elev-1:0 4px 15px rgba(0,0,0,.06);
+      --elev-2:0 8px 30px rgba(0,0,0,.08);
+      --elev-3:0 12px 40px rgba(0,0,0,.12);
+
+      /* scale */
+      --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+      --space-5:20px; --space-6:24px; --space-7:28px; --space-8:32px; --space-10:40px;
+
+      --fs-xs:12px; --fs-sm:14px; --fs-md:16px; --fs-lg:18px; --fs-xl:22px; --fs-2xl:28px; --fs-3xl: clamp(38px,5.6vw,60px);
     }
+
+    @media (prefers-color-scheme: dark){
+      :root{
+        --text:#e6e7ea; --muted:#a7afba; --border:#2a2f36; --card:#14181d; --shell:#0e1216;
+        --elev-1:0 4px 15px rgba(0,0,0,.35);
+        --elev-2:0 8px 30px rgba(0,0,0,.45);
+        --elev-3:0 12px 40px rgba(0,0,0,.55);
+        --brand-primary:#c9a56a; --brand-secondary:#b39559;
+      }
+      .searchbar{ border-color:#1f2530; background:#12161b }
+      .pf,.fc{ background:#12161b; border-color:#1f2530 }
+      .carousel-btn{ background:rgba(20,24,29,.9); border-color:#2a2f36; color:#e6e7ea }
+    }
+
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
-    body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;color:var(--text);line-height:1.6;background:var(--shell)}
-    body::before{content:"";position:fixed;inset:0;background-image:radial-gradient(hsla(0,0%,82%,.2) 1px,transparent 1px);background-size:20px 20px;opacity:.35;pointer-events:none}
-
+    body{
+      font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Ubuntu,'Helvetica Neue',Arial,sans-serif;
+      color:var(--text); line-height:1.6; background:var(--shell)
+    }
+    body::before{
+      content:""; position:fixed; inset:0;
+      background-image:radial-gradient(hsla(0,0%,82%,.18) 1px,transparent 1px);
+      background-size:20px 20px; opacity:.35; pointer-events:none
+    }
     .material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 600,'GRAD' 0,'opsz' 24;display:inline-flex;align-items:center;vertical-align:-3px;font-size:18px;line-height:1}
+
+    /* focus visibility */
+    :focus-visible{
+      outline:3px solid color-mix(in oklab, var(--brand-primary) 60%, black);
+      outline-offset:2px; border-radius:8px;
+    }
 
     .landing{max-width:1200px;margin:28px auto;padding:16px}
     @media(min-width:768px){.landing{padding:28px}}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:24px;box-shadow:var(--elev-2);overflow:hidden;position:relative}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:24px;box-shadow:var(--elev-1);overflow:hidden;position:relative}
     .card-inner{padding:24px 16px}
     @media(min-width:768px){.card-inner{padding:32px}}
     @media(min-width:1024px){.card-inner{padding:40px}}
 
     .top{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px}
     .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:22px;letter-spacing:-.02em;font-family:'Playfair Display',serif;cursor:pointer}
-    .logo{width:32px;height:32px;display:block;background:transparent;border:none;box-shadow:none;border-radius:0}
+    .logo{width:32px;height:32px;display:block}
     .cta{border:none;border-radius:8px;padding:10px 20px;font-weight:700;font-size:15px;color:#fff;background:var(--text);cursor:pointer}
 
     .hero{display:grid;grid-template-columns:1fr;gap:40px;align-items:center;margin-top:20px}
@@ -56,13 +112,13 @@
     .blob{width:120px;height:120px;background:rgba(185,155,107,.15);left:-18px;top:-16px;opacity:.8}
     .blob2{width:130px;height:130px;background:rgba(185,155,107,.1);left:220px;bottom:-10px;opacity:.6}
     .shot{width:100%;aspect-ratio:1/1;object-fit:cover;padding:16px;background:#fff;border:1px solid var(--border);border-radius:28px;transform:rotate(-6deg);box-shadow:0 28px 70px rgba(0,0,0,.15)}
-    .title{font-family:'Playfair Display',serif;font-size:clamp(38px,5.6vw,60px);font-weight:800;letter-spacing:-.04em;line-height:1.05;color:#222;margin-bottom:16px}
-    .desc{color:var(--muted);max-width:760px;font-size:17px}
+    .title{font-family:'Playfair Display',serif;font-size:var(--fs-3xl);font-weight:800;letter-spacing:-.04em;line-height:1.05;color:#222;margin-bottom:16px}
+    .desc{color:var(--muted);max-width:760px;font-size:var(--fs-md)}
 
     .search-wrap{margin:28px 0 12px;max-width:760px;position:relative;z-index:60}
     .searchbar{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:999px;padding:12px 16px;box-shadow:var(--elev-1)}
     .searchbar input{flex:1;border:none;background:transparent;outline:none;font-size:16px;color:var(--text);caret-color:var(--text)}
-    .searchbar input::placeholder{color:#aaa}
+    .searchbar input::placeholder{color:#9aa3af}
     .icon-btn{width:44px;height:44px;border-radius:999px;border:none;display:grid;place-items:center;background:var(--text);color:#fff;cursor:pointer}
 
     .actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px}
@@ -70,36 +126,44 @@
     .btn.primary{background:var(--text);color:#fff}.btn.primary:hover{background:#000}
     .btn.ghost{background:transparent;color:var(--text);border:1px solid var(--border)}.btn.ghost:hover{border-color:#ccc;background:#fafafa}
 
-    .suggest{display:none;position:absolute;left:0;right:0;top:100%;margin-top:12px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--elev-2);max-height:320px;overflow:auto;text-align:left;color:var(--text);z-index:70}
+    .suggest{display:none;position:absolute;left:0;right:0;top:100%;margin-top:12px;background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--elev-2);max-height:320px;overflow:auto;text-align:left;color:var(--text);z-index:70}
     .s-item{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer}
-    .suggest .s-item:hover,.s-item:hover{background:inherit!important;color:inherit!important;box-shadow:none!important;filter:none!important}
+    .s-item[aria-selected="true"]{background:color-mix(in oklab, var(--brand-primary) 12%, white)}
     .s-thumb{width:34px;height:34px;border-radius:9px;object-fit:cover;background:#e2e8f0;flex-shrink:0}
     .s-name{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .s-brand{color:var(--muted)!important;font-size:13px;margin-left:auto}
 
-    .section{padding:32px 0;border-top:1px dashed #e5e7eb}
-    @media(min-width:768px){.section{padding:48px 0}}
+    .section{padding:var(--space-8) 0;border-top:1px dashed #e5e7eb}
+    @media(min-width:768px){.section{padding:calc(var(--space-8) + 8px) 0}}
 
-    /* --- INLINE TOGGLE STYLES --- */
+    /* PREFS */
     .pref-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));gap:12px}
-    .row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;min-height:48px;border:1px solid #f1f5f9;border-radius:14px;background:#fff;cursor:pointer}
+    .row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;min-height:48px;border:1px solid #f1f5f9;border-radius:14px;background:var(--card);cursor:pointer}
     .lbl-wrap{display:flex;align-items:center;gap:8px}
     .lbl{font-size:16px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     @media(min-width:768px){.lbl{font-size:18px}}
-    
     .toggle{position:relative;width:44px;height:26px;background:#e2e8f0;border-radius:999px;transition:background .25s ease;flex-shrink:0}
     .toggle .dot{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:999px;background:#fff;box-shadow:0 2px 6px rgba(2,6,23,.15);transition:transform .25s ease}
     .toggle.active{background:var(--brand-primary)}
     .toggle.active .dot{transform:translateX(18px)}
+    .toggle[role="button"]{outline-offset:3px}
 
-    /* --- TOOLTIP STYLES --- */
-    .tooltip-trigger{position:relative;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background-color:var(--shell);color:var(--muted);border-radius:50%;font-weight:700;font-size:13px;line-height:1;cursor:help;user-select:none;flex-shrink:0}
-    .tooltip-trigger::before, .tooltip-trigger::after{position:absolute;left:50%;transform:translateX(-50%);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:100}
-    .tooltip-trigger::after{content:attr(data-tooltip);bottom:100%;margin-bottom:12px;background-color:var(--text);color:#fff;padding:8px 12px;border-radius:8px;font-size:14px;font-weight:500;line-height:1.5;text-align:center;width:240px}
-    .tooltip-trigger::before{content:'';bottom:100%;margin-bottom:2px;border:5px solid transparent;border-top-color:var(--text)}
-    .tooltip-trigger:hover::before, .tooltip-trigger:hover::after{opacity:1;transform:translateX(-50%) translateY(-4px)}
-    
-    .pf{display:flex;flex-direction:column;gap:12px;border-radius:18px;padding:12px;border:1px solid transparent;box-shadow:var(--elev-1);background:#fff;transition:box-shadow .28s cubic-bezier(.25,.8,.25,1),transform .28s cubic-bezier(.25,.8,.25,1),border-color .28s;overflow:hidden}
+    /* TOOLTIP — portal */
+    .tooltip-trigger{
+      position:relative; display:inline-grid; place-items:center;
+      width:20px;height:20px;border-radius:50%; background:var(--shell);
+      color:var(--muted); font-weight:700; font-size:13px; cursor:help; user-select:none; flex-shrink:0
+    }
+    #_tt{
+      position:fixed; transform:translate(-9999px,-9999px);
+      background:var(--text); color:#fff; padding:8px 12px; border-radius:8px;
+      font-size:14px; line-height:1.4; box-shadow:0 10px 30px rgba(0,0,0,.18);
+      z-index:99999; max-width:280px; pointer-events:none
+    }
+    #_tt::after{ content:""; position:absolute; width:0;height:0; border:6px solid transparent; border-top-color:var(--text); bottom:-12px; left:16px }
+
+    /* CARDS */
+    .pf{display:flex;flex-direction:column;gap:12px;border-radius:18px;padding:12px;border:1px solid var(--border);box-shadow:var(--elev-1);background:var(--card);transition:box-shadow .28s cubic-bezier(.25,.8,.25,1),transform .28s cubic-bezier(.25,.8,.25,1),border-color .28s;overflow:hidden}
     .pf:hover{transform:translate3d(0,-6px,0);box-shadow:var(--elev-3);border-color:rgba(185,155,107,.35)}
     .pf-img{width:100%;aspect-ratio:1/1;border-radius:12px;object-fit:cover;background:#e2e8f0;margin:0}
     .pf-brand{font-size:12px;letter-spacing:.4px;text-transform:uppercase;color:var(--brand-primary);font-weight:700}
@@ -116,6 +180,7 @@
     .fg{fill:none;stroke:var(--brand-primary);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .6s}
     .val{position:absolute;inset:0;display:grid;place-items:center;font-weight:800;font-size:13px}
 
+    /* Featured / Similar */
     .ref-card-grid{display:grid;grid-template-columns:1fr;gap:28px;align-items:start}
     @media(min-width:920px){.ref-card-grid{grid-template-columns:300px 1fr;gap:40px}}
     .ref-card-image{width:100%;max-width:300px;margin:0 auto;aspect-ratio:1/1;border-radius:20px;object-fit:cover}
@@ -138,11 +203,13 @@
     .carousel-btn.prev{left:-22px}.carousel-btn.next{right:-22px}
     @media(max-width:767px){.carousel-btn.prev{left:-10px}.carousel-btn.next{right:-10px}}
 
-    #featured h3,#results h3,#similar h3,#upload-section h3{font-weight:800;font-size:22px;margin-bottom:12px;font-family:'Playfair Display',serif}
+    #featured h3,#results h3,#similar h3,#upload-section h3{
+      font-weight:800;font-size:var(--fs-xl);margin-bottom:12px;font-family:'Playfair Display',serif
+    }
     .featured-wrap{position:relative}
-    .featured-grid{display:grid;grid-template-columns:1fr;gap:18px}
+    .featured-grid{display:grid;grid-template-columns:1fr;gap:18px; container-type:inline-size; container-name:cards;}
     @media(min-width:640px){.featured-grid{grid-template-columns:repeat(3,1fr)}}
-    .fc{display:flex;flex-direction:column;gap:12px;padding:14px;border:1px solid var(--border);border-radius:16px;background:#fff;box-shadow:var(--elev-1);cursor:pointer}
+    .fc{display:flex;flex-direction:column;gap:12px;padding:14px;border:1px solid var(--border);border-radius:16px;background:var(--card);box-shadow:var(--elev-1);cursor:pointer}
     .fc:hover{box-shadow:var(--elev-3);transform:translateY(-2px);transition:all .2s}
     .fc-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
     .fc-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:800;color:#222}
@@ -163,31 +230,33 @@
     .fab{position:fixed;right:24px;bottom:24px;width:56px;height:56px;border:none;border-radius:999px;display:grid;place-items:center;color:#fff;background:var(--text);box-shadow:var(--elev-3);cursor:pointer;opacity:0;transform:translateY(12px) scale(.96);pointer-events:none;transition:opacity .25s,transform .25s;z-index:9998}
     .fab.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
 
-    [data-debug-outline] *{outline:1px dashed rgba(100,116,139,.35)}
+    @media (prefers-reduced-motion: reduce){
+      *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; scroll-behavior:auto !important; }
+    }
   </style>
 </head>
 <body>
 <main class="landing" id="appRoot">
   <div class="card"><div class="card-inner">
     <div class="top">
-      <div class="brand">
-        <img class="logo" src="/assets/logo.svg" alt="simscent" width="32" height="32">simscent
-      </div>
+      <button class="brand" id="brandHome" aria-label="Ana sayfa">
+        <img class="logo" src="/assets/logo.svg" alt="" width="32" height="32"><span>simscent</span>
+      </button>
       <button class="cta" id="signupBtn">Kayıt Ol</button>
     </div>
 
-    <section id="hero" class="hero">
+    <section id="hero" class="hero" aria-labelledby="heroTitle">
       <div class="shot-wrap">
         <div class="blob"></div>
         <img id="heroShot" class="shot" src="https://images.unsplash.com/photo-1617839400561-d55457a29da2?q=80&w=930&auto=format&fit=crop" alt="parfüm"/>
         <div class="blob2"></div>
       </div>
       <div>
-        <h1 class="title">İmza Kokunu<br/>Keşfet</h1>
+        <h1 class="title" id="heroTitle">İmza Kokunu<br/>Keşfet</h1>
         <p class="desc">Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul.</p>
 
         <div class="search-wrap">
-          <div class="searchbar">
+          <div class="searchbar" role="search">
             <input id="searchInput" type="text" placeholder="Bir parfüm ara, örn: 'Aventus'" autocomplete="off" aria-label="Parfüm ara"/>
             <button id="searchBtn" class="icon-btn" title="Ara" aria-label="Ara">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -216,8 +285,8 @@
       </div>
     </section>
 
-    <section class="section" id="results">
-      <h3>Sonuçlar</h3>
+    <section class="section" id="results" aria-labelledby="resultsTitle">
+      <h3 id="resultsTitle">Sonuçlar</h3>
       <div id="refDetailOut">
         <div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px">
           <h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Keşfetmeye Başla</h4>
@@ -226,44 +295,44 @@
       </div>
     </section>
 
-    <section class="section" id="upload-section" style="display:none">
-      <h3>Benzerlik Kriterleri</h3>
+    <section class="section" id="upload-section" style="display:none" aria-labelledby="prefsTitle">
+      <h3 id="prefsTitle">Benzerlik Kriterleri</h3>
       <div class="card" style="box-shadow:none;border:1px solid var(--border);padding:16px; overflow: visible;">
         <div id="prefs" class="pref-grid">
           <div class="row active" data-pref="usage">
             <div class="lbl-wrap">
               <span class="lbl">Kullanım Amacı</span>
-              <span class="tooltip-trigger" data-tooltip="Parfümün giyileceği ortamı tanımlar. Örn: Günlük, iş, gece.">?</span>
+              <span class="tooltip-trigger" tabindex="0" data-tooltip="Parfümün giyileceği ortamı tanımlar. Örn: Günlük, iş, gece.">?</span>
             </div>
-            <div class="toggle active"><div class="dot"></div></div>
+            <div class="toggle active" role="button" aria-pressed="true" aria-label="Kullanım Amacı geçişi"><div class="dot"></div></div>
           </div>
           <div class="row active" data-pref="season">
             <div class="lbl-wrap">
               <span class="lbl">Mevsim</span>
-              <span class="tooltip-trigger" data-tooltip="Parfümün uygun olduğu mevsimi belirtir. Örn: Yaz, kış, ilkbahar.">?</span>
+              <span class="tooltip-trigger" tabindex="0" data-tooltip="Parfümün uygun olduğu mevsimi belirtir. Örn: Yaz, kış, ilkbahar.">?</span>
             </div>
-            <div class="toggle active"><div class="dot"></div></div>
+            <div class="toggle active" role="button" aria-pressed="true" aria-label="Mevsim geçişi"><div class="dot"></div></div>
           </div>
           <div class="row active" data-pref="style">
             <div class="lbl-wrap">
               <span class="lbl">Stil</span>
-              <span class="tooltip-trigger" data-tooltip="Parfümün genel karakterini ve tarzını ifade eder. Örn: Klasik, modern, maskülen.">?</span>
+              <span class="tooltip-trigger" tabindex="0" data-tooltip="Parfümün genel karakterini ve tarzını ifade eder. Örn: Klasik, modern, maskülen.">?</span>
             </div>
-            <div class="toggle active"><div class="dot"></div></div>
+            <div class="toggle active" role="button" aria-pressed="true" aria-label="Stil geçişi"><div class="dot"></div></div>
           </div>
           <div class="row active" data-pref="family">
             <div class="lbl-wrap">
               <span class="lbl">Koku Ailesi</span>
-              <span class="tooltip-trigger" data-tooltip="Parfümün ana koku grubunu belirtir. Örn: Odunsu, narenciye, çiçeksi.">?</span>
+              <span class="tooltip-trigger" tabindex="0" data-tooltip="Parfümün ana koku grubunu belirtir. Örn: Odunsu, narenciye, çiçeksi.">?</span>
             </div>
-            <div class="toggle active"><div class="dot"></div></div>
+            <div class="toggle active" role="button" aria-pressed="true" aria-label="Koku Ailesi geçişi"><div class="dot"></div></div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="similar" style="display:none">
-      <h3>Benzeri Parfümler</h3>
+    <section class="section" id="similar" style="display:none" aria-labelledby="similarTitle">
+      <h3 id="similarTitle">Benzeri Parfümler</h3>
       <div id="similarOut"></div>
     </section>
 
@@ -274,6 +343,9 @@
 <button id="fabTop" class="fab" aria-label="Yukarı kaydır" title="Yukarı">
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5l0 14M5.5 11.5L12 5l6.5 6.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </button>
+
+<!-- Tooltip portal (prevents clipping) -->
+<div id="_tt" role="tooltip" aria-hidden="true"></div>
 
 <script>
 'use strict';
@@ -338,6 +410,14 @@
     throw new Error('Geçersiz JSON');
   }
 
+  // lazy-load Fuse only when needed
+  async function ensureFuse(){
+    if(state.fuse) return;
+    if(!window.Fuse){
+      await import('https://cdn.jsdelivr.net/npm/fuse.js@7.0.0/dist/fuse.min.js');
+    }
+    buildFuse();
+  }
   function buildFuse(){ if(!state.data.length){ state.fuse=null; return; }
     state.fuse=new Fuse(state.data,{includeScore:true,threshold:0.38,ignoreLocation:true,keys:[
       {name:'fullName',weight:0.6},{name:'Brand',weight:0.35},{name:'Concentration',weight:0.5},{name:'Release Year',weight:0.25},{name:'Fragrance Name',weight:0.6},{name:'_search',weight:1.0}
@@ -346,37 +426,21 @@
 
   function vecSim(a,b,keys){ let dot=0,n1=0,n2=0; for(const k of keys){ const x=Number(a[k]||0)||0, y=Number(b[k]||0)||0; dot+=x*y; n1+=x*x; n2+=y*y; } return (!n1||!n2)?0:dot/(Math.sqrt(n1)*Math.sqrt(n2)); }
   function topKey(p,keys){ let best=null,max=-1; for(const k of keys){ const v=Number(p[k]||0); if(v>max){max=v; best=k;} } return max>0.01?best:null; }
-
   function usedFamilyKeys(data){ return KEYS.family.filter(k => data.some(p => Number(p[k]||0) > 0)); }
   function cosine(v1,v2){
     let dot=0,n1=0,n2=0; const L=Math.min(v1.length,v2.length);
-    for(let i=0;i<L;i++){ const a=+v1[i]||0, b=+v2[i]||0; dot+=a*b; n1+=a*a; n2+=b*b;
-    }
-    if(!n1||!n2) return 0;
-    return dot/(Math.sqrt(n1)*Math.sqrt(n2));
+    for(let i=0;i<L;i++){ const a=+v1[i]||0, b=+v2[i]||0; dot+=a*b; n1+=a*a; n2+=b*b; }
+    if(!n1||!n2) return 0; return dot/(Math.sqrt(n1)*Math.sqrt(n2));
   }
 
   function buildFeaturedIndex(){
     const cats = usedFamilyKeys(state.data);
     const N = state.data.length;
-    if(!N || cats.length<2){
-      state.featured = { pairs:[], topMap:new Map(), topList:[], picks:[], page: 0 };
-      return;
-    }
+    if(!N || cats.length<2){ state.featured = { pairs:[], topMap:new Map(), topList:[], picks:[], page: 0 }; return; }
     const vectors = new Map();
-    for(const c of cats){
-      const arr = new Array(N);
-      for(let i=0;i<N;i++) arr[i] = Number(state.data[i][c]||0) || 0;
-      vectors.set(c, arr);
-    }
+    for(const c of cats){ const arr = new Array(N); for(let i=0;i<N;i++) arr[i] = Number(state.data[i][c]||0) || 0; vectors.set(c, arr); }
     const allPairs=[];
-    for(let i=0;i<cats.length;i++){
-      for(let j=i+1;j<cats.length;j++){
-        const a=cats[i], b=cats[j];
-        const sim = cosine(vectors.get(a), vectors.get(b));
-        allPairs.push({a,b,sim});
-      }
-    }
+    for(let i=0;i<cats.length;i++){ for(let j=i+1;j<cats.length;j++){ const a=cats[i], b=cats[j]; const sim = cosine(vectors.get(a), vectors.get(b)); allPairs.push({a,b,sim}); } }
     allPairs.sort((x,y)=>y.sim-x.sim);
     let topPairs = allPairs.filter(p=>isFinite(p.sim) && p.sim>=0.35).slice(0,10);
     if(topPairs.length<3) topPairs = allPairs.filter(p=>p.sim>=0.20).slice(0,10);
@@ -384,22 +448,15 @@
 
     const topMap=new Map(), topList=[];
     for(const {a,b} of topPairs){
-      let scored = state.data.map((p,idx)=>{
-        const score=(+p[a]||0)+(+p[b]||0);
-        return {idx, perfume:p, score};
-      }).filter(x=>x.score>0).sort((u,v)=>v.score-u.score).slice(0,20);
-
+      let scored = state.data.map((p,idx)=>{ const score=(+p[a]||0)+(+p[b]||0); return {idx, perfume:p, score}; })
+        .filter(x=>x.score>0).sort((u,v)=>v.score-u.score).slice(0,20);
       if(scored.length===0){
-        scored = state.data.map((p,idx)=>{
-          const ma=(p['Main Accords']||'').toLowerCase();
+        scored = state.data.map((p,idx)=>{ const ma=(p['Main Accords']||'').toLowerCase();
           const hit=(ma.includes(a.toLowerCase())?1:0)+(ma.includes(b.toLowerCase())?1:0);
           return {idx, perfume:p, score:hit};
         }).filter(x=>x.score>0).sort((u,v)=>v.score-u.score).slice(0,20);
       }
-
-      const key=`${a}|${b}`;
-      topMap.set(key, scored);
-      topList.push({ key, a, b, items: scored });
+      const key=`${a}|${b}`; topMap.set(key, scored); topList.push({ key, a, b, items: scored });
     }
     state.featured = { pairs: topPairs, topMap, topList, picks: [], page: 0 };
   }
@@ -408,22 +465,15 @@
     if(!pairs.length){ state.featured.picks = []; return; }
     const pool = pairs.slice(0, 10);
     const start = (page * count) % pool.length;
-    const chosenPairs = [];
-    for(let i=0;i<count;i++) chosenPairs.push(pool[(start + i) % pool.length]);
+    const chosenPairs = []; for(let i=0;i<count;i++) chosenPairs.push(pool[(start + i) % pool.length]);
 
     const picks = [];
     for(let i=0;i<chosenPairs.length;i++){
-      const p = chosenPairs[i];
-      const key = `${p.a}|${p.b}`;
-      const items = topMap.get(key) || [];
-      const len = Math.min(items.length, 20);
+      const p = chosenPairs[i]; const key = `${p.a}|${p.b}`; const items = topMap.get(key) || []; const len = Math.min(items.length, 20);
       if(len===0){ picks.push({key, a:p.a, b:p.b, choice:null, list:[], rank:null}); continue; }
       let idx = Math.floor(Math.random()*len);
-      for(let tries=0; tries<4 && picks.some(px => px.choice?.idx === items[idx]?.idx); tries++){
-        idx = Math.floor(Math.random()*len);
-      }
-      const choice = items[idx];
-      picks.push({ key, a: p.a, b: p.b, choice, list: items, rank: idx + 1 });
+      for(let tries=0; tries<4 && picks.some(px => px.choice?.idx === items[idx]?.idx); tries++){ idx = Math.floor(Math.random()*len); }
+      const choice = items[idx]; picks.push({ key, a: p.a, b: p.b, choice, list: items, rank: idx + 1 });
     }
     state.featured.picks = picks;
   }
@@ -448,10 +498,7 @@
         </div>
         <div class='pf-name' style="margin-top:4px">${p.fullName||''}</div>
       </div>`;
-    if(!isRef){
-      el.style.cursor='pointer';
-      on(el,'click',() => setReferenceAndFindSimilar(p, true));
-    }
+    if(!isRef){ el.style.cursor='pointer'; on(el,'click',() => setReferenceAndFindSimilar(p, true)); }
     return el;
   }
 
@@ -465,13 +512,9 @@
     let subDetailsHTML = '';
     const perfumerLinks = perfumers.map(name => `<span class='perfumer-link' data-perfumer='${encodeURIComponent(name)}'>${name}</span>`).join(', ');
 
-    if (releaseYear && perfumers.length > 0) {
-      subDetailsHTML = `<p class='ref-card-sub'>${releaseYear} • ${perfumerLinks}</p>`;
-    } else if (releaseYear) {
-      subDetailsHTML = `<p class='ref-card-sub'>${releaseYear}</p>`;
-    } else if (perfumers.length > 0) {
-      subDetailsHTML = `<p class='ref-card-sub'>${perfumerLinks}</p>`;
-    }
+    if (releaseYear && perfumers.length > 0) subDetailsHTML = `<p class='ref-card-sub'>${releaseYear} • ${perfumerLinks}</p>`;
+    else if (releaseYear) subDetailsHTML = `<p class='ref-card-sub'>${releaseYear}</p>`;
+    else if (perfumers.length > 0) subDetailsHTML = `<p class='ref-card-sub'>${perfumerLinks}</p>`;
 
     const topUsage=topKey(p,KEYS.usage), topSeason=topKey(p,KEYS.season), topStyle=topKey(p,KEYS.style);
     const tags=[topUsage,topSeason,topStyle].filter(Boolean);
@@ -548,10 +591,7 @@
     const simSec = q('#similar');
     const container = q('#similarOut');
     container.innerHTML = '';
-    if(!sims.length){
-      simSec.style.display = 'none';
-      return;
-    }
+    if(!sims.length){ simSec.style.display = 'none'; return; }
     const carouselContainer=document.createElement('div'); carouselContainer.className='carousel-container';
     carouselContainer.innerHTML=`
       <div class="carousel-window"></div>
@@ -594,90 +634,96 @@
     header.appendChild(backBtn);
     refOut.appendChild(header);
 
-    if (!results.length) {
-        refOut.innerHTML += '<p>Bu kriter için sonuç bulunamadı.</p>';
-        return;
-    }
+    if (!results.length) { refOut.innerHTML += '<p>Bu kriter için sonuç bulunamadı.</p>'; return; }
 
     const grid = document.createElement('div');
     grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;';
 
     results.forEach(p => {
-        const year = p['Release Year'] || '';
-        const img = p['Image URL'] || `https://placehold.co/240x240/e2e8f0/64748b?text=${encodeURIComponent((p.Brand || '?').slice(0, 1))}`;
-        const el = document.createElement('div');
-        el.className = 'pf';
-        el.style.cursor = 'pointer';
-        el.innerHTML = `
-          <img class='pf-img' src='${img}' alt='${p.fullName}' loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/240x240/e2e8f0/64748b?text=Hata'"/>
-          <div>
-            <div style='display:flex;justify-content:space-between;align-items:flex-start;gap:8px'>
-              <div class='pf-brand brand-link' data-brand="${encodeURIComponent(p.Brand || '')}">${p.Brand || ''}</div>
-              ${year ? `<div class='badge' style="background:var(--shell); color: var(--text); border:1px solid var(--border);">${year}</div>` : ''}
-            </div>
-            <div class='pf-name' style="margin-top:4px">${p.fullName || ''}</div>
-          </div>`;
-        on(el, 'click', () => setReferenceAndFindSimilar(p, true));
-        grid.appendChild(el);
+      const year = p['Release Year'] || '';
+      const img = p['Image URL'] || `https://placehold.co/240x240/e2e8f0/64748b?text=${encodeURIComponent((p.Brand || '?').slice(0, 1))}`;
+      const el = document.createElement('div');
+      el.className = 'pf';
+      el.style.cursor = 'pointer';
+      el.innerHTML = `
+        <img class='pf-img' src='${img}' alt='${p.fullName}' loading="lazy"
+             onerror="this.onerror=null;this.src='https://placehold.co/240x240/e2e8f0/64748b?text=Hata'"/>
+        <div>
+          <div style='display:flex;justify-content:space-between;align-items:flex-start;gap:8px'>
+            <div class='pf-brand brand-link' data-brand="${encodeURIComponent(p.Brand || '')}">${p.Brand || ''}</div>
+            ${year ? `<div class='badge' style="background:var(--shell); color: var(--text); border:1px solid var(--border);">${year}</div>` : ''}
+          </div>
+          <div class='pf-name' style="margin-top:4px">${p.fullName || ''}</div>
+        </div>`;
+      on(el, 'click', () => setReferenceAndFindSimilar(p, true));
+      grid.appendChild(el);
     });
     refOut.appendChild(grid);
     q('#results').scrollIntoView({ behavior: 'smooth' });
   }
 
+  /* ---------- Category routes ---------- */
   function showPerfumerResults(name) {
     _renderCategoryGrid({
       title: `${name} Koleksiyonu`,
-      results: state.data.filter(p => p.Perfumer && p.Perfumer.toLowerCase().includes(name.toLowerCase())),
+      results: state.data.filter(p => (p.Perfumer || '').toLowerCase().includes(name.toLowerCase())),
       onBack: () => findSimilar(false)
     });
   }
-
   function showBrandResults(brandName) {
     _renderCategoryGrid({
       title: `${brandName} Koleksiyonu`,
-      results: state.data.filter(p => p.Brand && p.Brand.toLowerCase() === brandName.toLowerCase()),
+      results: state.data.filter(p => (p.Brand || '').toLowerCase() === brandName.toLowerCase()),
       onBack: () => findSimilar(false)
     });
   }
-
   function showAccordResults(accordName) {
     const results = state.data
-      .filter(p => p['Main Accords'] && p['Main Accords'].toLowerCase().includes(accordName.toLowerCase()))
-      .sort((a, b) => (b[accordName] || 0) - (a[accordName] || 0))
+      .filter(p => (p['Main Accords'] || '').toLowerCase().includes(accordName.toLowerCase()))
+      .sort((a, b) => (+b[accordName] || 0) - (+a[accordName] || 0))
       .slice(0, 50);
     _renderCategoryGrid({
       title: `'${ACCORD_TR[accordName.toLowerCase()] || accordName}' Akorduna Sahip Parfümler`,
-      results: results,
+      results,
       onBack: () => findSimilar(false)
     });
   }
-
   function showNoteResults(noteName) {
     _renderCategoryGrid({
       title: `'${noteName}' Notalı Parfümler`,
-      results: state.data.filter(p => p['Fragrance Notes'] && p['Fragrance Notes'].toLowerCase().includes(noteName.toLowerCase())),
+      results: state.data.filter(p => (p['Fragrance Notes'] || '').toLowerCase().includes(noteName.toLowerCase())),
       onBack: () => findSimilar(false)
     });
   }
 
+  /* ---------- Featured ---------- */
   function renderFeatured(){
-    const sec = q('#featured'); const grid = q('#featuredGrid');
-    grid.innerHTML = ''; const picks = state.featured.picks || []; sec.style.display = 'block';
+    const sec = q('#featured');
+    const grid = q('#featuredGrid');
+    grid.innerHTML = '';
+    const picks = state.featured.picks || [];
+    sec.style.display = 'block';
+
     if(!picks.length){
       grid.innerHTML = `<div class="fc" style="grid-column: 1/-1;">
-        <div class="fc-head"><div>
-          <div class="fc-title">Öne Çıkan Koleksiyonlar</div>
-          <div class="fc-sub">Uygun kategori çifti bulunamadı. Lütfen başka bir JSON deneyin.</div>
-        </div></div></div>`;
+        <div class="fc-head">
+          <div>
+            <div class="fc-title">Öne Çıkan Koleksiyonlar</div>
+            <div class="fc-sub">Uygun kategori çifti bulunamadı. Lütfen başka bir JSON deneyin.</div>
+          </div>
+        </div>
+      </div>`;
       return;
     }
+
     for(const p of picks){
       const perf = p.choice?.perfume;
       const img = perf?.['Image URL'] || `https://placehold.co/144x144/e2e8f0/64748b?text=${encodeURIComponent((perf?.Brand||'?').slice(0,1))}`;
       const title = `${(FAMILY_TR?.[p.a]||p.a)} & ${(FAMILY_TR?.[p.b]||p.b)}`;
       const brandName = perf ? (perf.Brand||'') : '—';
       const fragName = perf ? (perf.fullName||'Seçim bulunamadı') : 'Seçim bulunamadı';
-      const el = document.createElement('div'); el.className='fc';
+      const el = document.createElement('div');
+      el.className='fc';
       el.innerHTML = `
         <div class="fc-head">
           <div>
@@ -686,64 +732,121 @@
           </div>
         </div>
         <div class="fc-body">
-          <img class="fc-img" src="${img}" alt="${fragName}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/144x144/e2e8f0/64748b?text=?'"/>
+          <img class="fc-img" src="${img}" alt="${fragName}" loading="lazy"
+               onerror="this.onerror=null;this.src='https://placehold.co/144x144/e2e8f0/64748b?text=?'"/>
           <div>
             <div class="pf-brand brand-link" style="margin-bottom:4px" data-brand="${encodeURIComponent(brandName)}">${brandName}</div>
             <div class="pf-name">${fragName}</div>
-            <div class="fc-sub" style="margin-top:4px"><small>Top 20 içinde <b>${p.rank}.</b> sıradaki öneri</small></div>
+            <div class="fc-sub" style="margin-top:4px"><small>Top 20 içinde <b>${p.rank ?? '-'}</b>. sıradaki öneri</small></div>
           </div>
         </div>`;
-      el.addEventListener('click', ()=>{ if(!perf) return; setReferenceAndFindSimilar(perf, true); });
+      if(perf){ el.addEventListener('click', ()=> setReferenceAndFindSimilar(perf, true)); }
       grid.appendChild(el);
     }
   }
 
+  /* ---------- Event wiring & UX ---------- */
   function wireEvents(){
-    on(q('.brand'), 'click', resetToHome);
+    // brand home
+    on(q('#brandHome'), 'click', resetToHome);
 
+    // preference toggles with ARIA sync
     qa('#prefs .row').forEach(row => {
       on(row, 'click', (e) => {
         if (e.target.closest('.tooltip-trigger')) return;
-        
         row.classList.toggle('active');
         const toggle = row.querySelector('.toggle');
-        if (toggle) toggle.classList.toggle('active');
-        
+        if (toggle){
+          toggle.classList.toggle('active');
+          toggle.setAttribute('aria-pressed', toggle.classList.contains('active') ? 'true' : 'false');
+        }
         findSimilar(false);
       });
     });
 
-    const input=q('#searchInput'); const btn=q('#searchBtn'); const suggest=q('#suggestions'); let deb=null;
-    on(input,'input',()=>{
+    // search & suggestions
+    const input=q('#searchInput');
+    const btn=q('#searchBtn');
+    const suggest=q('#suggestions');
+    let deb=null, selIndex=-1;
+
+    on(input,'input', async ()=>{
       clearTimeout(deb);
-      deb=setTimeout(()=>{
+      deb=setTimeout(async ()=>{
         const qv=input.value.trim();
-        if(!qv||!state.fuse){ suggest.style.display='none'; return;}
-        const res=state.fuse.search(qv).slice(0,8);
-        if(!res.length){suggest.style.display='none';return;}
+        if(!qv){ suggest.style.display='none'; return; }
+        await ensureFuse();
+        const res=state.fuse?.search(qv).slice(0,8) || [];
+        if(!res.length){ suggest.style.display='none'; return; }
         suggest.innerHTML=res.map(r=>{
-          const it=r.item; const t=thumbURL(it);
+          const it=r.item;
           const yr= it['Release Year']!=null && it['Release Year']!=='' ? String(it['Release Year']) : '';
           const right=(it.Brand||yr)? `(${[it.Brand, yr].filter(Boolean).join(', ')})` : '';
           return `<div class='s-item' data-index='${r.refIndex}' role="option" aria-selected="false" aria-label='${it.fullName} ${right}'>
-            <img class='s-thumb' src='${t}' alt='' loading='lazy' onerror="this.onerror=null;this.src='https://placehold.co/40x40/e2e8f0/64748b?text=?'"/>
+            <img class='s-thumb' src='${thumbURL(it)}' alt='' loading='lazy'
+                 onerror="this.onerror=null;this.src='https://placehold.co/40x40/e2e8f0/64748b?text=?'"/>
             <div class='s-name'>${it.fullName}</div>
             <div class='s-brand'>${right}</div>
           </div>`;
         }).join('');
         suggest.style.display='block';
+        selIndex = -1;
       },140);
     });
-    on(suggest,'click',e=>{ const el=e.target.closest('.s-item'); if(!el) return; const idx = parseInt(el.dataset.index, 10); if(!isNaN(idx) && state.data[idx]) { setReferenceAndFindSimilar(state.data[idx], true); } suggest.style.display='none'; });
-    on(document,'click',e=>{ if(!suggest.contains(e.target) && e.target!==input) suggest.style.display='none'; });
-    on(input,'keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); suggest.style.display='none'; findSimilar(); }});
-    on(btn,'click',()=>{ suggest.style.display='none'; findSimilar(); });
 
+    on(suggest,'click',e=>{
+      const el=e.target.closest('.s-item');
+      if(!el) return;
+      const idx = parseInt(el.dataset.index, 10);
+      if(!isNaN(idx) && state.data[idx]){
+        setReferenceAndFindSimilar(state.data[idx], true);
+      }
+      suggest.style.display='none';
+      selIndex = -1;
+    });
+
+    on(document,'click',e=>{
+      if(!suggest.contains(e.target) && e.target!==input) suggest.style.display='none';
+    });
+
+    // keyboard nav for suggestions
+    on(input,'keydown',e=>{
+      if(suggest.style.display!=='block') return;
+      const items = qa('.s-item', suggest);
+      if(!items.length) return;
+
+      if(e.key==='ArrowDown'){
+        e.preventDefault();
+        selIndex = (selIndex + 1) % items.length;
+        items.forEach(i=>i.setAttribute('aria-selected','false'));
+        items[selIndex].setAttribute('aria-selected','true');
+        items[selIndex].scrollIntoView({block:'nearest'});
+      } else if(e.key==='ArrowUp'){
+        e.preventDefault();
+        selIndex = (selIndex - 1 + items.length) % items.length;
+        items.forEach(i=>i.setAttribute('aria-selected','false'));
+        items[selIndex].setAttribute('aria-selected','true');
+        items[selIndex].scrollIntoView({block:'nearest'});
+      } else if(e.key==='Enter'){
+        if(selIndex>=0){ e.preventDefault(); items[selIndex].click(); }
+      } else if(e.key==='Escape'){
+        suggest.style.display='none';
+        selIndex = -1;
+      }
+    });
+
+    on(btn,'click', async ()=>{
+      await ensureFuse();
+      suggest.style.display='none';
+      findSimilar();
+    });
+
+    // semantic links (brand / perfumer / accord / note)
     const linkHandlers = {
       '.perfumer-link': (el) => showPerfumerResults(decodeURIComponent(el.dataset.perfumer)),
-      '.brand-link': (el) => showBrandResults(decodeURIComponent(el.dataset.brand)),
-      '.accord-link': (el) => showAccordResults(decodeURIComponent(el.dataset.accord)),
-      '.note-link': (el) => showNoteResults(decodeURIComponent(el.dataset.note)),
+      '.brand-link':    (el) => showBrandResults(decodeURIComponent(el.dataset.brand)),
+      '.accord-link':   (el) => showAccordResults(decodeURIComponent(el.dataset.accord)),
+      '.note-link':     (el) => showNoteResults(decodeURIComponent(el.dataset.note)),
     };
     on(q('#appRoot'), 'click', e => {
       for (const selector in linkHandlers) {
@@ -756,37 +859,78 @@
       }
     });
 
+    // actions
     on(q('#surpriseBtn'),'click', handleSurprise);
     on(q('#signupBtn'),'click',()=>showToast('Yakında!','info'));
 
+    // featured pager
     const prev=q('#featPrev'), next=q('#featNext');
     on(prev,'click',()=>{ const {pairs}=state.featured; const count=3; const pages=Math.max(1, Math.ceil(Math.min(pairs.length,10)/count)); state.featured.page = (state.featured.page - 1 + pages) % pages; pickFeatured(count); renderFeatured(); });
     on(next,'click',()=>{ const {pairs}=state.featured; const count=3; const pages=Math.max(1, Math.ceil(Math.min(pairs.length,10)/count)); state.featured.page = (state.featured.page + 1) % pages; pickFeatured(count); renderFeatured(); });
 
-    const fab=q('#fabTop');
-    const toggleFab=()=>{ if(window.scrollY>280){ fab.classList.add('show'); } else { fab.classList.remove('show'); } };
+    // fab show/hide with debounce
+    const fab = q('#fabTop');
+    let fabT;
+    const toggleFab=()=>{ clearTimeout(fabT); fabT=setTimeout(()=>{ if(window.scrollY>280){ fab.classList.add('show'); } else { fab.classList.remove('show'); } }, 80); };
     on(window,'scroll',toggleFab,{passive:true}); toggleFab();
     on(fab,'click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+
+    // tooltip portal logic
+    (function tooltips(){
+      const tip = document.getElementById('_tt');
+      let hideT;
+      function show(el){
+        clearTimeout(hideT);
+        tip.textContent = el.getAttribute('data-tooltip') || '';
+        tip.setAttribute('aria-hidden','false');
+        // Force paint to measure
+        tip.style.transform = 'translate(-9999px,-9999px)';
+        requestAnimationFrame(()=>{
+          const r = el.getBoundingClientRect();
+          const pad = 8;
+          const x = Math.max(8, Math.min(window.innerWidth - tip.offsetWidth - 8, r.left));
+          const y = Math.max(8, r.top - tip.offsetHeight - pad);
+          tip.style.transform = `translate(${x}px, ${y}px)`;
+        });
+      }
+      function hide(){ hideT = setTimeout(()=>{ tip.setAttribute('aria-hidden','true'); tip.style.transform = 'translate(-9999px,-9999px)'; }, 60); }
+      on(document,'mouseover',e=>{ const t=e.target.closest('.tooltip-trigger'); if(t) show(t); });
+      on(document,'focusin',e=>{ const t=e.target.closest('.tooltip-trigger'); if(t) show(t); });
+      on(document,'mouseout',e=>{ if(e.target.closest('.tooltip-trigger')) hide(); });
+      on(document,'focusout',e=>{ if(e.target.closest('.tooltip-trigger')) hide(); });
+    })();
+
+    // real routing for /p/:brand/:frag
+    window.addEventListener('popstate', handleRealRouting);
   }
 
-  function handleRealRouting(){
+  /* ---------- Routing ---------- */
+  async function handleRealRouting(){
     const path = location.pathname;
-    const regex = /^\/p\/([^/]+)\/([^/]+)/;
-    const match = path.match(regex);
-    if (!match) { if (state.currentRef) { resetToHome(false); } return; }
+    const match = /^\/p\/([^/]+)\/([^/]+)/.exec(path);
+    if (!match){
+      if (state.currentRef) resetToHome(false);
+      return;
+    }
     const [, brandSlug, fragSlug] = match;
     const perfumeName = decodeURIComponent(fragSlug).replace(/-/g, ' ');
     if (state.currentRef && perfumeName === state.currentRef.fullName) return;
-    if (state.fuse) {
-      const result = state.fuse.search(perfumeName);
-      if (result.length > 0 && result[0].item) { log(`Path'ten bulundu: ${perfumeName}`); setReferenceAndFindSimilar(result[0].item, true); }
-      else { log.warn(`Path'ten parfüm bulunamadı: ${perfumeName}`); resetToHome(); }
-    } else { setTimeout(handleRealRouting, 200); }
+    await ensureFuse();
+    const result = state.fuse?.search(perfumeName) || [];
+    if (result.length > 0 && result[0].item){
+      setReferenceAndFindSimilar(result[0].item, true);
+    } else {
+      log.warn(`Path'ten parfüm bulunamadı: ${perfumeName}`);
+      resetToHome();
+    }
   }
 
+  /* ---------- App logic ---------- */
   function setReferenceAndFindSimilar(ref, scroll = true) {
-    if (!ref) { showToast('Geçerli bir parfüm seçilemedi.', 'err'); return; }
-    state.currentRef = ref; q('#searchInput').value = ref.fullName;
+    if (!ref){ showToast('Geçerli bir parfüm seçilemedi.','err'); return; }
+    state.currentRef = ref;
+    q('#searchInput').value = ref.fullName;
+
     document.title = `${ref.fullName} — simscent`;
     setMeta('description', `${ref.Brand} ${ref.fullName} notalar, akordlar ve benzer parfümler.`);
 
@@ -801,12 +945,12 @@
     showPrefs();
 
     const prefs = {
-      usage: q('.row[data-pref="usage"]').classList.contains('active'),
+      usage:  q('.row[data-pref="usage"]').classList.contains('active'),
       season: q('.row[data-pref="season"]').classList.contains('active'),
-      style: q('.row[data-pref="style"]').classList.contains('active'),
+      style:  q('.row[data-pref="style"]').classList.contains('active'),
       family: q('.row[data-pref="family"]').classList.contains('active')
     };
-    
+
     const sims = similarities(ref, prefs).slice(0, 10);
     render(ref, sims);
     if (scroll) q('#results').scrollIntoView({ behavior: 'smooth' });
@@ -815,29 +959,32 @@
     renderFeatured();
   }
 
-  function findSimilar(scroll=true){
+  async function findSimilar(scroll=true){
     if(!state.data.length){ return; }
     const qv=q('#searchInput').value.trim();
-    if (!qv && state.currentRef) { setReferenceAndFindSimilar(state.currentRef, scroll); return; }
-    if (qv) {
+    if (!qv && state.currentRef){ setReferenceAndFindSimilar(state.currentRef, scroll); return; }
+    if (qv){
+      await ensureFuse();
       const searchResult = state.fuse?.search(qv);
       const ref = searchResult?.[0]?.item;
       if(!ref){ showToast('Parfüm bulunamadı. Farklı bir arama deneyin.','err'); return; }
       setReferenceAndFindSimilar(ref, scroll);
       return;
     }
-    if (!state.currentRef) showToast('Lütfen bir parfüm arayın veya "Beni Şaşırt!" butonunu kullanın.', 'info');
+    if (!state.currentRef) showToast('Lütfen bir parfüm arayın veya "Beni Şaşırt!" butonunu kullanın.','info');
   }
 
   function handleSurprise(){
     if(!state.data.length){ return; }
-    const idx=Math.floor(Math.random()*state.data.length); const p=state.data[idx];
+    const idx=Math.floor(Math.random()*state.data.length);
+    const p=state.data[idx];
     setHeroFromPerfume(p);
     setReferenceAndFindSimilar(p, true);
   }
 
   function resetToHome(pushState = true) {
-    state.currentRef = null; q('#searchInput').value = '';
+    state.currentRef = null;
+    q('#searchInput').value = '';
     q('#upload-section').style.display = 'none';
     q('#similar').style.display = 'none';
     document.title = 'simscent — Ana Sayfa';
@@ -847,62 +994,105 @@
 
     if (state.data.length > 0) {
       const idx = Math.floor(Math.random() * state.data.length);
-      const rnd = state.data[idx];
-      setHeroFromPerfume(rnd);
+      setHeroFromPerfume(state.data[idx]);
     }
-    q('#refDetailOut').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Koleksiyon Yüklendi</h4><p style="color:var(--muted);margin-top:4px">Bir parfüm arayabilir veya "Beni Şaşırt!" butonunu kullanabilirsiniz.</p></div>`;
+    q('#refDetailOut').innerHTML = `
+      <div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px">
+        <h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Koleksiyon Yüklendi</h4>
+        <p style="color:var(--muted);margin-top:4px">Bir parfüm arayabilir veya "Beni Şaşırt!" butonunu kullanabilirsiniz.</p>
+      </div>`;
     if (pushState) window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function showPrefs(){ q('#upload-section').style.display = 'block'; }
-  function thumbURL(item){ const brand=(item.Brand||'?')+''; const letter=encodeURIComponent(brand.slice(0,1)); return item['Image URL']||`https://placehold.co/40x40/e2e8f0/64748b?text=${letter}`; }
+
+  function thumbURL(item){
+    const brand=(item.Brand||'?')+'';
+    const letter=encodeURIComponent(brand.slice(0,1));
+    return item['Image URL']||`https://placehold.co/40x40/e2e8f0/64748b?text=${letter}`;
+  }
+
   function setHeroFromPerfume(p){
-    const shot = q('#heroShot'); const img = p['Image URL'] || '';
-    if(img){ shot.src = img; shot.alt = p.fullName || 'parfüm'; shot.onerror = function(){ this.onerror=null; this.src='https://images.unsplash.com/photo-1523292562811-8fa7962a78c8?q=80&w=1200&auto=format&fit=crop'; }; }
+    const shot = q('#heroShot');
+    const img = p['Image URL'] || '';
+    if(img){
+      shot.src = img;
+      shot.alt = p.fullName || 'parfüm';
+      shot.onerror = function(){
+        this.onerror=null;
+        this.src='https://images.unsplash.com/photo-1523292562811-8fa7962a78c8?q=80&w=1200&auto=format&fit=crop';
+      };
+    }
     q('#searchInput').placeholder = `Bir parfüm ara, örn: '${p.fullName || 'Aventus'}'`;
   }
 
   function loadInitialUI(){
-    q('#refDetailOut').innerHTML = `<div style="text-align:center;padding:40px 20px;background:#f8fafc;border-radius:16px;"><h4 style="font-weight:700;font-size:18px;color:#0f172a;font-family:'Playfair Display',serif;">Veri Yükleniyor...</h4><p style="color:#475569;margin-top:4px">Lütfen bekleyin, parfüm koleksiyonu hazırlanıyor.</p></div>`;
+    q('#refDetailOut').innerHTML = `
+      <div style="text-align:center;padding:40px 20px;background:#f8fafc;border-radius:16px;">
+        <h4 style="font-weight:700;font-size:18px;color:#0f172a;font-family:'Playfair Display',serif;">Veri Yükleniyor...</h4>
+        <p style="color:#475569;margin-top:4px">Lütfen bekleyin, parfüm koleksiyonu hazırlanıyor.</p>
+      </div>`;
   }
 
   async function loadInitialData() {
     try {
-      const response = await fetch('/perfumes_data.json');
+      loadInitialUI();
+      const response = await fetch('/perfumes_data.json', { cache: 'force-cache' });
       if (!response.ok) throw new Error(`HTTP hatası! Durum: ${response.status}`);
       const text = await response.text();
       const txt = text.replace(/:\s*NaN/gi,': null');
+
       let data = parseFlexibleJSON(txt);
       if(!Array.isArray(data) || !data.length) throw new Error('JSON dosyası boş veya geçersiz.');
 
-      data=addFullName(data); state.data=data; buildFuse(); buildFeaturedIndex(); pickFeatured(3); renderFeatured();
+      data = addFullName(data);
+      state.data = data;
 
-      const idx = Math.floor(Math.random()*data.length);
-      const rnd = data[idx];
-      setHeroFromPerfume(rnd);
+      // Build indices & featured
+      buildFuse();
+      buildFeaturedIndex();
+      pickFeatured(3);
+      renderFeatured();
 
+      // Hero suggestion
+      setHeroFromPerfume(data[Math.floor(Math.random()*data.length)]);
+
+      // Initial empty state
       q('#upload-section').style.display = 'none';
-      q('#refDetailOut').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Koleksiyon Yüklendi</h4><p style="color:var(--muted);margin-top:4px">Bir parfüm arayabilir veya "Beni Şaşırt!" butonunu kullanabilirsiniz.</p></div>`;
+      q('#refDetailOut').innerHTML = `
+        <div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px">
+          <h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Koleksiyon Yüklendi</h4>
+          <p style="color:var(--muted);margin-top:4px">Bir parfüm arayabilir veya "Beni Şaşırt!" butonunu kullanabilirsiniz.</p>
+        </div>`;
+
       showToast(`✅ ${data.length} parfüm başarıyla yüklendi.`,'ok');
 
-      window.addEventListener('popstate', handleRealRouting);
+      // Apply route if deep-linked
       handleRealRouting();
     } catch (err) {
       log.error(err);
       showToast(`❌ Veri yüklenemedi: ${err.message}`,'err');
-      q('#refDetailOut').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Yükleme Başarısız</h4><p style="color:var(--muted);margin-top:4px">'perfumes_data.json' dosyası bulunamadı veya hatalı. Lütfen konsolu kontrol edin.</p></div>`;
+      q('#refDetailOut').innerHTML = `
+        <div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px">
+          <h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Yükleme Başarısız</h4>
+          <p style="color:var(--muted);margin-top:4px">'perfumes_data.json' dosyası bulunamadı veya hatalı. Lütfen konsolu kontrol edin.</p>
+        </div>`;
     }
   }
 
+  /* ---------- Public API (for console/tests) ---------- */
   window.simscent = {
     getState:()=>({ count:state.data.length, hasFuse:!!state.fuse, currentRef: state.currentRef, featured: state.featured }),
     loadJSON:(txt)=>{ const data=addFullName(parseFlexibleJSON(txt)); state.data=data; buildFuse(); buildFeaturedIndex(); pickFeatured(3); renderFeatured(); log('Manual load', data.length); showPrefs(); },
     nextFeatured:()=>{ const {pairs}=state.featured; const count=3; const pages=Math.max(1, Math.ceil(Math.min(pairs.length,10)/count)); state.featured.page=(state.featured.page+1)%pages; pickFeatured(count); renderFeatured(); }
   };
 
+  /* ---------- Init ---------- */
   function init(){ wireEvents(); loadInitialData(); }
   init();
+
 })();
 </script>
 </body>
 </html>
+
