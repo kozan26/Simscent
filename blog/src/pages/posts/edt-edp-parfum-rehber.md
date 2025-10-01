@@ -5,7 +5,7 @@ description: "Koku konsantrasyonları arasındaki farkları pratik örneklerle a
 date: "2025-09-29"
 category: "Rehber"
 author: "Ozan Kılıç"
-readTime: 9
+readTime: 12
 image: "https://bashify.io/img/f9b1c88962052849170975e7b580e2b2"
 ---
 
