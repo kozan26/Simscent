@@ -1,0 +1,38 @@
+---
+const FEED_URL = 'https://blog.simscent.com/api/posts.json';
+
+// Build-time fetch: CORS sıkıntısı yok, Astro prerender ediyor
+const res = await fetch(FEED_URL);
+if (!res.ok) {
+  throw new Error(`Blog feed alınamadı: ${res.status} ${res.statusText}`);
+}
+const data = await res.json();
+const posts = (data.items ?? []).slice(0, 30); // ilk 30 yazı
+---
+
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Blog — simscent</title>
+    <meta name="description" content="Simscent blog yazıları" />
+  </head>
+  <body style="font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; line-height:1.5; margin:0; padding:2rem; background:#fafafa; color:#222;">
+    <main style="max-width: 960px; margin: 0 auto;">
+      <h1 style="font-size:2rem; margin:0 0 1rem;">Blog</h1>
+      <p style="margin:0 0 2rem; color:#666;">Blog.simscent.com üzerinde yayımlanan son yazılar.</p>
+
+      <ul style="list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px;">
+        {posts.map((p:any) => (
+          <li style="background:#fff; border:1px solid #eee; border-radius:12px; padding:16px;">
+            <a href={p.url} style="text-decoration:none; color:inherit;">
+              <h2 style="font-size:1.1rem; margin:0 0 8px;">{p.title || 'Başlıksız'}</h2>
+              {p.description && <p style="margin:0 0 8px; color:#555; font-size:0.95rem;">{p.description}</p>}
+              {p.date && <time datetime={p.date} style="display:block; color:#888; font-size:0.85rem;">{new Date(p.date).toLocaleDateString('tr-TR')}</time>}
+              <div style="margin-top:10px; font-size:0.9rem; color:#0059c9;">Yazıya git →</div>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </main>
+  </body>
+</html>
