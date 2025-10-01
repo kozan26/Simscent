@@ -23,9 +23,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,500..700,0..1,-50..200"/>
-
-  <!-- Fuse opsiyonel; büyük JSON yüklendiğinde daha iyi eşleşme için kullanıyoruz -->
-  <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
 
   <style>
     :root{
@@ -74,6 +72,7 @@
 
     .suggest{display:none;position:absolute;left:0;right:0;top:100%;margin-top:12px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--elev-2);max-height:320px;overflow:auto;text-align:left;color:var(--text);z-index:70}
     .s-item{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer}
+    .suggest .s-item:hover,.s-item:hover{background:inherit!important;color:inherit!important;box-shadow:none!important;filter:none!important}
     .s-thumb{width:34px;height:34px;border-radius:9px;object-fit:cover;background:#e2e8f0;flex-shrink:0}
     .s-name{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .s-brand{color:var(--muted)!important;font-size:13px;margin-left:auto}
@@ -290,10 +289,7 @@
 
   const state = {
     data: [], fuse: null, currentRef: null,
-    featured: { pairs: [], topMap: new Map(), topList: [], picks: [], page: 0 },
-    sidx: null,              // HAFİF ARAMA İNDEKSİ (search/index.json)
-    sidxLoaded: false,
-    bigLoaded: false         // büyük JSON yüklendi mi?
+    featured: { pairs: [], topMap: new Map(), topList: [], picks: [], page: 0 }
   };
 
   const KEYS = {
@@ -361,7 +357,6 @@
   }
 
   function buildFeaturedIndex(){
-    if(!state.bigLoaded){ return; } // büyük JSON yoksa öne çıkanları hesaplama
     const cats = usedFamilyKeys(state.data);
     const N = state.data.length;
     if(!N || cats.length<2){
@@ -387,7 +382,7 @@
     if(topPairs.length<3) topPairs = allPairs.filter(p=>p.sim>=0.20).slice(0,10);
     if(topPairs.length<3) topPairs = allPairs.slice(0,10);
 
-    const topMap=new Map();
+    const topMap=new Map(), topList=[];
     for(const {a,b} of topPairs){
       let scored = state.data.map((p,idx)=>{
         const score=(+p[a]||0)+(+p[b]||0);
@@ -401,59 +396,36 @@
           return {idx, perfume:p, score:hit};
         }).filter(x=>x.score>0).sort((u,v)=>v.score-u.score).slice(0,20);
       }
-      topMap.set(`${a}|${b}`, scored);
+
+      const key=`${a}|${b}`;
+      topMap.set(key, scored);
+      topList.push({ key, a, b, items: scored });
     }
-    state.featured = { pairs: topPairs, topMap, topList: [], picks: [], page: 0 };
+    state.featured = { pairs: topPairs, topMap, topList, picks: [], page: 0 };
   }
   function pickFeatured(count = 3){
-    if(!state.bigLoaded){ return; }
     const { pairs, topMap, page } = state.featured;
-    if(!pairs?.length){ return; }
+    if(!pairs.length){ state.featured.picks = []; return; }
     const pool = pairs.slice(0, 10);
     const start = (page * count) % pool.length;
     const chosenPairs = [];
     for(let i=0;i<count;i++) chosenPairs.push(pool[(start + i) % pool.length]);
 
     const picks = [];
-    for(const p of chosenPairs){
-      const items = state.featured.topMap.get(`${p.a}|${p.b}`) || [];
+    for(let i=0;i<chosenPairs.length;i++){
+      const p = chosenPairs[i];
+      const key = `${p.a}|${p.b}`;
+      const items = topMap.get(key) || [];
       const len = Math.min(items.length, 20);
-      if(len===0){ picks.push({key:`${p.a}|${p.b}`, a: p.a, b: p.b, choice:null, list:[], rank:null}); continue; }
+      if(len===0){ picks.push({key, a:p.a, b:p.b, choice:null, list:[], rank:null}); continue; }
       let idx = Math.floor(Math.random()*len);
+      for(let tries=0; tries<4 && picks.some(px => px.choice?.idx === items[idx]?.idx); tries++){
+        idx = Math.floor(Math.random()*len);
+      }
       const choice = items[idx];
-      picks.push({ key:`${p.a}|${p.b}`, a: p.a, b: p.b, choice, list: items, rank: idx + 1 });
+      picks.push({ key, a: p.a, b: p.b, choice, list: items, rank: idx + 1 });
     }
     state.featured.picks = picks;
-  }
-  function renderFeatured(){
-    const sec = q('#featured'); const grid = q('#featuredGrid');
-    if(!state.bigLoaded || !state.featured?.pairs?.length){ sec.style.display='none'; grid.innerHTML=''; return; }
-    sec.style.display='block'; grid.innerHTML='';
-    for(const p of state.featured.picks){
-      const perf = p.choice?.perfume;
-      const img = perf?.['Image URL'] || `https://placehold.co/144x144/e2e8f0/64748b?text=${encodeURIComponent((perf?.Brand||'?').slice(0,1))}`;
-      const title = `${(FAMILY_TR?.[p.a]||p.a)} & ${(FAMILY_TR?.[p.b]||p.b)}`;
-      const brandName = perf ? (perf.Brand||'') : '—';
-      const fragName = perf ? (perf.fullName||'Seçim bulunamadı') : 'Seçim bulunamadı';
-      const el = document.createElement('div'); el.className='fc';
-      el.innerHTML = `
-        <div class="fc-head">
-          <div>
-            <div class="fc-title">${title}</div>
-            <div class="fc-sub">Bu ikilinin seçkisinden</div>
-          </div>
-        </div>
-        <div class="fc-body">
-          <img class="fc-img" src="${img}" alt="${fragName}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/144x144/e2e8f0/64748b?text=?'"/>
-          <div>
-            <div class="pf-brand brand-link" style="margin-bottom:4px" data-brand="${encodeURIComponent(brandName)}">${brandName}</div>
-            <div class="pf-name">${fragName}</div>
-            <div class="fc-sub" style="margin-top:4px"><small>${p.rank?`Top 20 içinde <b>${p.rank}.</b> sıradaki öneri`:'—'}</small></div>
-          </div>
-        </div>`;
-      el.addEventListener('click', ()=>{ if(!perf) return; setReferenceAndFindSimilar(perf, true); });
-      grid.appendChild(el);
-    }
   }
 
   function score(value,label){
@@ -571,11 +543,15 @@
       const avg=w? s/w : 0; return {perfume:p, similarity: Math.pow(avg,3)};
     }).filter(x=>x.similarity!==-1).sort((a,b)=>b.similarity-a.similarity);
   }
+
   function renderSimilar(sims){
     const simSec = q('#similar');
     const container = q('#similarOut');
     container.innerHTML = '';
-    if(!sims.length){ simSec.style.display = 'none'; return; }
+    if(!sims.length){
+      simSec.style.display = 'none';
+      return;
+    }
     const carouselContainer=document.createElement('div'); carouselContainer.className='carousel-container';
     carouselContainer.innerHTML=`
       <div class="carousel-window"></div>
@@ -587,6 +563,7 @@
     simSec.style.display = 'block';
     setupCarousel(carouselContainer);
   }
+
   function render(ref,sims){
     state.currentRef=ref;
     const refOut = q('#refDetailOut');
@@ -595,125 +572,7 @@
     renderSimilar(sims);
   }
 
-  // ----- HAFİF ARAMA: /search/index.json -----
-  async function ensureSearchIndex(){
-    if(state.sidxLoaded) return;
-    try{
-      const r=await fetch('/search/index.json',{credentials:'omit'});
-      const j=await r.json();
-      state.sidx = Array.isArray(j.items)? j.items : [];
-      state.sidxLoaded = true;
-      log('search index loaded', state.sidx.length);
-    }catch(e){
-      log.warn('search index failed', e);
-      state.sidx = [];
-      state.sidxLoaded = true;
-    }
-  }
-
-  // ----- BÜYÜK JSON: perfumes_data.json (yalnızca gerekince) -----
-  async function ensureFullData(){
-    if(state.bigLoaded) return;
-    showToast('Koleksiyon yükleniyor…','info');
-    const response = await fetch('/perfumes_data.json');
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const text = await response.text();
-    const txt = text.replace(/:\s*NaN/gi,': null');
-    let data = parseFlexibleJSON(txt);
-    if(!Array.isArray(data) || !data.length) throw new Error('Boş/Geçersiz JSON');
-    data = addFullName(data);
-    state.data = data;
-    state.bigLoaded = true;
-    buildFuse();
-    buildFeaturedIndex();
-    pickFeatured(3);
-    renderFeatured();
-    showToast(`✅ ${data.length} parfüm yüklendi.`);
-  }
-
-  // ----- UI WIRING -----
-  function wireEvents(){
-    on(q('.brand'), 'click', resetToHome);
-
-    qa('#prefs .row').forEach(row => {
-      on(row, 'click', async (e) => {
-        if (e.target.closest('.tooltip-trigger')) return;
-        row.classList.toggle('active');
-        const toggle = row.querySelector('.toggle');
-        if (toggle) toggle.classList.toggle('active');
-        if(!state.bigLoaded){ await ensureFullData().catch(err=>showToast('Veri yüklenemedi','err')); }
-        findSimilar(false);
-      });
-    });
-
-    const input=q('#searchInput'); const btn=q('#searchBtn'); const suggest=q('#suggestions'); let deb=null;
-    on(input,'focus', ()=>{ ensureSearchIndex(); }, { once:true });
-
-    on(input,'input',()=>{
-      clearTimeout(deb);
-      deb=setTimeout(async ()=>{
-        const qv=input.value.trim().toLowerCase();
-        if(!qv){ suggest.style.display='none'; return; }
-        await ensureSearchIndex();
-        const norm = (s)=>s.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-        const qtok = norm(qv);
-        const hits = (state.sidx||[]).filter(x=> x.t.includes(qtok) ).slice(0,8);
-        if(!hits.length){ suggest.style.display='none'; return; }
-        suggest.innerHTML = hits.map(r=>{
-          const yr=''; // hafif indeks yıl taşımıyor; istersen generate.mjs’ye ekleyebiliriz
-          const right=(r.b||yr)? `(${[r.b, yr].filter(Boolean).join(', ')})` : '';
-          const letter = encodeURIComponent((r.b||'?').slice(0,1));
-          const t = `https://placehold.co/40x40/e2e8f0/64748b?text=${letter}`;
-          return `<div class='s-item' data-url='${r.u}' role="option" aria-selected="false" aria-label='${r.n} ${right}'>
-            <img class='s-thumb' src='${t}' alt='' loading='lazy'/>
-            <div class='s-name'>${r.n}</div>
-            <div class='s-brand'>${right}</div>
-          </div>`;
-        }).join('');
-        suggest.style.display='block';
-      },140);
-    });
-    on(suggest,'click', async e=>{
-      const el=e.target.closest('.s-item'); if(!el) return;
-      suggest.style.display='none';
-      await onSearchCommit(input.value);
-    });
-    on(document,'click',e=>{ if(!suggest.contains(e.target) && e.target!==input) suggest.style.display='none'; });
-    on(input,'keydown',async e=>{
-      if(e.key==='Enter'){ e.preventDefault(); suggest.style.display='none'; await onSearchCommit(input.value); }
-    });
-    on(btn,'click', async ()=>{ suggest.style.display='none'; await onSearchCommit(input.value); });
-
-    on(q('#surpriseBtn'),'click', async ()=>{
-      if(!state.bigLoaded){
-        try{ await ensureFullData(); }catch(e){ showToast('Veri yüklenemedi','err'); return; }
-      }
-      handleSurprise();
-    });
-
-    const prev=q('#featPrev'), next=q('#featNext');
-    on(prev,'click',()=>{ const {pairs}=state.featured; const count=3; const pages=Math.max(1, Math.ceil(Math.min(pairs.length,10)/count)); state.featured.page = (state.featured.page - 1 + pages) % pages; pickFeatured(count); renderFeatured(); });
-    on(next,'click',()=>{ const {pairs}=state.featured; const count=3; const pages=Math.max(1, Math.ceil(Math.min(pairs.length,10)/count)); state.featured.page = (state.featured.page + 1) % pages; pickFeatured(count); renderFeatured(); });
-
-    const fab=q('#fabTop');
-    const toggleFab=()=>{ if(window.scrollY>280){ fab.classList.add('show'); } else { fab.classList.remove('show'); } };
-    on(window,'scroll',toggleFab,{passive:true}); toggleFab();
-    on(fab,'click',()=>window.scrollTo({top:0,behavior:'smooth'}));
-  }
-
-  async function onSearchCommit(qv){
-    const query = (qv||'').trim();
-    if(!query){ showToast('Bir parfüm adı yazın.','info'); return; }
-    if(!state.bigLoaded){
-      try{ await ensureFullData(); }catch(e){ showToast('Veri yüklenemedi','err'); return; }
-    }
-    const res = state.fuse?.search(query);
-    const ref = res?.[0]?.item;
-    if(!ref){ showToast('Parfüm bulunamadı.','err'); return; }
-    setReferenceAndFindSimilar(ref, true);
-  }
-
-  function renderCategoryGridTitleResults(title, results, onBack){
+  function _renderCategoryGrid({ title, results, onBack }) {
     const refOut = q('#refDetailOut');
     refOut.innerHTML = '';
     q('#upload-section').style.display = 'none';
@@ -735,61 +594,194 @@
     header.appendChild(backBtn);
     refOut.appendChild(header);
 
-    if (!results.length) { refOut.innerHTML += '<p>Bu kriter için sonuç bulunamadı.</p>'; return; }
+    if (!results.length) {
+        refOut.innerHTML += '<p>Bu kriter için sonuç bulunamadı.</p>';
+        return;
+    }
 
     const grid = document.createElement('div');
     grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;';
 
     results.forEach(p => {
-      const year = p['Release Year'] || '';
-      const img = p['Image URL'] || `https://placehold.co/240x240/e2e8f0/64748b?text=${encodeURIComponent((p.Brand || '?').slice(0, 1))}`;
-      const el = document.createElement('div');
-      el.className = 'pf';
-      el.style.cursor = 'pointer';
-      el.innerHTML = `
-        <img class='pf-img' src='${img}' alt='${p.fullName}' loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/240x240/e2e8f0/64748b?text=Hata'"/>
-        <div>
-          <div style='display:flex;justify-content:space-between;align-items:flex-start;gap:8px'>
-            <div class='pf-brand brand-link' data-brand="${encodeURIComponent(p.Brand || '')}">${p.Brand || ''}</div>
-            ${year ? `<div class='badge' style="background:var(--shell); color: var(--text); border:1px solid var(--border);">${year}</div>` : ''}
-          </div>
-          <div class='pf-name' style="margin-top:4px">${p.fullName || ''}</div>
-        </div>`;
-      on(el, 'click', () => setReferenceAndFindSimilar(p, true));
-      grid.appendChild(el);
+        const year = p['Release Year'] || '';
+        const img = p['Image URL'] || `https://placehold.co/240x240/e2e8f0/64748b?text=${encodeURIComponent((p.Brand || '?').slice(0, 1))}`;
+        const el = document.createElement('div');
+        el.className = 'pf';
+        el.style.cursor = 'pointer';
+        el.innerHTML = `
+          <img class='pf-img' src='${img}' alt='${p.fullName}' loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/240x240/e2e8f0/64748b?text=Hata'"/>
+          <div>
+            <div style='display:flex;justify-content:space-between;align-items:flex-start;gap:8px'>
+              <div class='pf-brand brand-link' data-brand="${encodeURIComponent(p.Brand || '')}">${p.Brand || ''}</div>
+              ${year ? `<div class='badge' style="background:var(--shell); color: var(--text); border:1px solid var(--border);">${year}</div>` : ''}
+            </div>
+            <div class='pf-name' style="margin-top:4px">${p.fullName || ''}</div>
+          </div>`;
+        on(el, 'click', () => setReferenceAndFindSimilar(p, true));
+        grid.appendChild(el);
     });
     refOut.appendChild(grid);
     q('#results').scrollIntoView({ behavior: 'smooth' });
   }
 
   function showPerfumerResults(name) {
-    renderCategoryGridTitleResults(`${name} Koleksiyonu`, state.data.filter(p => p.Perfumer && p.Perfumer.toLowerCase().includes(name.toLowerCase())), () => findSimilar(false));
+    _renderCategoryGrid({
+      title: `${name} Koleksiyonu`,
+      results: state.data.filter(p => p.Perfumer && p.Perfumer.toLowerCase().includes(name.toLowerCase())),
+      onBack: () => findSimilar(false)
+    });
   }
+
   function showBrandResults(brandName) {
-    renderCategoryGridTitleResults(`${brandName} Koleksiyonu`, state.data.filter(p => p.Brand && p.Brand.toLowerCase() === brandName.toLowerCase()), () => findSimilar(false));
+    _renderCategoryGrid({
+      title: `${brandName} Koleksiyonu`,
+      results: state.data.filter(p => p.Brand && p.Brand.toLowerCase() === brandName.toLowerCase()),
+      onBack: () => findSimilar(false)
+    });
   }
+
   function showAccordResults(accordName) {
     const results = state.data
       .filter(p => p['Main Accords'] && p['Main Accords'].toLowerCase().includes(accordName.toLowerCase()))
       .sort((a, b) => (b[accordName] || 0) - (a[accordName] || 0))
       .slice(0, 50);
-    renderCategoryGridTitleResults(`'${ACCORD_TR[accordName.toLowerCase()] || accordName}' Akorduna Sahip Parfümler`, results, () => findSimilar(false));
-  }
-  function showNoteResults(noteName) {
-    renderCategoryGridTitleResults(`'${noteName}' Notalı Parfümler`, state.data.filter(p => p['Fragrance Notes'] && p['Fragrance Notes'].toLowerCase().includes(noteName.toLowerCase())), () => findSimilar(false));
+    _renderCategoryGrid({
+      title: `'${ACCORD_TR[accordName.toLowerCase()] || accordName}' Akorduna Sahip Parfümler`,
+      results: results,
+      onBack: () => findSimilar(false)
+    });
   }
 
-  function findSimilar(scroll=true){
-    if(!state.bigLoaded){ return; }
-    const qv=q('#searchInput').value.trim();
-    if (!qv && state.currentRef) { setReferenceAndFindSimilar(state.currentRef, scroll); return; }
-    if (qv) {
-      const searchResult = state.fuse?.search(qv);
-      const ref = searchResult?.[0]?.item;
-      if(!ref){ showToast('Parfüm bulunamadı. Farklı bir arama deneyin.','err'); return; }
-      setReferenceAndFindSimilar(ref, scroll);
+  function showNoteResults(noteName) {
+    _renderCategoryGrid({
+      title: `'${noteName}' Notalı Parfümler`,
+      results: state.data.filter(p => p['Fragrance Notes'] && p['Fragrance Notes'].toLowerCase().includes(noteName.toLowerCase())),
+      onBack: () => findSimilar(false)
+    });
+  }
+
+  function renderFeatured(){
+    const sec = q('#featured'); const grid = q('#featuredGrid');
+    grid.innerHTML = ''; const picks = state.featured.picks || []; sec.style.display = 'block';
+    if(!picks.length){
+      grid.innerHTML = `<div class="fc" style="grid-column: 1/-1;">
+        <div class="fc-head"><div>
+          <div class="fc-title">Öne Çıkan Koleksiyonlar</div>
+          <div class="fc-sub">Uygun kategori çifti bulunamadı. Lütfen başka bir JSON deneyin.</div>
+        </div></div></div>`;
       return;
     }
+    for(const p of picks){
+      const perf = p.choice?.perfume;
+      const img = perf?.['Image URL'] || `https://placehold.co/144x144/e2e8f0/64748b?text=${encodeURIComponent((perf?.Brand||'?').slice(0,1))}`;
+      const title = `${(FAMILY_TR?.[p.a]||p.a)} & ${(FAMILY_TR?.[p.b]||p.b)}`;
+      const brandName = perf ? (perf.Brand||'') : '—';
+      const fragName = perf ? (perf.fullName||'Seçim bulunamadı') : 'Seçim bulunamadı';
+      const el = document.createElement('div'); el.className='fc';
+      el.innerHTML = `
+        <div class="fc-head">
+          <div>
+            <div class="fc-title">${title}</div>
+            <div class="fc-sub">Bu ikilinin seçkisinden</div>
+          </div>
+        </div>
+        <div class="fc-body">
+          <img class="fc-img" src="${img}" alt="${fragName}" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/144x144/e2e8f0/64748b?text=?'"/>
+          <div>
+            <div class="pf-brand brand-link" style="margin-bottom:4px" data-brand="${encodeURIComponent(brandName)}">${brandName}</div>
+            <div class="pf-name">${fragName}</div>
+            <div class="fc-sub" style="margin-top:4px"><small>Top 20 içinde <b>${p.rank}.</b> sıradaki öneri</small></div>
+          </div>
+        </div>`;
+      el.addEventListener('click', ()=>{ if(!perf) return; setReferenceAndFindSimilar(perf, true); });
+      grid.appendChild(el);
+    }
+  }
+
+  function wireEvents(){
+    on(q('.brand'), 'click', resetToHome);
+
+    qa('#prefs .row').forEach(row => {
+      on(row, 'click', (e) => {
+        if (e.target.closest('.tooltip-trigger')) return;
+        
+        row.classList.toggle('active');
+        const toggle = row.querySelector('.toggle');
+        if (toggle) toggle.classList.toggle('active');
+        
+        findSimilar(false);
+      });
+    });
+
+    const input=q('#searchInput'); const btn=q('#searchBtn'); const suggest=q('#suggestions'); let deb=null;
+    on(input,'input',()=>{
+      clearTimeout(deb);
+      deb=setTimeout(()=>{
+        const qv=input.value.trim();
+        if(!qv||!state.fuse){ suggest.style.display='none'; return;}
+        const res=state.fuse.search(qv).slice(0,8);
+        if(!res.length){suggest.style.display='none';return;}
+        suggest.innerHTML=res.map(r=>{
+          const it=r.item; const t=thumbURL(it);
+          const yr= it['Release Year']!=null && it['Release Year']!=='' ? String(it['Release Year']) : '';
+          const right=(it.Brand||yr)? `(${[it.Brand, yr].filter(Boolean).join(', ')})` : '';
+          return `<div class='s-item' data-index='${r.refIndex}' role="option" aria-selected="false" aria-label='${it.fullName} ${right}'>
+            <img class='s-thumb' src='${t}' alt='' loading='lazy' onerror="this.onerror=null;this.src='https://placehold.co/40x40/e2e8f0/64748b?text=?'"/>
+            <div class='s-name'>${it.fullName}</div>
+            <div class='s-brand'>${right}</div>
+          </div>`;
+        }).join('');
+        suggest.style.display='block';
+      },140);
+    });
+    on(suggest,'click',e=>{ const el=e.target.closest('.s-item'); if(!el) return; const idx = parseInt(el.dataset.index, 10); if(!isNaN(idx) && state.data[idx]) { setReferenceAndFindSimilar(state.data[idx], true); } suggest.style.display='none'; });
+    on(document,'click',e=>{ if(!suggest.contains(e.target) && e.target!==input) suggest.style.display='none'; });
+    on(input,'keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); suggest.style.display='none'; findSimilar(); }});
+    on(btn,'click',()=>{ suggest.style.display='none'; findSimilar(); });
+
+    const linkHandlers = {
+      '.perfumer-link': (el) => showPerfumerResults(decodeURIComponent(el.dataset.perfumer)),
+      '.brand-link': (el) => showBrandResults(decodeURIComponent(el.dataset.brand)),
+      '.accord-link': (el) => showAccordResults(decodeURIComponent(el.dataset.accord)),
+      '.note-link': (el) => showNoteResults(decodeURIComponent(el.dataset.note)),
+    };
+    on(q('#appRoot'), 'click', e => {
+      for (const selector in linkHandlers) {
+        const link = e.target.closest(selector);
+        if (link && link.dataset) {
+          e.stopPropagation();
+          linkHandlers[selector](link);
+          return;
+        }
+      }
+    });
+
+    on(q('#surpriseBtn'),'click', handleSurprise);
+    on(q('#signupBtn'),'click',()=>showToast('Yakında!','info'));
+
+    const prev=q('#featPrev'), next=q('#featNext');
+    on(prev,'click',()=>{ const {pairs}=state.featured; const count=3; const pages=Math.max(1, Math.ceil(Math.min(pairs.length,10)/count)); state.featured.page = (state.featured.page - 1 + pages) % pages; pickFeatured(count); renderFeatured(); });
+    on(next,'click',()=>{ const {pairs}=state.featured; const count=3; const pages=Math.max(1, Math.ceil(Math.min(pairs.length,10)/count)); state.featured.page = (state.featured.page + 1) % pages; pickFeatured(count); renderFeatured(); });
+
+    const fab=q('#fabTop');
+    const toggleFab=()=>{ if(window.scrollY>280){ fab.classList.add('show'); } else { fab.classList.remove('show'); } };
+    on(window,'scroll',toggleFab,{passive:true}); toggleFab();
+    on(fab,'click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+  }
+
+  function handleRealRouting(){
+    const path = location.pathname;
+    const regex = /^\/p\/([^/]+)\/([^/]+)/;
+    const match = path.match(regex);
+    if (!match) { if (state.currentRef) { resetToHome(false); } return; }
+    const [, brandSlug, fragSlug] = match;
+    const perfumeName = decodeURIComponent(fragSlug).replace(/-/g, ' ');
+    if (state.currentRef && perfumeName === state.currentRef.fullName) return;
+    if (state.fuse) {
+      const result = state.fuse.search(perfumeName);
+      if (result.length > 0 && result[0].item) { log(`Path'ten bulundu: ${perfumeName}`); setReferenceAndFindSimilar(result[0].item, true); }
+      else { log.warn(`Path'ten parfüm bulunamadı: ${perfumeName}`); resetToHome(); }
+    } else { setTimeout(handleRealRouting, 200); }
   }
 
   function setReferenceAndFindSimilar(ref, scroll = true) {
@@ -806,7 +798,8 @@
     const newPath   = `/p/${brandSlug}/${fragSlug}`;
     if (location.pathname !== newPath) history.pushState({ perfume: ref.fullName }, '', newPath);
 
-    q('#upload-section').style.display = 'block';
+    showPrefs();
+
     const prefs = {
       usage: q('.row[data-pref="usage"]').classList.contains('active'),
       season: q('.row[data-pref="season"]').classList.contains('active'),
@@ -822,8 +815,22 @@
     renderFeatured();
   }
 
+  function findSimilar(scroll=true){
+    if(!state.data.length){ return; }
+    const qv=q('#searchInput').value.trim();
+    if (!qv && state.currentRef) { setReferenceAndFindSimilar(state.currentRef, scroll); return; }
+    if (qv) {
+      const searchResult = state.fuse?.search(qv);
+      const ref = searchResult?.[0]?.item;
+      if(!ref){ showToast('Parfüm bulunamadı. Farklı bir arama deneyin.','err'); return; }
+      setReferenceAndFindSimilar(ref, scroll);
+      return;
+    }
+    if (!state.currentRef) showToast('Lütfen bir parfüm arayın veya "Beni Şaşırt!" butonunu kullanın.', 'info');
+  }
+
   function handleSurprise(){
-    if(!state.bigLoaded){ return; }
+    if(!state.data.length){ return; }
     const idx=Math.floor(Math.random()*state.data.length); const p=state.data[idx];
     setHeroFromPerfume(p);
     setReferenceAndFindSimilar(p, true);
@@ -838,10 +845,16 @@
     const homePath = '/';
     if (pushState && location.pathname !== homePath) history.pushState({}, '', homePath);
 
-    q('#refDetailOut').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Keşfetmeye Başla</h4><p style="color:var(--muted);margin-top:4px">Bir parfüm arayabilir veya "Beni Şaşırt!" butonunu kullanabilirsiniz.</p></div>`;
+    if (state.data.length > 0) {
+      const idx = Math.floor(Math.random() * state.data.length);
+      const rnd = state.data[idx];
+      setHeroFromPerfume(rnd);
+    }
+    q('#refDetailOut').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Koleksiyon Yüklendi</h4><p style="color:var(--muted);margin-top:4px">Bir parfüm arayabilir veya "Beni Şaşırt!" butonunu kullanabilirsiniz.</p></div>`;
     if (pushState) window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  function showPrefs(){ q('#upload-section').style.display = 'block'; }
   function thumbURL(item){ const brand=(item.Brand||'?')+''; const letter=encodeURIComponent(brand.slice(0,1)); return item['Image URL']||`https://placehold.co/40x40/e2e8f0/64748b?text=${letter}`; }
   function setHeroFromPerfume(p){
     const shot = q('#heroShot'); const img = p['Image URL'] || '';
@@ -849,33 +862,45 @@
     q('#searchInput').placeholder = `Bir parfüm ara, örn: '${p.fullName || 'Aventus'}'`;
   }
 
-  // Route'tan doğrudan ürün sayfası açılırsa: önce indeksle eşleştir, sonra büyük veriyi yükle
-  async function handleRealRouting(){
-    const path = location.pathname;
-    const match = path.match(/^\/p\/([^/]+)\/([^/]+)/);
-    if (!match) return;
-    const fragSlug = decodeURIComponent(match[2]).replace(/-/g,' ');
-    await ensureSearchIndex();
-    const hit = (state.sidx||[]).find(x => x.n.toLowerCase() === fragSlug.toLowerCase());
-    if(hit){
-      // büyük veri yüklendikten sonra Fuse ile kesin referansı bul
-      try{
-        await ensureFullData();
-        const res = state.fuse?.search(fragSlug);
-        const ref = res?.[0]?.item;
-        if(ref) setReferenceAndFindSimilar(ref, false);
-      }catch(e){ log.warn('route resolve failed', e); }
+  function loadInitialUI(){
+    q('#refDetailOut').innerHTML = `<div style="text-align:center;padding:40px 20px;background:#f8fafc;border-radius:16px;"><h4 style="font-weight:700;font-size:18px;color:#0f172a;font-family:'Playfair Display',serif;">Veri Yükleniyor...</h4><p style="color:#475569;margin-top:4px">Lütfen bekleyin, parfüm koleksiyonu hazırlanıyor.</p></div>`;
+  }
+
+  async function loadInitialData() {
+    try {
+      const response = await fetch('/perfumes_data.json');
+      if (!response.ok) throw new Error(`HTTP hatası! Durum: ${response.status}`);
+      const text = await response.text();
+      const txt = text.replace(/:\s*NaN/gi,': null');
+      let data = parseFlexibleJSON(txt);
+      if(!Array.isArray(data) || !data.length) throw new Error('JSON dosyası boş veya geçersiz.');
+
+      data=addFullName(data); state.data=data; buildFuse(); buildFeaturedIndex(); pickFeatured(3); renderFeatured();
+
+      const idx = Math.floor(Math.random()*data.length);
+      const rnd = data[idx];
+      setHeroFromPerfume(rnd);
+
+      q('#upload-section').style.display = 'none';
+      q('#refDetailOut').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Koleksiyon Yüklendi</h4><p style="color:var(--muted);margin-top:4px">Bir parfüm arayabilir veya "Beni Şaşırt!" butonunu kullanabilirsiniz.</p></div>`;
+      showToast(`✅ ${data.length} parfüm başarıyla yüklendi.`,'ok');
+
+      window.addEventListener('popstate', handleRealRouting);
+      handleRealRouting();
+    } catch (err) {
+      log.error(err);
+      showToast(`❌ Veri yüklenemedi: ${err.message}`,'err');
+      q('#refDetailOut').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Yükleme Başarısız</h4><p style="color:var(--muted);margin-top:4px">'perfumes_data.json' dosyası bulunamadı veya hatalı. Lütfen konsolu kontrol edin.</p></div>`;
     }
   }
 
-  function init(){
-    wireEvents();
-    // İlk yükte sadece UI hazırla; hafif indeks, odakta/ilk yazışta yüklenecek.
-    // Ana kahraman görseli: indeksten rastgele 1 harf/placeholder
-    q('#refDetailOut').innerHTML = `<div style="text-align:center;padding:40px 20px;background:#f8fafc;border-radius:16px;"><h4 style="font-weight:700;font-size:18px;color:#0f172a;font-family:'Playfair Display',serif;">Hazırsın</h4><p style="color:#475569;margin-top:4px">Arama alanına odaklandığında hızlı indeks yüklenir. Aramayı onayladığında koleksiyon verisi getirilir.</p></div>`;
-    handleRealRouting();
-    window.addEventListener('popstate', handleRealRouting);
-  }
+  window.simscent = {
+    getState:()=>({ count:state.data.length, hasFuse:!!state.fuse, currentRef: state.currentRef, featured: state.featured }),
+    loadJSON:(txt)=>{ const data=addFullName(parseFlexibleJSON(txt)); state.data=data; buildFuse(); buildFeaturedIndex(); pickFeatured(3); renderFeatured(); log('Manual load', data.length); showPrefs(); },
+    nextFeatured:()=>{ const {pairs}=state.featured; const count=3; const pages=Math.max(1, Math.ceil(Math.min(pairs.length,10)/count)); state.featured.page=(state.featured.page+1)%pages; pickFeatured(count); renderFeatured(); }
+  };
+
+  function init(){ wireEvents(); loadInitialData(); }
   init();
 })();
 </script>
