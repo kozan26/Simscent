@@ -6,7 +6,7 @@ date: "2025-09-29"
 category: "Rehber"
 author: "Ozan Kılıç"
 readTime: 12
-image: "https://bashify.io/img/f9b1c88962052849170975e7b580e2b2"
+image: "public/perfume_concentration.png"
 ---
 
 # Parfüm Rehberi: EDT, EDP ve Diğerleri Arasındaki Fark Nedir?
