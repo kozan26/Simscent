@@ -96,20 +96,8 @@ function renderProductWithTemplate(p) {
     p.Description || p.description || "Fragrance details and notes."
   ).slice(0, 160);
 
-  // İçerik bloğu (gerekirse zenginleştir)
-  const contentHTML = `
-    <h1 style="margin:0 0 12px 0">${escapeHtml(title)}</h1>
-    <section style="margin-top:8px">
-      <dl style="display:grid;grid-template-columns:max-content 1fr;gap:8px 16px">
-        <dt style="color:#666">Brand</dt><dd>${escapeHtml(p.Brand || "")}</dd>
-        <dt style="color:#666">Name</dt><dd>${escapeHtml(p["Fragrance Name"] || p.name || "")}</dd>
-        <dt style="color:#666">Concentration</dt><dd>${escapeHtml(p.Concentration || p.concentration || "")}</dd>
-      </dl>
-    </section>
-    <nav style="margin-top:24px">
-      <a href="/" style="color:#1155cc">← Ana sayfa</a>
-    </nav>
-  `;
+  // Artık içerik bloğunu boş bırakıyoruz (sayfanın üstündeki gereksiz yazıları kaldırmak için)
+  const contentHTML = "";
 
   // Placeholder'ları doldur
   tpl = tpl.replaceAll("{{TITLE}}", escapeHtml(title));
@@ -122,7 +110,7 @@ function renderProductWithTemplate(p) {
 
   return tpl;
 }
-// Minimal fallback (template yoksa)
+// Minimal fallback (template yoksa) — sessiz, ek yazı yok
 function renderProductMinimal(p) {
   const title = `${p.Brand || ""} ${p.fullName || ""}`.trim() || "Perfume";
   const safeDesc =
@@ -143,18 +131,7 @@ function renderProductMinimal(p) {
     <a href="/" style="text-decoration:none;color:inherit"><strong>simscent</strong></a>
   </header>
   <main style="max-width:960px;margin:0 auto;padding:16px;">
-    <h1 style="margin:0 0 12px 0">${escapeHtml(title)}</h1>
-    <p style="color:#555">${escapeHtml(safeDesc)}</p>
-    <section style="margin-top:16px">
-      <dl style="display:grid;grid-template-columns:max-content 1fr;gap:8px 16px">
-        <dt style="color:#666">Brand</dt><dd>${escapeHtml(p.Brand || "")}</dd>
-        <dt style="color:#666">Name</dt><dd>${escapeHtml(p["Fragrance Name"] || p.name || "")}</dd>
-        <dt style="color:#666">Concentration</dt><dd>${escapeHtml(p.Concentration || p.concentration || "")}</dd>
-      </dl>
-    </section>
-    <nav style="margin-top:24px">
-      <a href="/" style="color:#1155cc">← Ana sayfa</a>
-    </nav>
+    <!-- intentionally left blank; actual UI comes from your template/site scripts -->
   </main>
 </body>
 </html>`;
