@@ -1,11 +1,12 @@
 ---
-title: "Bleu de Chanel Kapsamlı Rehberi: EDT, EDP, Parfum ve L’Exclusif"
-description: "Bleu de Chanel’in EDT, EDP, Parfum ve L’Exclusif versiyonlarını koku DNA’sı, performans, mevsim ve kullanım senaryolarıyla karşılaştırdık. Hangisi size uygun?"
+layout: ../../layouts/PostLayout.astro
+title: "Bleu de Chanel Rehberi: EDT, EDP, Parfum ve L’Exclusif"
+description: "Bleu de Chanel’in EDT, EDP, Parfum ve L’Exclusif versiyonlarını koku DNA’sı, performans, mevsim ve kullanım senaryolarıyla karşılaştıran pratik seçim rehberi."
 date: "2025-10-01"
 category: "Rehber"
 author: "Ozan Kılıç"
 readTime: 9
-image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=1600&auto=format&fit=crop"
+image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=1200&auto=format&fit=crop"
 ---
 
 **TL;DR**  
