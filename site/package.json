@@ -3,15 +3,8 @@
   "private": true,
   "version": "1.0.4",
   "scripts": {
-    "build": "npm run _clean && npm run _mkdist && npm run _copy && npm run _verify",
-    "preview": "npx http-server dist -p 4173 -c-1",
-
-    "_clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
-    "_mkdist": "node -e \"require('fs').mkdirSync('dist',{recursive:true})\"",
-
-    "_copy": "shx cp -f index.html dist/ && (shx cp -f _redirects dist/ || true) && (shx cp -rf assets dist/ || true) && (shx cp -rf data dist/ || true) && (shx cp -f perfumes_data.json dist/ || true) && (shx cp -f _headers dist/ || true)",
-
-    "_verify": "node -e \"const fs=require('fs');const paths=['dist/perfumes_data.json','dist/assets/perfumes_data.json','dist/data/perfumes_data.json'];const found=paths.find(p=>fs.existsSync(p));if(!found){console.error('JSON not found in dist. Checked: '+paths.join(', '));process.exit(1)}else{const s=fs.statSync(found).size;console.log('JSON ok:',found,'('+s+' bytes)');}\""
+    "build": "node generate.mjs",
+    "preview": "npx http-server dist -p 4173 -c-1"
   },
   "devDependencies": {
     "http-server": "^14.1.1",
