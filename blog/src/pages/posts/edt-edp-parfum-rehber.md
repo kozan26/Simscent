@@ -4,87 +4,161 @@ title: "EDT mi, EDP mi, Parfum mü? Dozaj, Kalıcılık ve Doğru Seçim"
 description: "Koku konsantrasyonları arasındaki farkları pratik örneklerle anlatan, mevsim/ortam/ten tipine göre seçim rehberi."
 date: "2025-09-29"
 category: "Rehber"
-author: "Ayşe Demir"
+author: "Ozan Kılıç"
 readTime: 9
-image: "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop"
+image: "https://lh3.googleusercontent.com/rd-gg-dl/AJfQ9KRvQtlUW4g6Zgj-IWMc0dHdIKwFioJQAt3V_xsvIlnxdm0BLxTPbl47F14nGzviK-JgVcmOPdUYwZZQH7eq4Q6axE_FrgNEwrMVTRd1-HZhG1nliZWtb4XXnWotzSvBF9f_y46vxGVgPTSdIjrYA5H349CDASppzJELjHSvxOFWENYZwtynl3tdr70TQJkOz2XKqm5-lbftc4PSFjt_twfX0iqKOJyZacXee0kIDyPXcgynI7I_Z96ou9owbvVwyr8yfdlyMid1iPgBtkwj-596gtxSVKdgYbf1GXAveny7UAyTx15f1Q1ahFZkHZXA2guAU-xNV9p-eQaYCnCMAWASiIhFvC5jphhQbP1BNoOjCTe06hkd4sETWMMzBScXyLJpVSfNp02d9WTFgqfhUoiZYFLLxJwP5qImWOXDN44fTFiIHh_ymChihp2zAsH491H5BjhgM8FZVsNKJoX304B0uFPWKd9-qfwsfNO4ubwo9YedTk_Z9zftk9LRnOuO7QwUoSwogr6ggFDncU7XVTA4zEhLS6MxXQ2600xWj7pJio5miIfYaIp1aZpeHBHpgIjqwDesc16wkfJUDbf2_pwH_4gFRJgQD8VoWMCHpD_qpiQiOd2BGmcCFbIyEUKD70xE-Hl8MIAYVCnXFKYDIpG4pguEoX97GdhJJitc3nezDAJGEv6YEQL0qaQ-rsA-ujyveJbYPD6cnIgjWTQ4k6wCiU_X0jX4FSzSxdYNSFSev6Om7DNxQV91bCtcEsliId1QxnLg4R_Bsn4BUGfWnuK1-MazRIRlZOlbutkPifJVvQSJ7xVev5wfzS4iB9p0-ov5sP0OGpPRXMPIeA7rq1kR1agL-jLnhEKpyFFJYpp6wrSu-maU-AwQKsFO6U7r4vS9yxW4hsrj4c-_xZRR4-j1hnsNN6sBaVhHH5s_eEH3U4Eb19JK4v6nzUEFqzNamucp33KzcbLdrEf0TCqvMH599qwsS2GPx_vd26nVbHvJsAMV3-gPdSy8AxrQQlGM_ewasaucDtRGjqDeCKg6BjCAoRRctYXZJG7MTh361eZP5hXOU6UkqG5C-s5DNZcFSut7lgEjC8uN4PLKyiD4To0al7aebR84oyr9g8M9STt4_cIP5Pu_RgbXtyaWoG-h=s1024"
 ---
 
-Parfüm şişesinde yazan **EDT**, **EDP** ya da **Parfum** ibaresi aslında kokunun “güç ayarı”dır. Doğru konsantrasyonu seçmek, aynı kokudan **daha iyi performans** almak ve **doğru ortamda doğru iz** bırakmak demektir.
+# Parfüm Rehberi: EDT, EDP ve Diğerleri Arasındaki Fark Nedir?
 
-## Konsantrasyonlar Ne Anlama Gelir?
+### 1. Giriş: Kokuların Gizemli Dünyasına Hoş Geldiniz
 
-Aşağıdaki tablo genel bir rehberdir; formülasyona göre değişebilir:
+Bir parfüm mağazasına girdiğinizde veya online alışveriş yaparken, beğendiğiniz bir kokunun şişesi üzerinde **EDT**, **EDP** veya **Parfum** gibi kısaltmalarla karşılaşmışsınızdır. Bu terimler, özellikle parfüm dünyasına yeni adım atanlar için oldukça kafa karıştırıcı olabilir. Hangisi daha kalıcı? Hangisi daha yoğun? Aralarındaki fiyat farkı ne anlama geliyor?
 
-| Konsantrasyon | Yaklaşık Yağ Oranı | Kalıcılık (saat) | Yayılım (sillage) | Tipik Kullanım |
-|---|---:|---:|---|---|
-| Eau de Cologne (EdC) | %2–5 | 1–3 | Hafif | Spor/duş sonrası, tazeleme |
-| Eau de Toilette (EDT) | %5–15 | 3–6 | Orta | Ofis, gündüz, sıcak havalar |
-| Eau de Parfum (EDP) | %15–20 | 6–10 | Orta–Güçlü | Gün boyu, akşam buluşmaları |
-| Parfum (Extrait) | %20–40 | 8–12+ | Daha yakın, yoğun | Özel günler, serin/soğuk hava |
+Eğer bu sorular sizin de aklınızı kurcalıyorsa, doğru yerdesiniz. Bu rehber, parfüm şişelerinin üzerindeki bu gizemli etiketlerin sırrını çözmek ve size en uygun kokuyu bilinçli bir şekilde seçmenize yardımcı olmak için hazırlandı. Koku konsantrasyonlarının ne anlama geldiğini, kalıcılığı nelerin etkilediğini ve kendi tarzınıza en uygun parfümü nasıl bulacağınızı birlikte keşfedeceğiz.
 
-> **Pratik İpucu:** Aynı serinin EDT ve EDP’si **aynı kokmak zorunda değildir.** Notalar/denge değişebilir; mutlaka bilekte ayrı ayrı deneyin.
+Şimdi gelin, bu sihirli kelimelerin ardındaki sırrı birlikte çözelim ve parfümün temel yapı taşını anlayarak işe başlayalım.
 
-## Hangi Konsantrasyon Ne Zaman?
+### 2. Temel Kavram: Parfüm Konsantrasyonu Nedir?
 
-- **Sıcak Hava (25°C+)** → *EDT/EdC*: ferah ve ölçülü yayılım.  
-- **Serin/Soğuk Hava** → *EDP/Parfum*: zengin, derin, daha kalıcı.  
-- **Ofis/Yakın Temaslı Ortam** → *EDT/EDP (hafif uygulama)*: fazla yayılımdan kaçının.  
-- **Akşam/Özel Davet** → *EDP/Parfum*: daha rafine ve iz bırakan.
+Bir parfümü oluşturan temel bileşenleri anlamak, işin özünü kavramanın ilk adımıdır. Her parfüm temel olarak üç ana unsurdan oluşur:
 
-## Ten Tipi ve Cilt Bakımı Etkisi
+1.  **Parfüm Esansı (Koku Yağları):** Parfüme o eşsiz kokusunu veren, doğal veya sentetik aromatik bileşenlerin karışımıdır.
+2.  **Alkol (Etanol):** Esansın çözülmesini ve cilde uygulandığında buharlaşarak kokunun etrafa yayılmasını sağlayan taşıyıcı maddedir.
+3.  **Su:** Alkol oranını dengelemek için bazen formüllere eklenir.
 
-- **Kuru cilt** kokuyu çabuk “yer”. Duş sonrası **nötr bir vücut losyonu** sürüp sonra parfüm uygulayın.  
-- **Yağlı/normal cilt** daha iyi tutar; yayılım genelde daha belirgin olur.  
-- **Sakal/saç uçları** hafifçe sıkıldığında kokuyu “tutar”; aşırı uygulamaktan kaçının.
+Bir parfüm şişesinin üzerindeki **EDT**, **EDP** gibi etiketler, o ürünün içindeki saf parfüm esansı (koku yağı) oranını, yani **konsantrasyonunu** belirtir. Genel bir kural olarak, esans oranı ne kadar yüksekse, parfümün kokusu o kadar yoğun ve kalıcılığı o kadar uzun olur. Bu konsantrasyon seviyeleri, parfümün karakterini, kullanım amacını ve hatta fiyatını doğrudan etkiler.
 
-## Uygulama: Az ve Doğru Noktalara
+Peki bu konsantrasyon seviyeleri tam olarak ne anlama geliyor ve şişelerin üzerindeki etiketler bize ne söylüyor? Gelin en yaygın parfüm türlerini yakından inceleyelim.
 
-- **1–2 fıs** (EDP/Parfum), **2–4 fıs** (EDT) genelde yeterlidir.  
-- **Nabız noktaları**: boyun yanları, kulak arkası, göğüs.  
-- **Sürtmeyin!** Bilekleri birbirine sürmek üst notaların hızlı uçmasına neden olur.  
-- Giysiye **yakından sıkmayın**; 20–30 cm mesafe ve açık renk kumaşlarda dikkat.
+### 3. Etiketleri Deşifre Ediyoruz: Başlıca Parfüm Türleri
 
-## Hızlı Karar Akışı
+Parfüm türlerini incelemeye başlamadan önce, parfüm dünyasındaki en önemli sırlardan birini bilmek gerekir: **EDT, EDP gibi terimler yasal olarak düzenlenmiş veya endüstri genelinde standartlaştırılmış etiketler değildir.** Bu, markaların belirli bir konsantrasyon aralığına uymak zorunda olmadığı anlamına gelir. Bu yüzdeler, genel birer rehber niteliğindedir. Dolayısıyla, bir markanın Eau de Toilette (EDT) versiyonu, başka bir markanın Eau de Parfum (EDP) versiyonundan daha güçlü veya kalıcı olabilir. Bu nedenle etiketler bize bir fikir verse de, asıl belirleyici olan kokunun kendisi ve formülüdür.
 
-1. **Ne zaman/nerede?** Gündüz-ofis → *EDT*; akşam-özel → *EDP/Parfum*.  
-2. **Hava nasıl?** Sıcak → *EDT/EdC*; serin → *EDP/Parfum*.  
-3. **İmzanız ne olsun?** Hafif, temiz → *EDT*; belirgin, kalıcı → *EDP/Parfum*.  
-4. **Cildiniz kuru mu?** O zaman *EDP/Parfum* + nemlendirme.
+Bu önemli notu aklımızda tutarak, en sık karşılaşacağınız beş ana kategoriyi ve özelliklerini en yoğundan en hafife doğru inceleyelim:
 
-## “Performans”ı Artırmanın 6 Kolay Yolu
+-   **Extrait de Parfum (Parfüm Özü)**
+    -   **Esans Yoğunluğu:** %20–40 aralığındadır. Bu, en yüksek konsantrasyona sahip parfüm türüdür.
+    -   **Kalıcılık Süresi:** Genellikle 12 saatten 24 saate kadar teninizde kalabilir.
+    -   **Karakteri:** Çok zengin, derin ve lüks bir deneyim sunar. Az miktarda kullanım bile yeterlidir ve özel anlar için idealdir.
+-   **Eau de Parfum (EDP)**
+    -   **Esans Yoğunluğu:** Genellikle %15–20 aralığındadır. Piyasada en yaygın bulunan yoğun formüldür.
+    -   **Kalıcılık Süresi:** Ortalama 6 ila 8 saat kalıcılık sunar, ancak bazı formüllerde 10 saate kadar çıkabilir.
+    -   **Karakteri:** Gün boyu kalıcılık arayanlar için mükemmel bir dengedir. Akşam kullanımı ve özel günler için sıkça tercih edilir.
+-   **Eau de Toilette (EDT)**
+    -   **Esans Yoğunluğu:** %5–15 aralığında bir konsantrasyona sahiptir.
+    -   **Kalıcılık Süresi:** Genellikle 3 ila 6 saat arasında tende kalır.
+    -   **Karakteri:** EDP'ye göre daha hafif ve ferah bir yapıdadır. Günlük kullanım, ofis ortamı ve sıcak havalar için idealdir.
+-   **Eau de Cologne (EDC / Kolonya)**
+    -   **Esans Yoğunluğu:** %2–5 gibi daha düşük bir orana sahiptir.
+    -   **Kalıcılık Süresi:** Ortalama 2 ila 3 saat kadar kısa bir kalıcılık sunar.
+    -   **Karakteri:** Adını ilk üretildiği Alman şehri Köln'den (Cologne) alır ve geleneksel olarak ferahlatıcı narenciye notaları üzerine kuruludur. Gün içinde ferahlamak için kullanılır.
+-   **Eau Fraîche**
+    -   **Esans Yoğunluğu:** %1–3 ile en düşük esans oranına sahiptir.
+    -   **Kalıcılık Süresi:** Genellikle 2 saatten az kalır.
+    -   **Karakteri:** Alkol oranı da düşük olup, büyük kısmı sudan oluşur. Çok hafif, ferahlatıcı bir "koku spreyi" gibidir ve hassas ciltler için uygundur.
 
-1. Duş sonrası **nemlendir ve uygula**.  
-2. **Yan bölgelere** (göğüs/ense) birer hafif fıs ekle.  
-3. **Mini decant** taşı: gün içinde 1 fıs tazeleme.  
-4. **Mevsime göre** konsantrasyon seç.  
-5. **Kokuya uygun bakım ürünü** (nötr/siluet destekli) kullan.  
-6. **Over-spray** yapma: daha çok fıs ≠ daha iyi koku.
+Aşağıdaki tablo, bu türleri bir bakışta karşılaştırmanıza yardımcı olacaktır:
 
-## Sık Yapılan Hatalar (Ve Çözümleri)
+Tür
 
-- **“Koku çabuk kayboluyor.”** → Cildin kuru olabilir; *EDP/Parfum* dene, uygulama öncesi nemlendir.  
-- **“Fazla yoğun geliyor.”** → Sprey sayısını azalt; *EDT* veya **vücut ısısından uzak** noktalara uygula (gömlek içi).  
-- **“Aynı kokunun EDP’si çok tatlı geldi.”** → Formül farkı normaldir; **başka konsantrasyon** ya da **başka batch** dene.
+Esans Yoğunluğu (%)
 
-## Saklama ve Raf Ömrü
+Ortalama Kalıcılık
 
-- **Işık ve ısı** düşmanıdır: serin, karanlık bir dolap idealdir.  
-- Kutusunda saklamak **renk ve notaları korur**.  
-- Açılmış şişeler için 2–4 yıl, kapalı şişeler için daha uzun ömür **mümkündür** (formüle bağlı).
+İdeal Kullanım Alanı ve Karakteri
 
-## Deneme Stratejisi: 7 Günlük Mikro Test
+**Extrait de Parfum**
 
-- **Gün 1–2:** Mağaza kağıt blotter + bilek (EDT/EDP).  
-- **Gün 3–4:** Ev/iş ortamında yarım gün kullanım (1–2 fıs).  
-- **Gün 5:** Farklı hava koşulunda tekrar dene.  
-- **Gün 6:** Yakın çevreden **dürüst geri bildirim** al.  
-- **Gün 7:** Hangi konsantrasyon **en doğal** hissettirdiyse onu seç.
+%20–40
 
----
+12+ saat
 
-**Kısa Özet:**  
-- **EDT** = daha ferah, gündüz ve sıcak hava dostu.  
-- **EDP** = daha kalıcı, dengeli; çoğu kişi için “altın orta”.  
-- **Parfum** = yoğun ve derin; serin hava ve özel anlar.
+**İmza Koku/Özel Anlar:** Tene yakın, samimi ve lüks bir deneyim. En kalıcı ama en az yayılan olabilir.
 
-**Sonraki adım:** Tercihlerini *simscent* üzerinde işaretle; biz de **mevsim, ortam ve kalıcılık hedefin** için doğru konsantrasyonları önerelim.
+**Eau de Parfum (EDP)**
+
+%15–20
+
+6–8+ saat
+
+**Dengeli Performans:** Akşam, davetler ve kalıcılık istenen günlük kullanım için ideal. Zengin ve belirgin.
+
+**Eau de Toilette (EDT)**
+
+%5–15
+
+3–6 saat
+
+**Gündelik Zarafet:** Ofis, sıcak havalar ve ferah bir başlangıç için mükemmel. EDP'den daha havadar ve parlak.
+
+**Eau de Cologne (EDC)**
+
+%2–5
+
+2–3 saat
+
+**Anlık Ferahlama:** Spor sonrası, gün içi tazeleyici olarak kullanılır. Genellikle narenciye odaklı ve canlandırıcı.
+
+**Eau Fraîche**
+
+%1–3
+
+< 2 saat
+
+**En Hafif Dokunuş:** Su bazlı, hassas ciltler için uygun, çok hafif bir koku spreyi.
+
+Tabloya bakınca her şey çok net görünüyor, değil mi? Yüksek konsantrasyon, daha uzun kalıcılık demek. Ancak parfüm dünyasında işler her zaman bu kadar basit değildir. Şimdi en yaygın yanılgılardan birini ele alalım.
+
+### 4. Konsantrasyonun Ötesinde: "EDP Her Zaman Daha Kalıcıdır" Efsanesi
+
+Parfüm seçerken en sık düşülen hatalardan biri, kalıcılığı yalnızca konsantrasyon etiketine (EDP, EDT vb.) bağlamaktır. Oysa gerçekte, bir kokunun teninizde ne kadar kalacağını belirleyen başka kritik faktörler de vardır.
+
+#### 1. Notaların Rolü
+
+Bir parfümü oluşturan notaların (içerikler) yapısı, kalıcılık üzerinde en az konsantrasyon kadar etkilidir. Bu durumun temel sebebi, notaları oluşturan **moleküllerin ağırlığı ve yapısıdır**.
+
+-   **Uçucu Notalar:** Narenciye (limon, bergamot), yeşil notalar ve taze çiçekler gibi kokular, moleküler olarak daha hafif ve uçucu (daha yüksek buhar basıncına sahip) oldukları için tenden hızla buharlaşır.
+-   **Kalıcı Notalar:** Odunsu notalar (sandal ağacı, sedir), amber, misk, vanilya ve tütün gibi temel notalar ise moleküler olarak daha ağır ve stabildir. Bu notalar tene daha sıkı tutunur ve kokunun saatlerce kalmasını sağlar.
+
+Bu nedenle, **odunsu notalara sahip bir EDT, taze narenciye notaları içeren bir EDP'den daha kalıcı olabilir.**
+
+#### 2. Formül Farklılıkları
+
+Pek çok kişi, sevdiği bir parfümün EDP versiyonunun, EDT versiyonunun sadece daha yoğun ve kalıcı hali olduğunu düşünür. Ancak bu, çoğu zaman doğru değildir. Markalar genellikle aynı isim altındaki farklı konsantrasyonları, birbirinden farklı koku profillerine sahip, adeta birbirinin **"flanker"ı (yan versiyonu)** olan iki ayrı parfüm olarak tasarlar.
+
+**Unutmayın:** Beğendiğiniz bir EDT'nin EDP versiyonu, sadece kokunun daha güçlü bir hali olmayabilir; notaları değiştirilmiş tamamen farklı bir yorum olabilir. Bu nedenle denemeden satın almamak önemlidir.
+
+Artık konsantrasyonun hikayenin sadece bir parçası olduğunu bildiğimize göre, tüm bu bilgileri kullanarak kendimiz için en doğru parfümü nasıl seçebiliriz?
+
+### 5. Kendinize En Uygun Parfümü Nasıl Seçersiniz?
+
+Doğru parfümü seçmek, kişisel zevklerinizin yanı sıra yaşam tarzınız, mevsim ve cilt tipiniz gibi faktörlere de bağlıdır. İşte pratik ipuçları:
+
+-   **Duruma Göre Seçim**
+    -   **Günlük ve Ofis Kullanımı:** İş ortamında veya gündelik hayatta, etrafınızdaki insanları bunaltmayacak, daha hafif ve ferah kokular idealdir. Bu durumlar için **Eau de Toilette (EDT)** veya **Eau de Cologne (EDC)** harika seçeneklerdir.
+    -   **Özel Davetler ve Akşam Etkinlikleri:** Akşam yemeği, düğün veya özel bir buluşma gibi anlarda daha derin, dikkat çekici ve kalıcı bir izlenim bırakmak isteyebilirsiniz. Bu gibi durumlar için **Eau de Parfum (EDP)** veya **Extrait de Parfum** daha uygun olacaktır.
+-   **Mevsime Göre Seçim**
+    -   **Sıcak Yaz Ayları:** Yüksek sıcaklık ve nem, kokuların daha yoğun hissedilmesine neden olur. Bu nedenle yaz aylarında ferahlatıcı, hafif ve taze hissettiren **EDT** ve **EDC** türleri daha konforlu bir kullanım sunar.
+    -   **Soğuk Kış Ayları:** Soğuk hava, kokunun buharlaşmasını yavaşlatır. Bu mevsimde vücut ısısıyla yavaşça yayılan, sıcak, baharatlı ve odunsu notalara sahip **EDP** ve **Parfum** konsantrasyonları, daha katmanlı ve kalıcı bir his yaratır.
+-   **Cilt Tipinize Göre Seçim**
+    -   Parfümün kalıcılığı cilt tipinizle yakından ilişkilidir. Yağlı ve iyi nemlendirilmiş ciltler, kokuyu daha uzun süre tutma eğilimindedir. Eğer kuru bir cilde sahipseniz, parfümünüz beklediğinizden daha çabuk uçabilir. Bunu önlemek için, parfümü uygulamadan önce cildinize kokusuz bir nemlendirici sürerek kokunun ömrünü uzatabilirsiniz.
+
+Doğru parfümü seçmek kadar, onun performansını tanımlayan birkaç terimi bilmek de ufkunuzu genişletecektir. Gelin son olarak iki önemli kavrama daha göz atalım.
+
+### 6. Yayılım (Sillage) ve Performans (Projection) Nedir?
+
+Bu iki terim, bir parfümün etkisini tanımlamak için sıkça kullanılır ve genellikle birbiriyle karıştırılır.
+
+-   **Yayılım (Sillage):** Fransızca kökenli bir kelime olan "sillage" (okunuşu: _si-yaj_), **bir geminin suda ilerlerken arkasında bıraktığı iz (Fransızca'da 'wake') gibi, siz bir yerden ayrıldıktan sonra arkanızda bıraktığınız koku izini ifade eder.** Yüksek sillage'a sahip bir parfüm, siz odadan çıktıktan sonra bile kokunuzun havada asılı kalmasını sağlar.
+-   **Performans (Projection):** Bu ise parfümün teninizden ne kadar uzağa yayıldığını, yani etrafınızdaki insanların sizi fark ettiği **'koku auranızın' çapını belirtir.** Güçlü bir projeksiyona sahip bir parfüm, siz odaya girdiğinizde fark edilirken, tene yakın duran bir parfüm ancak size çok yaklaşan biri tarafından hissedilebilir.
+
+**Önemli Not:** Yüksek konsantrasyon (örneğin Extrait de Parfum), her zaman en yüksek yayılım veya performans anlamına gelmez. Bazı yoğun parfümler, daha samimi ve kişisel bir deneyim sunmak amacıyla tene daha yakın kalacak şekilde tasarlanmıştır.
+
+Artık parfüm şişelerinin üzerindeki etiketlerin sırrını çözdünüz ve bilinçli bir seçim yapmak için gereken tüm bilgilere sahipsiniz.
+
+### 7. Sonuç: Kendi Koku İmzanızı Keşfedin
+
+Gördüğünüz gibi, EDT ve EDP arasındaki fark sadece bir "yoğunluk" meselesinden çok daha fazlasıdır. Parfüm seçimi; notaların karakteri, mevsim, ortam ve en önemlisi sizin kişisel zevkinizle şekillenen bütünsel bir deneyimdir.
+
+Unutmayın ki "en iyi parfüm" diye bir şey yoktur; sizin kendinizi en iyi, en özgüvenli ve en mutlu hissettiğiniz koku vardır. Beğendiğiniz bir EDT'nin EDP versiyonunun sadece daha güçlü bir kopya olmadığını, bambaşka bir yorum olabileceğini aklınızda tutarak denemekten çekinmeyin. Farklı konsantrasyonları keşfedin ve teninizle en uyumlu olanı bulma yolculuğunun tadını çıkarın. Kendi koku imzanızı yaratmak, kişiliğinizi ifade etmenin en zarif yollarından biridir.
