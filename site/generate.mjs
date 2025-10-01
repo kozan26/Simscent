@@ -1,11 +1,7 @@
 // site/generate.mjs
-// Build static site into ./dist with:
-// - product-template.html (if present) for product pages (otherwise minimal fallback)
-// - merged sitemap.xml (www + blog)
-// - robots.txt
-// - _redirects (NO SPA fallback)
-// - lightweight search index at /search/index.json
-// Requires Node 18+ (global fetch).
+// Build static site into ./dist with product pages rendered using
+// product-template.html (if present), and a single merged sitemap.xml
+// (www + blog). Requires Node 18+ (global fetch).
 
 import fs from "fs";
 import path from "path";
@@ -16,7 +12,7 @@ import { fileURLToPath } from "url";
 // -------------------------
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const ROOT = __dirname;                     // site/
+const ROOT = __dirname;                      // site/
 const OUT_DIR = path.join(ROOT, "dist");
 const DOMAIN = process.env.DOMAIN || "https://www.simscent.com";
 
@@ -100,9 +96,10 @@ function renderProductWithTemplate(p) {
     p.Description || p.description || "Fragrance details and notes."
   ).slice(0, 160);
 
-  // {{CONTENT}}'i boş bırakıyoruz (UI zaten sitede var)
+  // Artık içerik bloğunu boş bırakıyoruz (sayfanın üstündeki gereksiz yazıları kaldırmak için)
   const contentHTML = "";
 
+  // Placeholder'ları doldur
   tpl = tpl.replaceAll("{{TITLE}}", escapeHtml(title));
   tpl = tpl.replaceAll("{{CANONICAL}}", canonical);
   tpl = tpl.replaceAll("{{DESCRIPTION}}", escapeHtml(description));
@@ -113,7 +110,7 @@ function renderProductWithTemplate(p) {
 
   return tpl;
 }
-// Minimal fallback (template yoksa) — sessiz
+// Minimal fallback (template yoksa) — sessiz, ek yazı yok
 function renderProductMinimal(p) {
   const title = `${p.Brand || ""} ${p.fullName || ""}`.trim() || "Perfume";
   const safeDesc =
@@ -124,7 +121,7 @@ function renderProductMinimal(p) {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>${escapeHtml(title)} | simscent</title>
+  <title>${title} | simscent</title>
   <link rel="canonical" href="${canonical}" />
   <meta name="description" content="${escapeHtml(safeDesc).slice(0, 160)}" />
   <link rel="stylesheet" href="/assets/styles.css" onerror="this.remove()">
@@ -134,7 +131,7 @@ function renderProductMinimal(p) {
     <a href="/" style="text-decoration:none;color:inherit"><strong>simscent</strong></a>
   </header>
   <main style="max-width:960px;margin:0 auto;padding:16px;">
-    <!-- intentionally left blank; your site UI handles the rest -->
+    <!-- intentionally left blank; actual UI comes from your template/site scripts -->
   </main>
 </body>
 </html>`;
@@ -168,7 +165,8 @@ function isSitemapIndex(xml) {
   return /<sitemapindex[\s>]/i.test(xml);
 }
 function extractSitemapsFromIndex(xml) {
-  return extractLocsFromUrlset(xml); // sitemapindex de <loc> ile listeler
+  // sitemapindex de <loc> kullanır
+  return extractLocsFromUrlset(xml);
 }
 async function fetchAllBlogUrls(entryUrl = "https://blog.simscent.com/sitemap-index.xml") {
   try {
@@ -185,6 +183,7 @@ async function fetchAllBlogUrls(entryUrl = "https://blog.simscent.com/sitemap-in
       return Array.from(new Set(extractLocsFromUrlset(rootXml)));
     }
   } catch (e) {
+    // fallback: direkt /sitemap.xml
     try {
       const xml = await fetchText("https://blog.simscent.com/sitemap.xml");
       return Array.from(new Set(extractLocsFromUrlset(xml)));
@@ -193,36 +192,6 @@ async function fetchAllBlogUrls(entryUrl = "https://blog.simscent.com/sitemap-in
       return [];
     }
   }
-}
-
-// -------------------------
-// SEARCH INDEX builders
-// -------------------------
-function tokenizeForSearch(s) {
-  return String(s || "")
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
-}
-
-// Tek dosya: dist/search/index.json
-function buildSearchIndexAll(data) {
-  const items = data.map((p, i) => {
-    const brand = p.Brand || "";
-    const name  = p["Fragrance Name"] || p.name || "";
-    const conc  = p.Concentration || p.concentration || "";
-    const full  = (conc ? `${name} ${conc}` : name).trim();
-    return {
-      id: i,                                        // küçük id
-      b: brand,                                     // brand (UI gösterimi)
-      n: full,                                      // tam ad (UI gösterimi)
-      u: pageURL(p),                                // relative URL
-      t: `${tokenizeForSearch(brand)} ${tokenizeForSearch(full)}` // arama metni
-    };
-  });
-  const payload = JSON.stringify({ v: 1, count: items.length, items });
-  write(path.join(OUT_DIR, "search", "index.json"), payload);
-  console.log(`✓ search/index.json written (${items.length} items)`);
 }
 
 // -------------------------
@@ -283,10 +252,11 @@ async function build() {
   }
   console.log(`✓ Generated ${count} product pages ${useTpl ? "(with product-template.html)" : "(minimal template)"}`);
 
-  // 4) Redirects (robots/sitemap 200 rewrites, NO SPA fallback)
+  // 4) Redirects (robots/sitemap 200 rewrites + SPA fallback)
   const redirects = `
 /sitemap.xml  /sitemap.xml  200
 /robots.txt   /robots.txt   200
+/*            /index.html   200
 `.trim() + "\n";
   write(path.join(OUT_DIR, "_redirects"), redirects);
 
@@ -298,10 +268,7 @@ Sitemap: ${DOMAIN}/sitemap.xml
 `;
   write(path.join(OUT_DIR, "robots.txt"), robots);
 
-  // 6) SEARCH INDEX (lightweight)
-  buildSearchIndexAll(data); // dist/search/index.json
-
-  // 7) SITEMAP (merge WWW + BLOG)
+  // 6) SITEMAP (merge WWW + BLOG)
   const today = new Date().toISOString().slice(0, 10);
   const wwwUrls = data.map((p) => `${DOMAIN}${pageURL(p)}`);
   const home = `${DOMAIN}/`;
