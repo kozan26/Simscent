@@ -23,9 +23,9 @@ Bir parfüm seçerken karşınıza çıkacak EDT, EDP gibi etiketler veya üst, 
 
 Bir parfümün etiketindeki bu kısaltmalar, temel olarak içindeki parfüm yağı konsantrasyonunu, yani kokunun yoğunluğunu ve kalıcılığını belirtir. Parfüm dünyasındaki bu ayrımlar, Hacettepe Üniversitesi Eczacılık Fakültesi Dergisi'nde de belirtildiği gibi, esansiyel yağ konsantrasyonuna dayanır. Aralarındaki temel farklar şunlardır:
 
-- **Eau de Toilette (EDT):** Genellikle %5-15 arasında parfüm yağı içerir. Bu, en hafif konsantrasyonlardan biridir ve kokuya daha taze, canlı ve enerjik bir başlangıç sunar. Genellikle günlük kullanım için idealdir.
-- **Eau de Parfum (EDP):** Yaklaşık %15-20 oranında daha yoğun bir yağ konsantrasyonuna sahiptir. Bu sayede kokunun kalıcılığı artar ve karakteri daha derin hale gelir. Hem gündüz hem de gece kullanımına uygun, dengeli bir seçenektir.
-- **Parfum:** %20-40'a varan en yüksek konsantrasyona sahiptir. Bu, en zengin, en yoğun ve en kalıcı koku deneyimini sunar. Cilde daha yakın durur ancak etkisi saatlerce, hatta günlerce sürebilir.
+- **[Eau de Toilette (EDT)](https://www.simscent.com/p/chanel/bleu-de-chanel-eau-de-toilette):** Genellikle %5-15 arasında parfüm yağı içerir. Bu, en hafif konsantrasyonlardan biridir ve kokuya daha taze, canlı ve enerjik bir başlangıç sunar. Genellikle günlük kullanım için idealdir.
+- **[Eau de Parfum (EDP)](https://www.simscent.com/p/chanel/bleu-de-chanel-eau-de-parfum):** Yaklaşık %15-20 oranında daha yoğun bir yağ konsantrasyonuna sahiptir. Bu sayede kokunun kalıcılığı artar ve karakteri daha derin hale gelir. Hem gündüz hem de gece kullanımına uygun, dengeli bir seçenektir.
+- **[Parfum](https://www.simscent.com/p/chanel/bleu-de-chanel-parfum):** %20-40'a varan en yüksek konsantrasyona sahiptir. Bu, en zengin, en yoğun ve en kalıcı koku deneyimini sunar. Cilde daha yakın durur ancak etkisi saatlerce, hatta günlerce sürebilir.
 
 #### Koku Piramidi: Üst, Orta ve Alt Notalar
 
@@ -46,7 +46,7 @@ Artık temel kavramları anladığımıza göre, Bleu de Chanel ailesinin her bi
 
 #### a. Bleu de Chanel Eau de Toilette (EDT) - Canlı ve Keskin Başlangıç
 
-2010 yılında efsanevi parfümör Jacques Polge tarafından yaratılan orijinal **Bleu de Chanel EDT**, modern "mavi koku" (blue fragrance) kategorisini tanımlayan ve başlatan parfümdür. Taze, keskin ve enerjik karakteriyle anında dikkat çeker.
+2010 yılında efsanevi parfümör Jacques Polge tarafından yaratılan orijinal **[Bleu de Chanel EDT](https://www.simscent.com/p/chanel/bleu-de-chanel-eau-de-toilette)**, modern "mavi koku" (blue fragrance) kategorisini tanımlayan ve başlatan parfümdür. Taze, keskin ve enerjik karakteriyle anında dikkat çeker.
 
 - **Koku Profili:**
   - **Narenciye (Greyfurt, Limon):** İlk sıkıldığı anda patlayan bu notalar, anında bir ferahlık ve canlandırıcı bir enerji verir.
@@ -57,7 +57,7 @@ Artık temel kavramları anladığımıza göre, Bleu de Chanel ailesinin her bi
 
 #### b. Bleu de Chanel Eau de Parfum (EDP) - Dengeli ve Sofistike Derinlik
 
-2014 yılında yine Jacques Polge tarafından tasarlanan **Eau de Parfum**, orijinal EDT'nin DNA'sını korurken ona daha fazla derinlik, zenginlik ve pürüzsüzlük katmak için yaratılmış bir evrimdir. EDT'nin keskin narenciye ve zencefil patlamasının aksine, EDP daha olgun ve yuvarlak bir açılış sunar; narenciyeler burada birer spot ışığı değil, amber ve tütsünün sıcaklığını aydınlatan birer şamdan gibidir.
+2014 yılında yine Jacques Polge tarafından tasarlanan **[Bleu de Chanel EDP](https://www.simscent.com/p/chanel/bleu-de-chanel-eau-de-parfum)**, orijinal EDT'nin DNA'sını korurken ona daha fazla derinlik, zenginlik ve pürüzsüzlük katmak için yaratılmış bir evrimdir. EDT'nin keskin narenciye ve zencefil patlamasının aksine, EDP daha olgun ve yuvarlak bir açılış sunar; narenciyeler burada birer spot ışığı değil, amber ve tütsünün sıcaklığını aydınlatan birer şamdan gibidir.
 
 - **Koku Profili:**
   - **Amber ve Tonka Fasulyesi:** Kokuya daha sıcak, daha zengin ve hafif tatlı bir boyut katarak EDT'den daha dolgun bir his yaratır.
@@ -68,7 +68,7 @@ Artık temel kavramları anladığımıza göre, Bleu de Chanel ailesinin her bi
 
 #### c. Bleu de Chanel Parfum - Yoğun ve Kremsi Zarafet
 
-2018'de, babasının mirasını devralan Olivier Polge tarafından yaratılan **Parfum**, serinin en yoğun, en rafine ve en olgun yorumudur. Bu versiyon, EDT'nin keskin tazeliğini ve EDP'nin mükemmel dengesini bir kenara bırakarak odağını tamamen zengin ve kremsi odunsu notalara kaydırır.
+2018'de, babasının mirasını devralan Olivier Polge tarafından yaratılan **[Bleu de Chanel Parfum](https://www.simscent.com/p/chanel/bleu-de-chanel-parfum)**, serinin en yoğun, en rafine ve en olgun yorumudur. Bu versiyon, EDT'nin keskin tazeliğini ve EDP'nin mükemmel dengesini bir kenara bırakarak odağını tamamen zengin ve kremsi odunsu notalara kaydırır.
 
 - **Koku Profili:**
   - **Sandal Ağacı ve Sedir:** Bu notalar, parfümün başından sonuna kadar baskındır ve kokuya, yeni cilalanmış lüks bir ahşap mobilyanın verdiği o pürüzsüz ve zengin hissi katan yoğun, kremsi bir karakter verir.
@@ -78,7 +78,7 @@ Artık temel kavramları anladığımıza göre, Bleu de Chanel ailesinin her bi
 
 #### d. Bleu de Chanel L’Exclusif - Gizemli ve Lüks Yorum
 
-Bleu de Chanel ailesinin en yeni ve en gösterişli üyesi olan **L'Exclusif**, koleksiyonun en gizemli, en güçlü ve en lüks yorumu olarak tasarlanmış, güncel bir şaheserdir.
+Bleu de Chanel ailesinin en yeni ve en gösterişli üyesi olan **[L'Exclusif](https://www.simscent.com/p/chanel/bleu-de-chanel-lexclusif)**, koleksiyonun en gizemli, en güçlü ve en lüks yorumu olarak tasarlanmış, güncel bir şaheserdir.
 
 - **Koku Profili:**
   - **Amber ve Odun Harmanı:** Parfüme son derece pürüzsüz, kremsi ve tatlı bir derinlik katarak duyusal bir deneyim sunar.
@@ -93,19 +93,19 @@ Karar vermenize yardımcı olmak için dört versiyonu bir arada görelim:
 
 | Versiyon | Koku Profili | En İyi Olduğu Zaman | Öne Çıkan Özellik |
 |---|---|---|---|
-| **Eau de Toilette (EDT)** | Taze, keskin; narenciye, zencefil ve tütsü odaklı. | Günlük kullanım, ilkbahar-yaz, dinamik ortamlar. | Enerjik ve dikkat çekici yayılım. |
-| **Eau de Parfum (EDP)** | Dengeli, pürüzsüz; amber, amber ağacı ve tütsü ile zenginleştirilmiş. | Her mevsim ve durum (ofis, günlük, gece). | Mükemmel denge ve çok yönlülük. |
-| **Parfum** | Yoğun, kremsi; sandal ağacı ve sedir ağırlıklı. | Özel günler, resmi etkinlikler, sonbahar-kış. | Olgun, zarif ve cilde yakın kalıcılık. |
-| **L’Exclusif** | Karmaşık, zengin; kremsi amber, duman ve deri notaları. | Akşam kullanımı, soğuk aylar, cesur izlenim için. | En lüks, en güçlü ve en kalıcı yorum. |
+| **[Eau de Toilette (EDT)](https://www.simscent.com/p/chanel/bleu-de-chanel-eau-de-toilette)** | Taze, keskin; narenciye, zencefil ve tütsü odaklı. | Günlük kullanım, ilkbahar-yaz, dinamik ortamlar. | Enerjik ve dikkat çekici yayılım. |
+| **[Eau de Parfum (EDP)](https://www.simscent.com/p/chanel/bleu-de-chanel-eau-de-parfum)** | Dengeli, pürüzsüz; amber, amber ağacı ve tütsü ile zenginleştirilmiş. | Her mevsim ve durum (ofis, günlük, gece). | Mükemmel denge ve çok yönlülük. |
+| **[Parfum](https://www.simscent.com/p/chanel/bleu-de-chanel-parfum)** | Yoğun, kremsi; sandal ağacı ve sedir ağırlıklı. | Özel günler, resmi etkinlikler, sonbahar-kış. | Olgun, zarif ve cilde yakın kalıcılık. |
+| **[L’Exclusif](https://www.simscent.com/p/chanel/bleu-de-chanel-lexclusif)** | Karmaşık, zengin; kremsi amber, duman ve deri notaları. | Akşam kullanımı, soğuk aylar, cesur izlenim için. | En lüks, en güçlü ve en kalıcı yorum. |
 
 #### Seçiminiz İçin İpuçları
 
 Hala kararsızsanız, işte size yol gösterecek son birkaç ipucu:
 
-- **Enerjik ve dikkat çekici bir başlangıç için:** `Bleu de Chanel EDT`'yi seçin.
-- **Her duruma uyan dengeli ve güvenilir bir imza kokusu için:** `Bleu de Chanel EDP` en iyi seçeneğinizdir.
-- **Daha olgun, odunsu ve size yakın kalacak zarif bir koku için:** `Bleu de Chanel Parfum`'u tercih edin.
-- **En zengin, en kalıcı ve en lüks deneyimle fark yaratmak için:** `Bleu de Chanel L’Exclusif`'i keşfedin.
+- **Enerjik ve dikkat çekici bir başlangıç için:** [Bleu de Chanel EDT](https://www.simscent.com/p/chanel/bleu-de-chanel-eau-de-toilette)'yi seçin.
+- **Her duruma uyan dengeli ve güvenilir bir imza kokusu için:** [Bleu de Chanel EDP](https://www.simscent.com/p/chanel/bleu-de-chanel-eau-de-parfum) en iyi seçeneğinizdir.
+- **Daha olgun, odunsu ve size yakın kalacak zarif bir koku için:** [Bleu de Chanel Parfum](https://www.simscent.com/p/chanel/bleu-de-chanel-parfum)'u tercih edin.
+- **En zengin, en kalıcı ve en lüks deneyimle fark yaratmak için:** [Bleu de Chanel L’Exclusif](https://www.simscent.com/p/chanel/bleu-de-chanel-lexclusif)'i keşfedin.
 
 ### Sonuç
 
