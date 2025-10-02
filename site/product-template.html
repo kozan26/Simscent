@@ -5,60 +5,54 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-7LCE4Z60ZB"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){dataLayer.push(arguments);} 
     gtag('js', new Date());
     gtag('config', 'G-7LCE4Z60ZB');
   </script>
 
-  <!-- Essential Meta Tags -->
+  <!-- Essential Meta -->
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  
-  <!-- Primary Meta Tags -->
-  <title>{{TITLE}}</title>
-  <meta name="title" content="{{TITLE}}"/>
-  <meta name="description" content="{{DESCRIPTION}}"/>
-  <meta name="keywords" content="parfüm, koku, fragrance, parfüm önerisi, parfüm koleksiyonu, benzer parfümler"/>
-  <meta name="author" content="simscent"/>
   <meta name="robots" content="index, follow"/>
-  <meta name="language" content="Turkish"/>
-  <meta name="google-adsense-account" content="ca-pub-9033780165680589"/>
+  <meta name="google-adsense-account" content="ca-pub-9033780165680589">
 
-  <!-- Canonical URL -->
-  <link rel="canonical" href="{{CANONICAL}}"/>
+  <!-- Primary Meta -->
+  <title>simscent — Ana Sayfa</title>
+  <meta name="description" content="Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul."/>
+  <link rel="canonical" href="https://www.simscent.com/"/>
 
-  <!-- Open Graph / Facebook -->
+  <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website"/>
-  <meta property="og:url" content="{{CANONICAL}}"/>
-  <meta property="og:title" content="{{TITLE}}"/>
-  <meta property="og:description" content="{{DESCRIPTION}}"/>
-  <meta property="og:image" content="https://yourdomain.com/assets/og-image.jpg"/>
+  <meta property="og:url" content="https://www.simscent.com/"/>
+  <meta property="og:title" content="simscent — Ana Sayfa"/>
+  <meta property="og:description" content="Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul."/>
+  <meta property="og:image" content="https://www.simscent.com/assets/social-home.jpg"/>
   <meta property="og:locale" content="tr_TR"/>
   <meta property="og:site_name" content="simscent"/>
 
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:url" content="{{CANONICAL}}"/>
-  <meta name="twitter:title" content="{{TITLE}}"/>
-  <meta name="twitter:description" content="{{DESCRIPTION}}"/>
-  <meta name="twitter:image" content="https://yourdomain.com/assets/twitter-image.jpg"/>
+  <meta name="twitter:title" content="simscent — Ana Sayfa"/>
+  <meta name="twitter:description" content="Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul."/>
+  <meta name="twitter:image" content="https://www.simscent.com/assets/social-home.jpg"/>
 
   <!-- Favicons -->
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"/>
-  <link rel="alternate icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png"/>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png"/>
 
-  <!-- Preconnect for Performance -->
+  <!-- Performance Hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="dns-prefetch" href="https://www.googletagmanager.com"/>
 
-  <!-- Fonts - Optimized Loading -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
+  <!-- Fonts (preload stylesheet, swap fallback) -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap">
+  </noscript>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,500..700,0..1,-50..200"/>
-  
-  <!-- External Libraries - Deferred -->
+
+  <!-- External Libraries (deferred) -->
   <script defer src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
 
   <style>
@@ -116,6 +110,7 @@
     .section{padding:32px 0;border-top:1px dashed #e5e7eb}
     @media(min-width:768px){.section{padding:48px 0}}
 
+    /* --- INLINE TOGGLE STYLES --- */
     .pref-grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(220px, 1fr));gap:12px}
     .row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;min-height:48px;border:1px solid #f1f5f9;border-radius:14px;background:#fff;cursor:pointer}
     .lbl-wrap{display:flex;align-items:center;gap:8px}
@@ -127,6 +122,7 @@
     .toggle.active{background:var(--brand-primary)}
     .toggle.active .dot{transform:translateX(18px)}
 
+    /* --- TOOLTIP STYLES --- */
     .tooltip-trigger{position:relative;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;background-color:var(--shell);color:var(--muted);border-radius:50%;font-weight:700;font-size:13px;line-height:1;cursor:help;user-select:none;flex-shrink:0}
     .tooltip-trigger::before, .tooltip-trigger::after{position:absolute;left:50%;transform:translateX(-50%);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:100}
     .tooltip-trigger::after{content:attr(data-tooltip);bottom:100%;margin-bottom:12px;background-color:var(--text);color:#fff;padding:8px 12px;border-radius:8px;font-size:14px;font-weight:500;line-height:1.5;text-align:center;width:240px}
@@ -196,165 +192,147 @@
     .toast.info{background:linear-gradient(135deg,#64748b,#334155)}
     .fab{position:fixed;right:24px;bottom:24px;width:56px;height:56px;border:none;border-radius:999px;display:grid;place-items:center;color:#fff;background:var(--text);box-shadow:var(--elev-3);cursor:pointer;opacity:0;transform:translateY(12px) scale(.96);pointer-events:none;transition:opacity .25s,transform .25s;z-index:9998}
     .fab.show{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+
+    [data-debug-outline] *{outline:1px dashed rgba(100,116,139,.35)}
   </style>
 
-  <!-- Structured Data / Schema.org -->
+  <!-- Structured Data / Schema.org: WebSite + SearchAction -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "simscent",
-    "url": "{{CANONICAL}}",
-    "description": "Benzersiz tercihlerinle eşleşen parfümleri keşfet",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "{{CANONICAL}}/p/{search_term_string}",
-      "query-input": "required name=search_term_string"
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"simscent",
+    "url":"https://www.simscent.com/",
+    "description":"Benzersiz tercihlerinle eşleşen parfümleri keşfet",
+    "potentialAction":{
+      "@type":"SearchAction",
+      "target":"https://www.simscent.com/?q={search_term_string}",
+      "query-input":"required name=search_term_string"
     },
-    "inLanguage": "tr"
+    "inLanguage":"tr"
   }
   </script>
 
+  <!-- Breadcrumb (Ana sayfa) -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    "brand": {
-      "@type": "Brand",
-      "name": "{{BRAND}}"
-    },
-    "name": "{{NAME}}",
-    "category": "Fragrance",
-    "url": "{{CANONICAL}}",
-    "description": "{{DESCRIPTION}}"
-  }
-  </script>
-
-  <!-- Breadcrumb Schema -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [{
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Ana Sayfa",
-      "item": "{{CANONICAL}}"
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[{
+      "@type":"ListItem",
+      "position":1,
+      "name":"Ana Sayfa",
+      "item":"https://www.simscent.com/"
     }]
   }
   </script>
-
 </head>
 <body>
 <main class="landing" id="appRoot" role="main">
-  {{CONTENT}}
+  <div class="card"><div class="card-inner">
+    <header class="top">
+      <h1 class="brand" aria-label="simscent ana sayfa">
+        <img class="logo" src="/assets/logo.svg" alt="simscent logo" width="32" height="32">simscent
+      </h1>
+      <button class="cta" id="signupBtn" type="button">Kayıt Ol</button>
+    </header>
 
-  <article class="card">
-    <div class="card-inner">
-      <header class="top">
-        <h1 class="brand">
-          <img class="logo" src="/assets/logo.svg" alt="simscent logo" width="32" height="32">simscent
-        </h1>
-        <button class="cta" id="signupBtn" type="button">Kayıt Ol</button>
-      </header>
+    <section id="hero" class="hero" aria-labelledby="hero-title">
+      <figure class="shot-wrap">
+        <div class="blob" aria-hidden="true"></div>
+        <img id="heroShot" class="shot" src="https://images.unsplash.com/photo-1617839400561-d55457a29da2?q=80&w=930&auto=format&fit=crop" alt="Parfüm şişesi görseli" fetchpriority="high" decoding="async"/>
+        <div class="blob2" aria-hidden="true"></div>
+      </figure>
+      <div>
+        <h2 id="hero-title" class="title">İmza Kokunu<br/>Keşfet</h2>
+        <p class="desc">Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul.</p>
 
-      <section id="hero" class="hero">
-        <figure class="shot-wrap">
-          <div class="blob" aria-hidden="true"></div>
-          <img id="heroShot" class="shot" src="https://images.unsplash.com/photo-1617839400561-d55457a29da2?q=80&w=930&auto=format&fit=crop" alt="Parfüm şişesi görseli"/>
-          <div class="blob2" aria-hidden="true"></div>
-        </figure>
-        <div>
-          <h2 class="title">İmza Kokunu<br/>Keşfet</h2>
-          <p class="desc">Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul.</p>
-
-          <div class="search-wrap">
-            <div class="searchbar" role="search">
-              <input id="searchInput" type="search" placeholder="Bir parfüm ara, örn: 'Aventus'" autocomplete="off" aria-label="Parfüm ara"/>
-              <button id="searchBtn" class="icon-btn" type="button" title="Ara" aria-label="Ara">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-            </div>
-            <div id="suggestions" class="suggest" role="listbox" aria-label="Öneriler"></div>
+        <div class="search-wrap">
+          <div class="searchbar" role="search">
+            <input id="searchInput" type="search" inputmode="search" enterkeyhint="search" placeholder="Bir parfüm ara, örn: 'Aventus'" autocomplete="off" aria-label="Parfüm ara"/>
+            <button id="searchBtn" class="icon-btn" type="button" title="Ara" aria-label="Ara">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 21l-4.35-4.35M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
           </div>
-
-          <nav class="actions" aria-label="Ana işlemler">
-            <a class="btn primary" href="#results">Koleksiyonu Keşfet</a>
-            <button class="btn ghost" id="surpriseBtn" type="button">Beni Şaşırt!</button>
-          </nav>
+          <div id="suggestions" class="suggest" role="listbox" aria-label="Öneriler"></div>
         </div>
-      </section>
 
-      <section class="section" id="featured" style="display:none" aria-labelledby="featured-title">
-        <h3 id="featured-title">Öne Çıkan Koleksiyonlar</h3>
-        <div class="featured-wrap">
-          <div id="featuredGrid" class="featured-grid"></div>
-          <button id="featPrev" class="carousel-btn prev" type="button" aria-label="Önceki koleksiyon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-          </button>
-          <button id="featNext" class="carousel-btn next" type="button" aria-label="Sonraki koleksiyon">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-          </button>
+        <nav class="actions" aria-label="Ana işlemler">
+          <a class="btn primary" href="#results">Koleksiyonu Keşfet</a>
+          <button class="btn ghost" id="surpriseBtn" type="button">Beni Şaşırt!</button>
+        </nav>
+      </div>
+    </section>
+
+    <section class="section" id="featured" style="display:none" aria-labelledby="featured-title">
+      <h3 id="featured-title">Öne Çıkan Koleksiyonlar</h3>
+      <div class="featured-wrap">
+        <div id="featuredGrid" class="featured-grid"></div>
+        <button id="featPrev" class="carousel-btn prev" type="button" aria-label="Önceki koleksiyon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button id="featNext" class="carousel-btn next" type="button" aria-label="Sonraki koleksiyon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <section class="section" id="results" aria-labelledby="results-title">
+      <h3 id="results-title">Sonuçlar</h3>
+      <div id="refDetailOut">
+        <div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px">
+          <h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Keşfetmeye Başla</h4>
+          <p style="color:var(--muted);margin-top:4px">Başlamak için yukarıdan bir parfüm arayın veya "Beni Şaşırt!" butonunu kullanın.</p>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section" id="results" aria-labelledby="results-title">
-        <h3 id="results-title">Sonuçlar</h3>
-        <div id="refDetailOut">
-          <div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px">
-            <h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Keşfetmeye Başla</h4>
-            <p style="color:var(--muted);margin-top:4px">Başlamak için yukarıdan bir parfüm arayın veya "Beni Şaşırt!" butonunu kullanın.</p>
+    <section class="section" id="upload-section" style="display:none" aria-labelledby="criteria-title">
+      <h3 id="criteria-title">Benzerlik Kriterleri</h3>
+      <div class="card" style="box-shadow:none;border:1px solid var(--border);padding:16px; overflow: visible;">
+        <div id="prefs" class="pref-grid" role="group" aria-label="Kriter seçenekleri">
+          <div class="row active" data-pref="usage" role="button" tabindex="0">
+            <div class="lbl-wrap">
+              <span class="lbl">Kullanım Amacı</span>
+              <span class="tooltip-trigger" data-tooltip="Parfümün giyileceği ortamı tanımlar. Örn: Günlük, iş, gece." aria-label="Kullanım Amacı bilgisi">?</span>
+            </div>
+            <div class="toggle active" aria-hidden="true"><div class="dot"></div></div>
           </div>
-        </div>
-      </section>
-
-      <section class="section" id="upload-section" style="display:none" aria-labelledby="criteria-title">
-        <h3 id="criteria-title">Benzerlik Kriterleri</h3>
-        <div class="card" style="box-shadow:none;border:1px solid var(--border);padding:16px; overflow: visible;">
-          <div id="prefs" class="pref-grid" role="group" aria-label="Kriter seçenekleri">
-            <div class="row active" data-pref="usage" role="button" tabindex="0">
-              <div class="lbl-wrap">
-                <span class="lbl">Kullanım Amacı</span>
-                <span class="tooltip-trigger" data-tooltip="Parfümün giyileceği ortamı tanımlar. Örn: Günlük, iş, gece." aria-label="Kullanım Amacı bilgisi">?</span>
-              </div>
-              <div class="toggle active" aria-hidden="true"><div class="dot"></div></div>
+          <div class="row active" data-pref="season" role="button" tabindex="0">
+            <div class="lbl-wrap">
+              <span class="lbl">Mevsim</span>
+              <span class="tooltip-trigger" data-tooltip="Parfümün uygun olduğu mevsimi belirtir. Örn: Yaz, kış, ilkbahar." aria-label="Mevsim bilgisi">?</span>
             </div>
-            <div class="row active" data-pref="season" role="button" tabindex="0">
-              <div class="lbl-wrap">
-                <span class="lbl">Mevsim</span>
-                <span class="tooltip-trigger" data-tooltip="Parfümün uygun olduğu mevsimi belirtir. Örn: Yaz, kış, ilkbahar." aria-label="Mevsim bilgisi">?</span>
-              </div>
-              <div class="toggle active" aria-hidden="true"><div class="dot"></div></div>
+            <div class="toggle active" aria-hidden="true"><div class="dot"></div></div>
+          </div>
+          <div class="row active" data-pref="style" role="button" tabindex="0">
+            <div class="lbl-wrap">
+              <span class="lbl">Stil</span>
+              <span class="tooltip-trigger" data-tooltip="Parfümün genel karakterini ve tarzını ifade eder. Örn: Klasik, modern, maskülen." aria-label="Stil bilgisi">?</span>
             </div>
-            <div class="row active" data-pref="style" role="button" tabindex="0">
-              <div class="lbl-wrap">
-                <span class="lbl">Stil</span>
-                <span class="tooltip-trigger" data-tooltip="Parfümün genel karakterini ve tarzını ifade eder. Örn: Klasik, modern, maskülen." aria-label="Stil bilgisi">?</span>
-              </div>
-              <div class="toggle active" aria-hidden="true"><div class="dot"></div></div>
+            <div class="toggle active" aria-hidden="true"><div class="dot"></div></div>
+          </div>
+          <div class="row active" data-pref="family" role="button" tabindex="0">
+            <div class="lbl-wrap">
+              <span class="lbl">Koku Ailesi</span>
+              <span class="tooltip-trigger" data-tooltip="Parfümün ana koku grubunu belirtir. Örn: Odunsu, narenciye, çiçeksi." aria-label="Koku Ailesi bilgisi">?</span>
             </div>
-            <div class="row active" data-pref="family" role="button" tabindex="0">
-              <div class="lbl-wrap">
-                <span class="lbl">Koku Ailesi</span>
-                <span class="tooltip-trigger" data-tooltip="Parfümün ana koku grubunu belirtir. Örn: Odunsu, narenciye, çiçeksi." aria-label="Koku Ailesi bilgisi">?</span>
-              </div>
-              <div class="toggle active" aria-hidden="true"><div class="dot"></div></div>
-            </div>
+            <div class="toggle active" aria-hidden="true"><div class="dot"></div></div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="section" id="similar" style="display:none" aria-labelledby="similar-title">
-        <h3 id="similar-title"></h3>
-        <div id="similarOut"></div>
-      </section>
+    <!-- NOTE: Dynamic title; left empty in HTML, set in JS -->
+    <section class="section" id="similar" style="display:none" aria-labelledby="similar-title">
+      <h3 id="similar-title"></h3>
+      <div id="similarOut"></div>
+    </section>
 
-    </div>
-  </article>
+  </div></div>
 </main>
 
 <aside id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></aside>
-
 <button id="fabTop" class="fab" type="button" aria-label="Yukarı kaydır" title="Yukarı">
   <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 5l0 14M5.5 11.5L12 5l6.5 6.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </button>
@@ -542,7 +520,7 @@
   function renderRefDetail(p){
     const img=p['Image URL']||`https://placehold.co/480x480/e2e8f0/64748b?text=${encodeURIComponent((p.Brand||'?').slice(0,1))}`;
     const lon=toPct(p.Longevity), scent=toPct(p.Scent), sil=toPct(p.Sillage), val=toPct(p['Value for Money']);
-    const sourceLink=p.URL?`<a href='${p.URL}' target='_blank' rel='noopener noreferrer' class='btn ghost' style='display:flex;align-items:center;gap:8px;justify-content:center;width:100%;margin-top:16px;'>Parfumo'da Görüntüle</a>`:'';
+    const sourceLink=p.URL?`<a href='${p.URL}' target='_blank' rel='noopener noreferrer nofollow' class='btn ghost' style='display:flex;align-items:center;gap:8px;justify-content:center;width:100%;margin-top:16px;'>Parfumo'da Görüntüle</a>`:'';
 
     const releaseYear = p['Release Year'] && p['Release Year'] !== 'N/A' && p['Release Year'] !== 'Unknown' ? String(p['Release Year']) : null;
     const perfumers = (p.Perfumer || '').split(',').map(name => name.trim()).filter(name => name && name !== 'N/A' && name !== 'Unknown');
@@ -628,19 +606,19 @@
     }).filter(x=>x.similarity!==-1).sort((a,b)=>b.similarity-a.similarity);
   }
 
+  // DYNAMIC similar title here
   function renderSimilar(sims){
     const simSec = q('#similar');
     const container = q('#similarOut');
     const titleEl = q('#similar-title');
+    const refName = state.currentRef?.fullName || '';
+    titleEl.textContent = refName ? `${refName} Benzeri Parfümler` : 'Benzeri Parfümler';
+
     container.innerHTML = '';
     if(!sims.length){
       simSec.style.display = 'none';
       return;
     }
-    
-    const refName = state.currentRef?.fullName || 'Seçili Parfüm';
-    titleEl.textContent = `${refName} Benzeri Parfümler`;
-    
     const carouselContainer=document.createElement('div'); carouselContainer.className='carousel-container';
     carouselContainer.innerHTML=`
       <div class="carousel-window"></div>
@@ -801,7 +779,7 @@
         
         findSimilar(false);
       });
-      
+
       on(row, 'keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
@@ -890,7 +868,6 @@
     const fragName = ref.fullName || 'Ürün';
     document.title = `${fragName} - ${brandName} | simscent`;
     setMeta('description', `${brandName} ${fragName} hakkında detaylı bilgi, notalar, akordlar ve benzer parfüm önerileri. Kalıcılık, yayılım ve kullanıcı puanları.`);
-    setMeta('keywords', `${fragName}, ${brandName}, parfüm, koku, ${ref['Main Accords'] || 'fragrance'}`);
 
     const slugify = (text) => text.toString().toLowerCase()
       .replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ç/g, 'c')
@@ -943,9 +920,9 @@
     state.currentRef = null; q('#searchInput').value = '';
     q('#upload-section').style.display = 'none';
     q('#similar').style.display = 'none';
-    document.title = 'simscent - Parfüm Keşif Platformu | İmza Kokunu Bul';
-    setMeta('description', 'Benzersiz tercihlerinle eşleşen parfümleri keşfet. Binlerce parfüm arasından sana en uygun kokuyu bul. Parfüm önerileri, notalar ve akordlar.');
-    setMeta('keywords', 'parfüm, koku, fragrance, parfüm önerisi, parfüm keşfi, benzer parfümler, koku ailesi');
+    q('#similar-title').textContent = ''; // clear dynamic heading on home
+    document.title = 'simscent — Ana Sayfa';
+    setMeta('description', 'Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul.');
     const homePath = '/';
     if (pushState && location.pathname !== homePath) history.pushState({}, '', homePath);
 
@@ -986,7 +963,7 @@
       setHeroFromPerfume(rnd);
 
       q('#upload-section').style.display = 'none';
-      q('#refDetailOut').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Koleksiyon Yüklendi</h4><p style="color:var(--muted);margin-top:4px">Bir parfüm arayabilir veya "Beni Şaşırt!" butonunu kullanabilirsiniz.</p></div>`;
+      q('#refDetailOut').innerHTML = `<div style=\"text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px\"><h4 style=\"font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif\">Koleksiyon Yüklendi</h4><p style=\"color:var(--muted);margin-top:4px\">Bir parfüm arayabilir veya \"Beni Şaşırt!\" butonunu kullanabilirsiniz.</p></div>`;
       showToast(`✅ ${data.length} parfüm başarıyla yüklendi.`,'ok');
 
       window.addEventListener('popstate', handleRealRouting);
@@ -994,7 +971,7 @@
     } catch (err) {
       log.error(err);
       showToast(`❌ Veri yüklenemedi: ${err.message}`,'err');
-      q('#refDetailOut').innerHTML = `<div style="text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px"><h4 style="font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif">Yükleme Başarısız</h4><p style="color:var(--muted);margin-top:4px">'perfumes_data.json' dosyası bulunamadı veya hatalı. Lütfen konsolu kontrol edin.</p></div>`;
+      q('#refDetailOut').innerHTML = `<div style=\"text-align:center;padding:40px 20px;background:var(--shell);border-radius:16px\"><h4 style=\"font-weight:700;font-size:18px;color:var(--text);font-family:'Playfair Display',serif\">Yükleme Başarısız</h4><p style=\"color:var(--muted);margin-top:4px\">'perfumes_data.json' dosyası bulunamadı veya hatalı. Lütfen konsolu kontrol edin.</p></div>`;
     }
   }
 
@@ -1004,7 +981,7 @@
     nextFeatured:()=>{ const {pairs}=state.featured; const count=3; const pages=Math.max(1, Math.ceil(Math.min(pairs.length,10)/count)); state.featured.page=(state.featured.page+1)%pages; pickFeatured(count); renderFeatured(); }
   };
 
-  function init(){ wireEvents(); loadInitialData(); }
+  function init(){ wireEvents(); loadInitialUI(); loadInitialData(); }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
