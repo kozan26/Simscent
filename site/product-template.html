@@ -345,7 +345,7 @@
       </section>
 
       <section class="section" id="similar" style="display:none" aria-labelledby="similar-title">
-        <h3 id="similar-title">Benzeri Parfümler</h3>
+        <h3 id="similar-title"></h3>
         <div id="similarOut"></div>
       </section>
 
@@ -631,11 +631,16 @@
   function renderSimilar(sims){
     const simSec = q('#similar');
     const container = q('#similarOut');
+    const titleEl = q('#similar-title');
     container.innerHTML = '';
     if(!sims.length){
       simSec.style.display = 'none';
       return;
     }
+    
+    const refName = state.currentRef?.fullName || 'Seçili Parfüm';
+    titleEl.textContent = `${refName} Benzeri Parfümler`;
+    
     const carouselContainer=document.createElement('div'); carouselContainer.className='carousel-container';
     carouselContainer.innerHTML=`
       <div class="carousel-window"></div>
