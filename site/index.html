@@ -605,11 +605,13 @@
     }).filter(x=>x.similarity!==-1).sort((a,b)=>b.similarity-a.similarity);
   }
 
+  // --- UPDATED: renderSimilar also resets title when empty ---
   function renderSimilar(sims){
     const simSec = q('#similar');
     const container = q('#similarOut');
     container.innerHTML = '';
     if(!sims.length){
+      q('#similar-title').textContent = 'Benzeri Parfümler'; // reset
       simSec.style.display = 'none';
       return;
     }
@@ -625,11 +627,18 @@
     setupCarousel(carouselContainer);
   }
 
+  // --- UPDATED: render sets "X Benzeri Parfümler" ---
   function render(ref,sims){
     state.currentRef=ref;
     const refOut = q('#refDetailOut');
     refOut.innerHTML='';
     refOut.appendChild(renderRefDetail(ref));
+
+    // Başlığı dinamik yap: "X Benzeri Parfümler"
+    const t = q('#similar-title');
+    const x = `${ref.Brand ? ref.Brand + ' ' : ''}${ref.fullName}`.trim();
+    t.textContent = `${x} Benzeri Parfümler`;
+
     renderSimilar(sims);
   }
 
@@ -910,10 +919,13 @@
     setReferenceAndFindSimilar(p, true);
   }
 
+  // --- UPDATED: resetToHome resets default similar title ---
   function resetToHome(pushState = true) {
     state.currentRef = null; q('#searchInput').value = '';
     q('#upload-section').style.display = 'none';
     q('#similar').style.display = 'none';
+    q('#similar-title').textContent = 'Benzeri Parfümler'; // default title
+
     document.title = 'simscent — Ana Sayfa';
     setMeta('description', 'Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul.');
     const homePath = '/';
