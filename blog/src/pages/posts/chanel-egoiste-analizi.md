@@ -5,7 +5,7 @@ description: "Égoïste'in koku DNA'sı, stil profili, ideal kullanım ve perfor
 date: "2025-10-04"
 category: "Analiz"
 author: "Ozan Kılıç"
-readTime: 9
+readTime: 7
 image: "/egoiste_hero.png"
 ---
 
