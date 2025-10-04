@@ -1,11 +1,11 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "Cartier L'Envol: Verilerle Bir Zarafet Uçuşu"
+title: "Cartier L'Envol: Bir Zarafet Uçuşu"
 description: "Cartier L'Envol Eau de Parfum'ün koku DNA'sını, stil profilini, ideal kullanımını ve performansını kullanıcı verileriyle analiz eden kapsamlı inceleme."
 date: "2025-10-04"
 category: "Analiz"
 author: "Ozan Kılıç"
-readTime: 10
+readTime: 7
 image: "/lenvol_hero.png"
 ---
 
