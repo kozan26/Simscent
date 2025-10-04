@@ -14,7 +14,7 @@ image: "/egoiste_hero.png"
 
 ## Giriş: Klasik Zarafetin Koku Formülü
 
-Chanel denince akla gelen zamansız şıklık, 1990 yılında Jacques Polge ve François Demachy gibi iki dahi parfümörün elinde bir şişeye hapsedildi: **[Égoïste Eau de Toilette](https://www.simscent.com/p/chanel/goste-eau-de-toilette)**. Piyasaya çıktığı günden bu yana 30 yılı aşkın bir süredir erkek parfümerisinin temel taşlarından biri olan bu koku, adeta bir efsaneye dönüştü. Peki, Égoïste'i bu kadar özel ve kalıcı kılan nedir?
+Chanel denince akla gelen zamansız şıklık, 1990 yılında Jacques Polge  gibi bir dahi parfümörün elinde bir şişeye hapsedildi: **[Égoïste Eau de Toilette](https://www.simscent.com/p/chanel/goste-eau-de-toilette)**. Piyasaya çıktığı günden bu yana 30 yılı aşkın bir süredir erkek parfümerisinin temel taşlarından biri olan bu koku, adeta bir efsaneye dönüştü. Peki, Égoïste'i bu kadar özel ve kalıcı kılan nedir?
 
 *Detaylar & notlar:* Ürün sayfası ve not dağılımı için bkz. **[SimScent — Chanel Égoïste EDT](https://www.simscent.com/p/chanel/goste-eau-de-toilette)**.
 
