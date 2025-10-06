@@ -6,7 +6,7 @@ date: "2025-10-06"
 category: "Analiz"
 author: "Ozan Kılıç"
 readTime: 7
-image: "/autumn-vibes-hero.jpg"
+image: "/autumn-vibes-hero.png"
 slug: "maison-margiela-autumn-vibes-inceleme"
 tags:
   - maison margiela
