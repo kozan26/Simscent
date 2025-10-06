@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Sonbahar Parfümleri Rehberi"
 description: "Yazdan kışa acele etmeden, veriye dayalı koku aileleri ve notalarla gerçek bir sonbahar paleti kurma rehberi."
-date: "2025-10-06"
+date: "2025-10-07"
 category: "Rehber"
 author: "Ozan Kılıç"
 readTime: 15
