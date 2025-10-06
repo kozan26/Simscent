@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Chanel Égoïste: Zamana Meydan Okuyan Bir Efsanenin Verilerle Anatomisi"
 description: "Égoïste'in koku DNA'sı, stil profili, ideal kullanım ve performansını verilerle inceleyen kapsamlı analiz."
-date: "2025-10-04"
+date: "2025-10-05"
 category: "Analiz"
 author: "Ozan Kılıç"
 readTime: 7
