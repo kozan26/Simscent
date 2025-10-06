@@ -1,20 +1,22 @@
-----------
+---
 layout: ../../layouts/PostLayout.astro
-title: "Sonbahar Parfümleri Rehberi"
+title: "Sonbahar Parfümleri İçin Kapsamlı ve Veri Odaklı Rehber"
 description: "Yazdan kışa acele etmeden, veriye dayalı koku aileleri ve notalarla gerçek bir sonbahar paleti kurma rehberi."
-date: "2025-10-07"
+date: "2025-10-06"
 category: "Rehber"
 author: "Ozan Kılıç"
 readTime: 15
-image: "/autumn-guide-hero.png"
+image: "/autumn-guide-hero.jpg"
 slug: "sonbahar-parfumleri-kapsamli-veri-odakli-rehber"
 tags:
--   sonbahar
--   parfüm rehberi
--   koku aileleri
--   veri analizi
--   notalar
-----------
+  - sonbahar
+  - parfüm rehberi
+  - koku aileleri
+  - veri analizi
+  - notalar
+canonical: "https://www.simscent.com/blog/sonbahar-parfumleri-kapsamli-veri-odakli-rehber"
+draft: false
+---
 
 # **Sonbahar Parfümleri İçin Kapsamlı ve Veri Odaklı Rehber**
 
