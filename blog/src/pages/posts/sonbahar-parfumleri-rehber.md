@@ -14,8 +14,6 @@ tags:
   - koku aileleri
   - veri analizi
   - notalar
-canonical: "https://www.simscent.com/blog/sonbahar-parfumleri-kapsamli-veri-odakli-rehber"
-draft: false
 ---
 
 # **Sonbahar Parfümleri İçin Kapsamlı ve Veri Odaklı Rehber**
