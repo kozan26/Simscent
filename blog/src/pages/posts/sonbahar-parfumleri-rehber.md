@@ -14,7 +14,6 @@ tags:
 -   koku aileleri
 -   veri analizi
 -   notalar
-
 ----------
 
 # **Sonbahar Parfümleri İçin Kapsamlı ve Veri Odaklı Rehber**
