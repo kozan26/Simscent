@@ -1,6 +1,4 @@
-
 ----------
-
 layout: ../../layouts/PostLayout.astro
 title: "Sonbahar Parfümleri Rehberi"
 description: "Yazdan kışa acele etmeden, veriye dayalı koku aileleri ve notalarla gerçek bir sonbahar paleti kurma rehberi."
@@ -16,9 +14,6 @@ tags:
 -   koku aileleri
 -   veri analizi
 -   notalar
-canonical: "https://www.simscent.com/blog/sonbahar-parfumleri-kapsamli-veri-odakli-rehber"
-draft: false
-    
 
 ----------
 
