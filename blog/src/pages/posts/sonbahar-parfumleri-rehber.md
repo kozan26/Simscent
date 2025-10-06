@@ -57,42 +57,42 @@ Sezgisel seçimlerin yanıltıcı olabildiği bu dönemde, istatistiksel veriler
 
 #### **Baharatlı (Spicy): Mevsimin Sıcak Kucaklaması**
 
-Verilerde sonbahar ile en güçlü pozitif korelasyonu (**ρ = 0.603**) gösteren bu aile, mevsimin sıcak ve davetkar ruhunu istatistiksel olarak kanıtlar. Tarçın ve karanfilin sıcaklığı nostaljik bir mutluluk sunarken, kakule gibi notalar serin havaya modern bir keskinlik katar.
+Verilerde sonbahar ile en güçlü pozitif korelasyonu gösteren bu aile, mevsimin sıcak ve davetkar ruhunu istatistiksel olarak kanıtlar. Tarçın ve karanfilin sıcaklığı nostaljik bir mutluluk sunarken, kakule gibi notalar serin havaya modern bir keskinlik katar.
 
 -   **Örnek:** _Égoïste (Chanel)_ - Tarçın, tütün ve sandal ağacının hakim olduğu bu klasik, baharatlı sıcaklığın en zarif yorumlarından birini sunarak mevsimin ruhunu mükemmel bir şekilde kucaklar.
     
 
 #### **Reçineli (Resinous): Meditatif Derinlik**
 
-Sonbaharla güçlü bir pozitif ilişki (**ρ = 0.472**) sergileyen reçineler, parfüme antik tapınakları andıran ruhani bir derinlik katar. Bu kokular, sonbaharın içe dönük, meditatif anlarını sarmalayan sıcak ve yapışkan bir kehribar gibidir.
+Sonbaharla güçlü bir pozitif ilişki sergileyen reçineler, parfüme antik tapınakları andıran ruhani bir derinlik katar. Bu kokular, sonbaharın içe dönük, meditatif anlarını sarmalayan sıcak ve yapışkan bir kehribar gibidir.
 
 -   **Örnek:** _Eau Sauvage Parfum (Dior)_ - İçeriğindeki Mür notası, bu parfüme sonbaharın aradığı o meditatif ve ruhani derinliği katarak sofistike bir karaktere büründürür.
     
 
 #### **Dumanlı (Smoky): Gizemli ve Melankolik**
 
-Tütsü ve huş katranı gibi notalar, verilerde de onaylandığı üzere (**ρ = 0.460**) sonbaharın gizemli yüzüyle mükemmel uyum sağlar. Bu kokular, sadece yanan bir şömineyi değil, aynı zamanda sönmekte olan bir ateşin melankolisini de çağrıştırır.
+Tütsü ve huş katranı gibi notalar, verilerde de onaylandığı üzere sonbaharın gizemli yüzüyle mükemmel uyum sağlar. Bu kokular, sadece yanan bir şömineyi değil, aynı zamanda sönmekte olan bir ateşin melankolisini de çağrıştırır.
 
 -   **Örnek:** _Comme des Garçons 2 Man (Comme des Garçons)_ - Tütsü ve odunsu notaların dumanlı harmonisi, sonbahar akşamları için gizemli bir aura yaratarak bu ailenin melankolik karakterini yansıtır.
     
 
 #### **Deri (Leathery): Sofistike Bir Dokunuş**
 
-Deri kokuları (**ρ = 0.315**), rafine bir zarafet ve ham bir güç arasında mükemmel bir denge kurar. Sonbaharın serin havasına karşı şık bir deri ceket gibi koruyucu ve karakterli bir katman sunar.
+Deri kokuları, rafine bir zarafet ve ham bir güç arasında mükemmel bir denge kurar. Sonbaharın serin havasına karşı şık bir deri ceket gibi koruyucu ve karakterli bir katman sunar.
 
 -   **Örnek:** _Ombré Leather (Tom Ford)_ - Bu parfüm, derinin sıcak ve zengin dokusunu ön plana çıkararak sonbahar şıklığını karakterli bir imza ile tamamlar.
     
 
 #### **Odunsu (Woody): Ormanın Kalbi**
 
-Sandal ağacından sedire uzanan bu geniş aile (**ρ = 0.364**), sonbaharda ormanda yapılan bir yürüyüşün tüm katmanlarını teninize taşır. Bu kokular, toprağa bağlılık ve dingin bir güç hissi verir.
+Sandal ağacından sedire uzanan bu geniş aile, sonbaharda ormanda yapılan bir yürüyüşün tüm katmanlarını teninize taşır. Bu kokular, toprağa bağlılık ve dingin bir güç hissi verir.
 
 -   **Örnek:** _Encre Noire à L'Extrême (Lalique)_ - Vetiver ve selvinin koyu, odunsu ve topraksı profili, sonbahar ormanının kalbini yansıtarak bu ailenin temel vaadini yerine getirir.
     
 
 #### **Topraksı (Earthy): Doğanın Kökleri**
 
-Paçuli ve vetiver gibi kök notaları (**ρ = 0.234**), yağmurun toprağı öptüğü o ilk anın kokusunu yakalar. Topraksı bir koku giymek, en kaotik günde bile köklerinize dönmek ve doğayla yeniden bağ kurmak gibidir.
+Paçuli ve vetiver gibi kök notaları, yağmurun toprağı öptüğü o ilk anın kokusunu yakalar. Topraksı bir koku giymek, en kaotik günde bile köklerinize dönmek ve doğayla yeniden bağ kurmak gibidir.
 
 -   **Örnek:** _For Him (Narciso Rodriguez)_ - Paçuli ve miskin yarattığı topraksı ve hafif nemli his, mevsimin köklerine inerek bu ailenin doğaya bağlı ruhunu mükemmel bir şekilde yakalar.
     
@@ -118,23 +118,23 @@ Doğru parfümü seçmek kadar, yanlış olanı seçmemek de bir sanattır. Veri
 
 #### **Taze (Fresh)**
 
-Taze koku ailesi, verilerde de görüldüğü gibi sonbaharla güçlü bir negatif korelasyon (**ρ = -0.836**) göstererek karakterine en uzak noktada durur. Taze bir koku, sonbaharın loş ve sıcak ışıkla aydınlanmış odasına aniden açılan ve içeri soğuk rüzgar dolduran bir pencere gibidir; _ferahlatıcı ama yersizdir._
+Taze koku ailesi, verilerde de görüldüğü gibi sonbaharla güçlü bir negatif korelasyon göstererek karakterine en uzak noktada durur. Taze bir koku, sonbaharın loş ve sıcak ışıkla aydınlanmış odasına aniden açılan ve içeri soğuk rüzgar dolduran bir pencere gibidir; _ferahlatıcı ama yersizdir._
 
 #### **Narenciye (Citrus)**
 
-Limonun keskinliği ve portakalın neşesi (**ρ = -0.579**), sonbaharın sakin tefekkür ruhuyla tezat oluşturur. Bu canlılık, mum ışığında okunan bir şiirin ortasında çalan bir alarm gibidir; _dikkat dağıtıcı ve ritmi bozucudur._
+Limonun keskinliği ve portakalın neşesi, sonbaharın sakin tefekkür ruhuyla tezat oluşturur. Bu canlılık, mum ışığında okunan bir şiirin ortasında çalan bir alarm gibidir; _dikkat dağıtıcı ve ritmi bozucudur._
 
 #### **Akuatik (Aquatic)**
 
-Deniz tuzu ve okyanus esintisi gibi notalar (**ρ = -0.405**), bizi yazın engin maviliklerine götürür. Bu tercih, ormanda yapılan bir yürüyüşte denizi özlemek gibidir; _anın büyüsünü kaçırır._
+Deniz tuzu ve okyanus esintisi gibi notalar, bizi yazın engin maviliklerine götürür. Bu tercih, ormanda yapılan bir yürüyüşte denizi özlemek gibidir; _anın büyüsünü kaçırır._
 
 #### **Yeşil (Green)**
 
-Taze kesilmiş çimen ve ezilmiş yaprak gibi notalar (**ρ = -0.439**), doğanın uyanışını kutlar. Yeşil bir koku kullanmak, sonbaharın bilgeliğine ve olgun güzelliğine karşı baharın tecrübesiz ve coşkulu enerjisini sürmek gibidir. _Mevsimin ruhunu anlamak yerine ona meydan okur._
+Taze kesilmiş çimen ve ezilmiş yaprak gibi notalar, doğanın uyanışını kutlar. Yeşil bir koku kullanmak, sonbaharın bilgeliğine ve olgun güzelliğine karşı baharın tecrübesiz ve coşkulu enerjisini sürmek gibidir. _Mevsimin ruhunu anlamak yerine ona meydan okur._
 
 #### **Meyveli (Fruity)**
 
-Tatlı ve şenlikli meyve notaları (**ρ = -0.331**), genellikle yazın tasasız ruhuyla uyumludur. Bu tasasız neşe, sonbaharın getirdiği hüzünlü güzellik ve nostaljik derinlik karşısında sığ ve yersiz kalabilir. _Bu, melankolik bir caz parçası çalarken araya giren bir pop şarkısı gibidir._
+Tatlı ve şenlikli meyve notaları, genellikle yazın tasasız ruhuyla uyumludur. Bu tasasız neşe, sonbaharın getirdiği hüzünlü güzellik ve nostaljik derinlik karşısında sığ ve yersiz kalabilir. _Bu, melankolik bir caz parçası çalarken araya giren bir pop şarkısı gibidir._
 
 Artık hangi ailelere yöneleceğimizi ve hangilerinden kaçınacağımızı bildiğimize göre, şimdi merceğimizi daha da yakınlaştırarak koku piramidinin temel taşları olan notalara odaklanalım.
 
