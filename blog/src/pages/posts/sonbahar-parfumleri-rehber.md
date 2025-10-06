@@ -6,7 +6,7 @@ date: "2025-10-06"
 category: "Rehber"
 author: "Ozan Kılıç"
 readTime: 15
-image: "/autumn-guide-hero.jpg"
+image: "/autumn-guide-hero.png"
 slug: "sonbahar-parfumleri-kapsamli-veri-odakli-rehber"
 tags:
   - sonbahar
