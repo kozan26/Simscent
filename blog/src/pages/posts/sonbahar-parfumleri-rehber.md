@@ -1,6 +1,6 @@
 ---
 layout: ../../layouts/PostLayout.astro
-title: "Sonbahar Parfümleri İçin Kapsamlı ve Veri Odaklı Rehber"
+title: "Sonbahar Parfümleri Rehberi"
 description: "Yazdan kışa acele etmeden, veriye dayalı koku aileleri ve notalarla gerçek bir sonbahar paleti kurma rehberi."
 date: "2025-10-06"
 category: "Rehber"
