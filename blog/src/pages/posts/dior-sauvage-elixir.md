@@ -3,7 +3,7 @@ layout: ../../layouts/PostLayout.astro
 title: "Dior Sauvage Elixir: Verilerin Işığında Bir Performans Canavarı"
 description: "Sauvage Elixir’in koku DNA’sı, stil profili, ideal kullanım alanları ve performansını kullanıcı verileri ışığında  analiz."
 date: "2025-10-06"
-category: "İnceleme"
+category: "Analiz"
 author: "Ozan Kılıç"
 readTime: 7
 image: "/sauvage-elixir-hero.jpg"
