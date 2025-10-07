@@ -59,7 +59,7 @@ Sezgisel seçimlerin yanıltıcı olabildiği bu dönemde, istatistiksel veriler
 
 Verilerde sonbahar ile en güçlü pozitif korelasyonu gösteren bu aile, mevsimin sıcak ve davetkar ruhunu istatistiksel olarak kanıtlar. Tarçın ve karanfilin sıcaklığı nostaljik bir mutluluk sunarken, kakule gibi notalar serin havaya modern bir keskinlik katar.
 
--   **Örnek:** _Égoïste (Chanel)_ - Tarçın, tütün ve sandal ağacının hakim olduğu bu klasik, baharatlı sıcaklığın en zarif yorumlarından birini sunarak mevsimin ruhunu mükemmel bir şekilde kucaklar.
+-   **Örnek:** [_Égoïste (Chanel)_] (https://blog.simscent.com/posts/chanel-egoiste-analizi/) - Tarçın, tütün ve sandal ağacının hakim olduğu bu klasik, baharatlı sıcaklığın en zarif yorumlarından birini sunarak mevsimin ruhunu mükemmel bir şekilde kucaklar.
     
 
 #### **Reçineli (Resinous): Meditatif Derinlik**
