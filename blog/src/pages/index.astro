@@ -3,6 +3,24 @@ const posts = await Astro.glob('./posts/*.md');
 const sortedPosts = posts.sort((a, b) => 
   new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
 );
+
+// Extract categories and tags
+const categories = [...new Set(posts.map(post => post.frontmatter.category).filter(Boolean))];
+const allTags = posts.flatMap(post => post.frontmatter.tags || []).filter(Boolean);
+const uniqueTags = [...new Set(allTags)];
+
+// Get category counts
+const categoryCounts = categories.reduce((acc, category) => {
+  acc[category] = posts.filter(post => post.frontmatter.category === category).length;
+  return acc;
+}, {});
+
+// Get tag counts
+const tagCounts = uniqueTags.reduce((acc, tag) => {
+  acc[tag] = posts.filter(post => post.frontmatter.tags?.includes(tag)).length;
+  return acc;
+}, {});
+
 const featuredPost = sortedPosts[0];
 const otherPosts = sortedPosts.slice(1);
 ---
@@ -93,6 +111,43 @@ const otherPosts = sortedPosts.slice(1);
     .article-card:hover .read-more{color:var(--brand-primary)}
     .article-card:hover .read-more svg{transform:translateX(4px)}
 
+    /* Filter and Category Styles */
+    .filters-section{background:#fff;border-radius:20px;padding:32px;margin-bottom:40px;box-shadow:0 4px 20px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.04)}
+    .filters-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:16px}
+    .filters-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#1a1a1a}
+    .search-box{position:relative;flex:1;min-width:250px;max-width:400px}
+    .search-input{width:100%;padding:12px 16px 12px 44px;border:2px solid var(--border);border-radius:12px;font-size:15px;transition:all .3s;background:#fafafa}
+    .search-input:focus{outline:none;border-color:var(--brand-primary);background:#fff;box-shadow:0 0 0 3px rgba(185,155,107,.1)}
+    .search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);width:16px;height:16px}
+    
+    .filter-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+    .filter-tab{padding:8px 16px;border-radius:20px;background:#f5f5f5;color:var(--text);text-decoration:none;font-size:14px;font-weight:600;transition:all .3s;border:2px solid transparent;cursor:pointer}
+    .filter-tab:hover{background:var(--brand-primary);color:#fff;transform:translateY(-1px)}
+    .filter-tab.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-secondary)}
+    
+    .tags-cloud{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+    .tag{padding:6px 12px;border-radius:16px;background:rgba(185,155,107,.1);color:var(--brand-secondary);text-decoration:none;font-size:13px;font-weight:600;transition:all .3s;border:1px solid rgba(185,155,107,.2)}
+    .tag:hover{background:var(--brand-primary);color:#fff;transform:translateY(-1px);box-shadow:0 4px 12px rgba(185,155,107,.3)}
+    .tag-count{opacity:.7;margin-left:4px}
+    
+    .stats-section{background:linear-gradient(135deg,#f9f8f6 0%,#fefefe 100%);border-radius:20px;padding:32px;margin-bottom:40px;border:1px solid rgba(185,155,107,.1)}
+    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
+    .stat-card{text-align:center;padding:20px;background:#fff;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+    .stat-number{font-family:'Playfair Display',serif;font-size:32px;font-weight:800;color:var(--brand-primary);margin-bottom:8px}
+    .stat-label{color:var(--muted);font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+    
+    .category-badge{position:absolute;top:16px;left:16px;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);color:var(--brand-secondary);padding:6px 16px;border-radius:999px;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.8px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+    .tags-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+    .post-tag{padding:4px 8px;border-radius:12px;background:rgba(185,155,107,.1);color:var(--brand-secondary);font-size:11px;font-weight:600;text-decoration:none;transition:all .3s}
+    .post-tag:hover{background:var(--brand-primary);color:#fff}
+    
+    .no-results{text-align:center;padding:80px 24px;background:#fff;border-radius:20px;margin-top:40px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+    .no-results-content svg{color:var(--muted);margin-bottom:24px}
+    .no-results-content h3{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;margin-bottom:12px;color:#1a1a1a}
+    .no-results-content p{color:var(--muted);font-size:16px;margin-bottom:24px;max-width:400px;margin-left:auto;margin-right:auto}
+    .clear-filters-btn{background:var(--brand-primary);color:#fff;padding:12px 24px;border-radius:12px;border:none;font-weight:700;font-size:15px;cursor:pointer;transition:all .3s}
+    .clear-filters-btn:hover{background:var(--brand-secondary);transform:translateY(-2px);box-shadow:0 8px 20px rgba(185,155,107,.3)}
+
     /* Footer */
     footer{margin-top:60px;padding:60px 24px 40px;background:#fff;border-top:1px solid rgba(0,0,0,.06)}
     .footer-content{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:40px;text-align:center}
@@ -108,6 +163,15 @@ const otherPosts = sortedPosts.slice(1);
     @media(max-width:639px){
       nav{display:none}
       .hero{padding:80px 0 60px}
+      .filters-header{flex-direction:column;align-items:stretch}
+      .search-box{max-width:none;margin-top:16px}
+      .filter-tabs{justify-content:center}
+      .tags-cloud{justify-content:center}
+      .stats-grid{grid-template-columns:repeat(2,1fr);gap:16px}
+      .stat-card{padding:16px}
+      .stat-number{font-size:24px}
+      .filters-section{padding:24px;margin-bottom:32px}
+      .stats-section{padding:24px;margin-bottom:32px}
     }
   </style>
 </head>
@@ -136,6 +200,63 @@ const otherPosts = sortedPosts.slice(1);
   </section>
 
   <main class="container">
+    <!-- Statistics Section -->
+    <div class="stats-section">
+      <h2 class="section-title">Blog İstatistikleri</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">{posts.length}</div>
+          <div class="stat-label">Toplam Yazı</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">{categories.length}</div>
+          <div class="stat-label">Kategori</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">{uniqueTags.length}</div>
+          <div class="stat-label">Etiket</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">{Math.round(posts.reduce((acc, post) => acc + (post.frontmatter.readTime || 0), 0) / posts.length)}</div>
+          <div class="stat-label">Ortalama Okuma Süresi</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="filters-section">
+      <div class="filters-header">
+        <h2 class="filters-title">Keşfet</h2>
+        <div class="search-box">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="M21 21l-4.35-4.35"/>
+          </svg>
+          <input type="text" class="search-input" placeholder="Yazılar arasında ara..." id="searchInput">
+        </div>
+      </div>
+      
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-category="all">Tümü ({posts.length})</button>
+        {categories.map(category => (
+          <button class="filter-tab" data-category={category}>
+            {category} ({categoryCounts[category]})
+          </button>
+        ))}
+      </div>
+      
+      <div class="tags-cloud">
+        {uniqueTags.slice(0, 15).map(tag => (
+          <a href="#" class="tag" data-tag={tag}>
+            {tag} <span class="tag-count">({tagCounts[tag]})</span>
+          </a>
+        ))}
+        {uniqueTags.length > 15 && (
+          <span class="tag">+{uniqueTags.length - 15} daha</span>
+        )}
+      </div>
+    </div>
+
     {featuredPost && (
       <a href={featuredPost.url} class="featured">
         <div class="featured-image-wrap">
@@ -173,9 +294,9 @@ const otherPosts = sortedPosts.slice(1);
       <p class="section-subtitle">Parfüm dünyasından güncel içerikler</p>
     </div>
 
-    <div class="blog-grid">
+    <div class="blog-grid" id="blogGrid">
       {otherPosts.map(post => (
-        <a href={post.url} class="article-card">
+        <a href={post.url} class="article-card" data-category={post.frontmatter.category} data-tags={post.frontmatter.tags?.join(',')}>
           <div class="article-image-wrap">
             {post.frontmatter.image && (
               <img class="article-image" src={post.frontmatter.image} alt={post.frontmatter.title} />
@@ -200,6 +321,16 @@ const otherPosts = sortedPosts.slice(1);
             </div>
             <h3 class="article-title">{post.frontmatter.title}</h3>
             <p class="article-excerpt">{post.frontmatter.description}</p>
+            {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
+              <div class="tags-list">
+                {post.frontmatter.tags.slice(0, 3).map(tag => (
+                  <span class="post-tag">{tag}</span>
+                ))}
+                {post.frontmatter.tags.length > 3 && (
+                  <span class="post-tag">+{post.frontmatter.tags.length - 3}</span>
+                )}
+              </div>
+            )}
             <span class="read-more">
               Devamını Oku
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -207,6 +338,21 @@ const otherPosts = sortedPosts.slice(1);
           </div>
         </a>
       ))}
+    </div>
+    
+    <!-- No results message -->
+    <div id="noResults" class="no-results" style="display: none;">
+      <div class="no-results-content">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="M21 21l-4.35-4.35"/>
+          <line x1="11" y1="8" x2="11" y2="14"/>
+          <line x1="8" y1="11" x2="14" y2="11"/>
+        </svg>
+        <h3>Aradığınız kriterlere uygun yazı bulunamadı</h3>
+        <p>Farklı bir kategori veya etiket deneyebilir, ya da arama teriminizi değiştirebilirsiniz.</p>
+        <button onclick="clearFilters()" class="clear-filters-btn">Filtreleri Temizle</button>
+      </div>
     </div>
   </main>
 
@@ -236,5 +382,158 @@ const otherPosts = sortedPosts.slice(1);
       <p>&copy; 2025 simscent. Tüm hakları saklıdır.</p>
     </div>
   </footer>
+
+  <script>
+    // Global variables for filter state
+    let currentCategory = 'all';
+    let currentSearchTerm = '';
+    let currentTag = '';
+
+    // Filter and search functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('searchInput');
+      const filterTabs = document.querySelectorAll('.filter-tab');
+      const tagLinks = document.querySelectorAll('.tag[data-tag]');
+      const articleCards = document.querySelectorAll('.article-card');
+      const featuredCard = document.querySelector('.featured');
+      const noResultsDiv = document.getElementById('noResults');
+
+      // Search functionality
+      searchInput.addEventListener('input', function() {
+        currentSearchTerm = this.value.toLowerCase();
+        filterPosts();
+      });
+
+      // Category filter functionality
+      filterTabs.forEach(tab => {
+        tab.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          // Update active tab
+          filterTabs.forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          
+          currentCategory = this.dataset.category;
+          currentTag = ''; // Reset tag filter when category changes
+          filterPosts();
+        });
+      });
+
+      // Tag filter functionality
+      tagLinks.forEach(tag => {
+        tag.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          currentTag = this.dataset.tag;
+          currentCategory = 'all'; // Reset category filter when tag changes
+          
+          // Update active tab
+          filterTabs.forEach(t => t.classList.remove('active'));
+          filterTabs[0].classList.add('active'); // "Tümü" tab
+          
+          filterPosts();
+        });
+      });
+
+      function filterPosts() {
+        let visibleCount = 0;
+        
+        articleCards.forEach(card => {
+          const cardCategory = card.dataset.category;
+          const cardTags = card.dataset.tags ? card.dataset.tags.split(',') : [];
+          const cardTitle = card.querySelector('.article-title').textContent.toLowerCase();
+          const cardDescription = card.querySelector('.article-excerpt').textContent.toLowerCase();
+          
+          let showCard = true;
+          
+          // Category filter
+          if (currentCategory !== 'all' && cardCategory !== currentCategory) {
+            showCard = false;
+          }
+          
+          // Tag filter
+          if (currentTag && !cardTags.includes(currentTag)) {
+            showCard = false;
+          }
+          
+          // Search filter
+          if (currentSearchTerm && 
+              !cardTitle.includes(currentSearchTerm) && 
+              !cardDescription.includes(currentSearchTerm)) {
+            showCard = false;
+          }
+          
+          if (showCard) {
+            card.style.display = 'flex';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        
+        // Show/hide no results message
+        if (visibleCount === 0) {
+          noResultsDiv.style.display = 'block';
+        } else {
+          noResultsDiv.style.display = 'none';
+        }
+        
+        // Update section header
+        const sectionSubtitle = document.querySelector('.section-subtitle');
+        if (currentCategory !== 'all' || currentTag || currentSearchTerm) {
+          let filterText = '';
+          if (currentCategory !== 'all') {
+            filterText = `${currentCategory} kategorisinde `;
+          }
+          if (currentTag) {
+            filterText += `${currentTag} etiketinde `;
+          }
+          if (currentSearchTerm) {
+            filterText += `"${currentSearchTerm}" aramasında `;
+          }
+          sectionSubtitle.textContent = `${filterText}${visibleCount} yazı bulundu`;
+        } else {
+          sectionSubtitle.textContent = 'Parfüm dünyasından güncel içerikler';
+        }
+      }
+
+      // Smooth scroll for tag links
+      tagLinks.forEach(tag => {
+        tag.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.querySelector('.blog-grid').scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
+        });
+      });
+    });
+
+    // Clear filters function (global scope for onclick)
+    function clearFilters() {
+      // Reset all filters
+      currentCategory = 'all';
+      currentSearchTerm = '';
+      currentTag = '';
+      
+      // Clear search input
+      document.getElementById('searchInput').value = '';
+      
+      // Reset active tab
+      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+      document.querySelector('.filter-tab[data-category="all"]').classList.add('active');
+      
+      // Show all posts
+      document.querySelectorAll('.article-card').forEach(card => {
+        card.style.display = 'flex';
+      });
+      
+      // Hide no results message
+      document.getElementById('noResults').style.display = 'none';
+      
+      // Reset section subtitle
+      document.querySelector('.section-subtitle').textContent = 'Parfüm dünyasından güncel içerikler';
+    }
+  </script>
 </body>
 </html>
