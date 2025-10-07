@@ -21,16 +21,29 @@ const tagCounts = uniqueTags.reduce((acc, tag) => {
   return acc;
 }, {});
 
-const featuredPost = sortedPosts[0];
-const otherPosts = sortedPosts.slice(1);
+// Get URL parameters for filtering
+const url = new URL(Astro.request.url);
+const categoryParam = url.searchParams.get('category');
+const tagParam = url.searchParams.get('tag');
+
+// Filter posts based on URL parameters
+let filteredPosts = sortedPosts;
+if (categoryParam) {
+  filteredPosts = sortedPosts.filter(post => post.frontmatter.category === categoryParam);
+} else if (tagParam) {
+  filteredPosts = sortedPosts.filter(post => post.frontmatter.tags?.includes(tagParam));
+}
+
+const featuredPost = filteredPosts[0];
+const otherPosts = filteredPosts.slice(1);
 ---
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog — simscent</title>
-  <meta name="description" content="Parfüm kültürü, öneriler ve keşifler hakkında yazılarımızı okuyun.">
+  <title>{categoryParam ? `${categoryParam} Kategorisi` : tagParam ? `${tagParam} Etiketi` : 'Blog'} — simscent</title>
+  <meta name="description" content={categoryParam ? `${categoryParam} kategorisindeki parfüm yazıları` : tagParam ? `${tagParam} etiketli parfüm yazıları` : 'Parfüm kültürü, öneriler ve keşifler hakkında yazılarımızı okuyun.'}>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
@@ -67,6 +80,13 @@ const otherPosts = sortedPosts.slice(1);
 
     /* Container */
     .container{max-width:1320px;margin:0 auto;padding:60px 24px 80px}
+
+    /* Breadcrumb Navigation */
+    .breadcrumb{display:flex;align-items:center;gap:8px;margin-bottom:32px;padding:16px 20px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.04)}
+    .breadcrumb-link{color:var(--brand-secondary);text-decoration:none;font-weight:600;font-size:14px;transition:color .3s}
+    .breadcrumb-link:hover{color:var(--brand-primary)}
+    .breadcrumb-separator{color:var(--muted);font-size:14px}
+    .breadcrumb-current{color:var(--text);font-weight:600;font-size:14px}
 
     /* Featured Article */
     .featured{position:relative;display:grid;grid-template-columns:1fr;gap:0;background:#fff;border-radius:32px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.08);transition:all .4s cubic-bezier(.25,.8,.25,1);margin-bottom:80px;text-decoration:none;color:inherit}
@@ -128,6 +148,7 @@ const otherPosts = sortedPosts.slice(1);
     .tags-cloud{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
     .tag{padding:6px 12px;border-radius:16px;background:rgba(185,155,107,.1);color:var(--brand-secondary);text-decoration:none;font-size:13px;font-weight:600;transition:all .3s;border:1px solid rgba(185,155,107,.2)}
     .tag:hover{background:var(--brand-primary);color:#fff;transform:translateY(-1px);box-shadow:0 4px 12px rgba(185,155,107,.3)}
+    .tag.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary);box-shadow:0 4px 12px rgba(185,155,107,.3)}
     .tag-count{opacity:.7;margin-left:4px}
     
     .stats-section{background:linear-gradient(135deg,#f9f8f6 0%,#fefefe 100%);border-radius:20px;padding:32px;margin-bottom:40px;border:1px solid rgba(185,155,107,.1)}
@@ -194,12 +215,29 @@ const otherPosts = sortedPosts.slice(1);
 
   <section class="hero">
     <div class="hero-content">
-      <h1>Koku Dünyasından<br/>Hikayeler</h1>
-      <p>Parfüm kültürü, öneriler ve keşifler hakkında ilham veren yazılarımızı okuyun.</p>
+      <h1>
+        {categoryParam ? `${categoryParam} Kategorisi` : tagParam ? `${tagParam} Etiketi` : 'Koku Dünyasından<br/>Hikayeler'}
+      </h1>
+      <p>
+        {categoryParam ? `${categoryParam} kategorisindeki parfüm yazılarını keşfedin.` : 
+         tagParam ? `${tagParam} etiketli parfüm yazılarını keşfedin.` : 
+         'Parfüm kültürü, öneriler ve keşifler hakkında ilham veren yazılarımızı okuyun.'}
+      </p>
     </div>
   </section>
 
   <main class="container">
+    <!-- Breadcrumb Navigation -->
+    {(categoryParam || tagParam) && (
+      <div class="breadcrumb">
+        <a href="/" class="breadcrumb-link">Blog</a>
+        <span class="breadcrumb-separator">›</span>
+        <span class="breadcrumb-current">
+          {categoryParam ? `${categoryParam} Kategorisi` : `${tagParam} Etiketi`}
+        </span>
+      </div>
+    )}
+
     <!-- Statistics Section -->
     <div class="stats-section">
       <h2 class="section-title">Blog İstatistikleri</h2>
@@ -237,9 +275,9 @@ const otherPosts = sortedPosts.slice(1);
       </div>
       
       <div class="filter-tabs">
-        <button class="filter-tab active" data-category="all">Tümü ({posts.length})</button>
+        <button class="filter-tab {!categoryParam && !tagParam ? 'active' : ''}" data-category="all">Tümü ({posts.length})</button>
         {categories.map(category => (
-          <button class="filter-tab" data-category={category}>
+          <button class="filter-tab {categoryParam === category ? 'active' : ''}" data-category={category}>
             {category} ({categoryCounts[category]})
           </button>
         ))}
@@ -247,7 +285,7 @@ const otherPosts = sortedPosts.slice(1);
       
       <div class="tags-cloud">
         {uniqueTags.slice(0, 15).map(tag => (
-          <a href="#" class="tag" data-tag={tag}>
+          <a href={`/?tag=${encodeURIComponent(tag)}`} class="tag {tagParam === tag ? 'active' : ''}" data-tag={tag}>
             {tag} <span class="tag-count">({tagCounts[tag]})</span>
           </a>
         ))}
@@ -290,8 +328,14 @@ const otherPosts = sortedPosts.slice(1);
     )}
 
     <div class="section-header">
-      <h2 class="section-title">Son Yazılar</h2>
-      <p class="section-subtitle">Parfüm dünyasından güncel içerikler</p>
+      <h2 class="section-title">
+        {categoryParam ? `${categoryParam} Kategorisi` : tagParam ? `${tagParam} Etiketi` : 'Son Yazılar'}
+      </h2>
+      <p class="section-subtitle">
+        {categoryParam ? `${categoryParam} kategorisindeki parfüm yazıları` : 
+         tagParam ? `${tagParam} etiketli parfüm yazıları` : 
+         'Parfüm dünyasından güncel içerikler'}
+      </p>
     </div>
 
     <div class="blog-grid" id="blogGrid">
@@ -385,9 +429,9 @@ const otherPosts = sortedPosts.slice(1);
 
   <script>
     // Global variables for filter state
-    let currentCategory = 'all';
+    let currentCategory = '{categoryParam || 'all'}';
     let currentSearchTerm = '';
-    let currentTag = '';
+    let currentTag = '{tagParam || ''}';
 
     // Filter and search functionality
     document.addEventListener('DOMContentLoaded', function() {
@@ -409,31 +453,16 @@ const otherPosts = sortedPosts.slice(1);
         tab.addEventListener('click', function(e) {
           e.preventDefault();
           
-          // Update active tab
-          filterTabs.forEach(t => t.classList.remove('active'));
-          this.classList.add('active');
-          
-          currentCategory = this.dataset.category;
-          currentTag = ''; // Reset tag filter when category changes
-          filterPosts();
+          const category = this.dataset.category;
+          if (category === 'all') {
+            window.location.href = '/';
+          } else {
+            window.location.href = `/?category=${encodeURIComponent(category)}`;
+          }
         });
       });
 
-      // Tag filter functionality
-      tagLinks.forEach(tag => {
-        tag.addEventListener('click', function(e) {
-          e.preventDefault();
-          
-          currentTag = this.dataset.tag;
-          currentCategory = 'all'; // Reset category filter when tag changes
-          
-          // Update active tab
-          filterTabs.forEach(t => t.classList.remove('active'));
-          filterTabs[0].classList.add('active'); // "Tümü" tab
-          
-          filterPosts();
-        });
-      });
+      // Tag filter functionality - tags now use href navigation, no need for click handler
 
       function filterPosts() {
         let visibleCount = 0;
@@ -511,28 +540,8 @@ const otherPosts = sortedPosts.slice(1);
 
     // Clear filters function (global scope for onclick)
     function clearFilters() {
-      // Reset all filters
-      currentCategory = 'all';
-      currentSearchTerm = '';
-      currentTag = '';
-      
-      // Clear search input
-      document.getElementById('searchInput').value = '';
-      
-      // Reset active tab
-      document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
-      document.querySelector('.filter-tab[data-category="all"]').classList.add('active');
-      
-      // Show all posts
-      document.querySelectorAll('.article-card').forEach(card => {
-        card.style.display = 'flex';
-      });
-      
-      // Hide no results message
-      document.getElementById('noResults').style.display = 'none';
-      
-      // Reset section subtitle
-      document.querySelector('.section-subtitle').textContent = 'Parfüm dünyasından güncel içerikler';
+      // Navigate to main page to clear all filters
+      window.location.href = '/';
     }
   </script>
 </body>
