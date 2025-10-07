@@ -66,7 +66,7 @@ Verilerde sonbahar ile en güçlü pozitif korelasyonu gösteren bu aile, mevsim
 
 Sonbaharla güçlü bir pozitif ilişki sergileyen reçineler, parfüme antik tapınakları andıran ruhani bir derinlik katar. Bu kokular, sonbaharın içe dönük, meditatif anlarını sarmalayan sıcak ve yapışkan bir kehribar gibidir.
 
--   **Örnek:** [_Eau Sauvage Parfum (Dior)_](https://blog.simscent.com/posts/sonbahar-parfumleri-rehber/) - İçeriğindeki Mür notası, bu parfüme sonbaharın aradığı o meditatif ve ruhani derinliği katarak sofistike bir karaktere büründürür.
+-   **Örnek:** [_Eau Sauvage Parfum (Dior)_](https://blog.simscent.com/posts/dior-eau-sauvage-parfum-2012-inceleme/) - İçeriğindeki Mür notası, bu parfüme sonbaharın aradığı o meditatif ve ruhani derinliği katarak sofistike bir karaktere büründürür.
     
 
 #### **Dumanlı (Smoky): Gizemli ve Melankolik**
