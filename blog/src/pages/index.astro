@@ -429,9 +429,9 @@ const otherPosts = filteredPosts.slice(1);
 
   <script>
     // Global variables for filter state
-    let currentCategory = '{categoryParam || 'all'}';
+    let currentCategory = '{categoryParam || "all"}';
     let currentSearchTerm = '';
-    let currentTag = '{tagParam || ''}';
+    let currentTag = '{tagParam || ""}';
 
     // Filter and search functionality
     document.addEventListener('DOMContentLoaded', function() {
