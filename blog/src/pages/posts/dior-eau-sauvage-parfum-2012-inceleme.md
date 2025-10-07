@@ -3,7 +3,7 @@ layout: ../../layouts/PostLayout.astro
 title: "Dior Eau Sauvage Parfum (2012): Mirasın Modernleşen Yüzü ve Derinliği"
 description: "Dior'un efsanevi klasiği Eau Sauvage'ın 2012 Parfum versiyonunun koku DNA'sı, stil profili, ideal kullanım ve performansını kullanıcı verileriyle analiz."
 date: "2025-10-07"
-category: "İnceleme"
+category: "Analiz"
 author: "Ozan Kılıç"
 readTime: 7
 image: "/eau-sauvage-parfum-hero.png"
