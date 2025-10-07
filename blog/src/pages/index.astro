@@ -1,118 +1,923 @@
 ---
+// Blog yazılarını getir
 const posts = await Astro.glob('./posts/*.md');
-const sortedPosts = posts.sort((a, b) => 
+
+// Kategorileri çıkar ve say
+const categoryCount = {};
+posts.forEach(post => {
+  const category = post.frontmatter.category || 'Genel';
+  categoryCount[category] = (categoryCount[category] || 0) + 1;
+});
+
+// Kategorileri alfabetik sırala
+const categories = Object.keys(categoryCount).sort();
+
+// Kategori ikonları
+const categoryIcons = {
+  "Rehber": "📚",
+  "Koku Notları": "🌸",
+  "Mevsimsel": "🍂",
+  "Trendler": "✨",
+  "Marka İncelemeleri": "🏷️",
+  "DIY": "🧪",
+  "Kültür": "🎭",
+  "İpuçları": "💡",
+  "Genel": "📝"
+  "Analiz: "🔎"
+};
+
+// URL'den aktif kategoriyi al
+const activeCategory = Astro.url.searchParams.get('category') || 'all';
+
+// Yazıları kategoriye göre filtrele
+let filteredPosts = posts;
+if (activeCategory !== 'all') {
+  filteredPosts = posts.filter(post => 
+    (post.frontmatter.category || 'Genel') === activeCategory
+  );
+}
+
+// Tarihe göre sırala
+const sortedPosts = filteredPosts.sort((a, b) => 
   new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
 );
+
+// Öne çıkan ve diğer yazılar
 const featuredPost = sortedPosts[0];
 const otherPosts = sortedPosts.slice(1);
+
+// Sayfalama
+const POSTS_PER_PAGE = 9;
+const currentPage = parseInt(Astro.url.searchParams.get('page') || '1');
+const totalPages = Math.ceil(otherPosts.length / POSTS_PER_PAGE);
+const paginatedPosts = otherPosts.slice(
+  (currentPage - 1) * POSTS_PER_PAGE,
+  currentPage * POSTS_PER_PAGE
+);
+
+// SEO Meta
+const pageTitle = activeCategory !== 'all' 
+  ? `${activeCategory} | Blog — simscent` 
+  : 'Blog — simscent';
+const pageDescription = activeCategory !== 'all'
+  ? `${activeCategory} kategorisindeki tüm yazılar - Parfüm kültürü ve önerileri`
+  : 'Parfüm kültürü, öneriler ve keşifler hakkında yazılarımızı okuyun.';
 ---
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog — simscent</title>
-  <meta name="description" content="Parfüm kültürü, öneriler ve keşifler hakkında yazılarımızı okuyun.">
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription}>
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content={pageTitle}>
+  <meta property="og:description" content={pageDescription}>
+  <meta property="og:type" content="website">
+  <meta property="og:url" content={Astro.url}>
+  <meta property="og:image" content="https://www.simscent.com/og-blog.jpg">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={pageTitle}>
+  <meta name="twitter:description" content={pageDescription}>
+  
+  <!-- Canonical -->
+  <link rel="canonical" href={Astro.url.origin + Astro.url.pathname}>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  
   <style>
     :root{
-      --brand-primary:#B99B6B;--brand-secondary:#A08C62;--text:#3a3a3a;--muted:#888;
-      --border:#eee;--card:#fff;--shell:#f9f8f6;
+      --brand-primary:#B99B6B;
+      --brand-secondary:#A08C62;
+      --text:#3a3a3a;
+      --muted:#888;
+      --border:#eee;
+      --card:#fff;
+      --shell:#f9f8f6;
+      --shadow-sm:0 4px 20px rgba(0,0,0,.06);
+      --shadow-md:0 20px 50px rgba(0,0,0,.12);
+      --shadow-lg:0 30px 80px rgba(0,0,0,.15);
     }
+    
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
-    body{font-family:'Inter',sans-serif;color:var(--text);line-height:1.7;background:#fafafa;overflow-x:hidden}
+    body{
+      font-family:'Inter',sans-serif;
+      color:var(--text);
+      line-height:1.7;
+      background:#fafafa;
+      overflow-x:hidden;
+    }
     
     /* Header */
-    header{background:rgba(255,255,255,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(185,155,107,.12);position:sticky;top:0;z-index:100}
-    .header-inner{max-width:1320px;margin:0 auto;padding:20px 24px;display:flex;align-items:center;justify-content:space-between}
-    .brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:24px;letter-spacing:-.03em;font-family:'Playfair Display',serif;text-decoration:none;color:var(--text);transition:transform .2s}
+    header{
+      background:rgba(255,255,255,.85);
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(185,155,107,.12);
+      position:sticky;
+      top:0;
+      z-index:100;
+      transition:all .3s;
+    }
+    
+    .header-scrolled{
+      box-shadow:0 4px 20px rgba(0,0,0,.08);
+    }
+    
+    .header-inner{
+      max-width:1320px;
+      margin:0 auto;
+      padding:20px 24px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:800;
+      font-size:24px;
+      letter-spacing:-.03em;
+      font-family:'Playfair Display',serif;
+      text-decoration:none;
+      color:var(--text);
+      transition:transform .2s;
+    }
+    
     .brand:hover{transform:scale(1.02)}
+    
     .logo{width:36px;height:36px}
+    
     nav{display:flex;gap:32px;align-items:center}
-    nav a{text-decoration:none;color:var(--text);font-weight:600;font-size:15px;transition:all .2s;position:relative;padding:4px 0}
-    nav a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--brand-primary);transition:width .3s ease}
+    
+    nav a{
+      text-decoration:none;
+      color:var(--text);
+      font-weight:600;
+      font-size:15px;
+      transition:all .2s;
+      position:relative;
+      padding:4px 0;
+    }
+    
+    nav a::after{
+      content:'';
+      position:absolute;
+      bottom:0;
+      left:0;
+      width:0;
+      height:2px;
+      background:var(--brand-primary);
+      transition:width .3s ease;
+    }
+    
     nav a:hover::after{width:100%}
+    
     .nav-active{color:var(--brand-primary)}
     .nav-active::after{width:100%}
+    
+    .mobile-toggle{
+      display:none;
+      flex-direction:column;
+      gap:5px;
+      cursor:pointer;
+      padding:8px;
+      background:none;
+      border:none;
+    }
+    
+    .mobile-toggle span{
+      width:24px;
+      height:2px;
+      background:var(--text);
+      transition:all .3s;
+      display:block;
+    }
 
     /* Hero */
-    .hero{position:relative;padding:120px 0 80px;overflow:hidden;background:linear-gradient(135deg,#f9f8f6 0%,#fefefe 100%)}
-    .hero::before{content:'';position:absolute;top:-50%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(185,155,107,.08) 0%,transparent 70%);border-radius:50%;animation:float 20s ease-in-out infinite}
-    .hero::after{content:'';position:absolute;bottom:-30%;left:-5%;width:500px;height:500px;background:radial-gradient(circle,rgba(185,155,107,.06) 0%,transparent 70%);border-radius:50%;animation:float 25s ease-in-out infinite reverse}
-    @keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-30px) rotate(5deg)}}
-    .hero-content{position:relative;z-index:2;max-width:900px;margin:0 auto;text-align:center;padding:0 24px}
-    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(42px,6vw,72px);font-weight:800;letter-spacing:-.04em;line-height:1.08;margin-bottom:24px;background:linear-gradient(135deg,#3a3a3a 0%,#6b6b6b 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .hero p{color:var(--muted);font-size:clamp(17px,2vw,20px);max-width:620px;margin:0 auto;line-height:1.6}
+    .hero{
+      position:relative;
+      padding:100px 0 60px;
+      overflow:hidden;
+      background:linear-gradient(135deg,#f9f8f6 0%,#fefefe 100%);
+    }
+    
+    .hero::before{
+      content:'';
+      position:absolute;
+      top:-50%;
+      right:-10%;
+      width:600px;
+      height:600px;
+      background:radial-gradient(circle,rgba(185,155,107,.08) 0%,transparent 70%);
+      border-radius:50%;
+      animation:float 20s ease-in-out infinite;
+    }
+    
+    .hero::after{
+      content:'';
+      position:absolute;
+      bottom:-30%;
+      left:-5%;
+      width:500px;
+      height:500px;
+      background:radial-gradient(circle,rgba(185,155,107,.06) 0%,transparent 70%);
+      border-radius:50%;
+      animation:float 25s ease-in-out infinite reverse;
+    }
+    
+    @keyframes float{
+      0%,100%{transform:translateY(0) rotate(0deg)}
+      50%{transform:translateY(-30px) rotate(5deg)}
+    }
+    
+    .hero-content{
+      position:relative;
+      z-index:2;
+      max-width:900px;
+      margin:0 auto;
+      text-align:center;
+      padding:0 24px;
+    }
+    
+    .hero h1{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(36px,5vw,56px);
+      font-weight:800;
+      letter-spacing:-.04em;
+      line-height:1.1;
+      margin-bottom:16px;
+      background:linear-gradient(135deg,#3a3a3a 0%,#6b6b6b 100%);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    
+    .hero p{
+      color:var(--muted);
+      font-size:clamp(16px,2vw,18px);
+      max-width:620px;
+      margin:0 auto;
+      line-height:1.6;
+    }
+
+    /* Filter Bar */
+    .filter-bar{
+      background:#fff;
+      border-radius:20px;
+      padding:24px;
+      margin:40px auto;
+      max-width:1320px;
+      box-shadow:var(--shadow-sm);
+      border:1px solid rgba(0,0,0,.04);
+    }
+    
+    .filter-bar-inner{
+      display:flex;
+      gap:20px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    
+    .search-box{
+      flex:1;
+      min-width:280px;
+      position:relative;
+    }
+    
+    .search-box input{
+      width:100%;
+      padding:14px 20px 14px 44px;
+      border:2px solid var(--border);
+      border-radius:12px;
+      font-size:15px;
+      transition:all .3s;
+      background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E") no-repeat 14px center;
+      font-family:'Inter',sans-serif;
+    }
+    
+    .search-box input:focus{
+      outline:none;
+      border-color:var(--brand-primary);
+      box-shadow:0 0 0 3px rgba(185,155,107,.1);
+    }
+    
+    .search-box input::placeholder{
+      color:var(--muted);
+    }
+    
+    .search-clear{
+      position:absolute;
+      right:12px;
+      top:50%;
+      transform:translateY(-50%);
+      background:none;
+      border:none;
+      cursor:pointer;
+      padding:4px;
+      display:none;
+      color:var(--muted);
+      transition:color .2s;
+    }
+    
+    .search-clear:hover{color:var(--text)}
+    .search-clear.visible{display:block}
+    
+    .category-tabs{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    
+    .category-tab{
+      padding:10px 20px;
+      border:2px solid transparent;
+      background:var(--shell);
+      border-radius:999px;
+      font-weight:600;
+      font-size:14px;
+      cursor:pointer;
+      transition:all .3s;
+      text-decoration:none;
+      color:var(--text);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+    }
+    
+    .category-tab:hover{
+      background:rgba(185,155,107,.1);
+      border-color:rgba(185,155,107,.2);
+      transform:translateY(-2px);
+    }
+    
+    .category-tab.active{
+      background:var(--brand-primary);
+      color:#fff;
+      border-color:var(--brand-primary);
+      box-shadow:0 4px 12px rgba(185,155,107,.3);
+    }
+    
+    .category-count{
+      background:rgba(0,0,0,.1);
+      padding:2px 8px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:700;
+    }
+    
+    .category-tab.active .category-count{
+      background:rgba(255,255,255,.25);
+    }
 
     /* Container */
-    .container{max-width:1320px;margin:0 auto;padding:60px 24px 80px}
+    .container{
+      max-width:1320px;
+      margin:0 auto;
+      padding:0 24px 80px;
+    }
+
+    /* Result Info */
+    .result-info{
+      text-align:center;
+      margin:40px 0 30px;
+      color:var(--muted);
+      font-size:15px;
+      animation:fadeIn .5s ease;
+    }
+    
+    .result-info strong{
+      color:var(--text);
+      font-weight:700;
+    }
+    
+    @keyframes fadeIn{
+      from{opacity:0;transform:translateY(-10px)}
+      to{opacity:1;transform:translateY(0)}
+    }
 
     /* Featured Article */
-    .featured{position:relative;display:grid;grid-template-columns:1fr;gap:0;background:#fff;border-radius:32px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.08);transition:all .4s cubic-bezier(.25,.8,.25,1);margin-bottom:80px;text-decoration:none;color:inherit}
-    @media(min-width:900px){.featured{grid-template-columns:1.2fr 1fr;min-height:560px}}
-    .featured:hover{transform:translateY(-8px);box-shadow:0 30px 80px rgba(0,0,0,.12)}
-    .featured-image-wrap{position:relative;overflow:hidden;min-height:400px}
-    @media(min-width:900px){.featured-image-wrap{min-height:auto}}
-    .featured-image{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
-    .featured:hover .featured-image{transform:scale(1.05)}
-    .featured-content{padding:48px;display:flex;flex-direction:column;justify-content:center}
-    @media(min-width:900px){.featured-content{padding:60px}}
-    .featured-badge{background:var(--brand-primary);color:#fff;padding:8px 18px;border-radius:999px;font-weight:800;font-size:11px;display:inline-block;margin-bottom:24px;text-transform:uppercase;letter-spacing:1px;box-shadow:0 4px 12px rgba(185,155,107,.3);width:fit-content}
-    .featured-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,42px);font-weight:800;line-height:1.15;margin-bottom:20px;color:#1a1a1a}
-    .featured-excerpt{color:#666;font-size:17px;line-height:1.7;margin-bottom:32px}
-    .featured-meta{display:flex;align-items:center;gap:16px;color:var(--muted);font-size:14px;flex-wrap:wrap}
-    .featured-cta{display:inline-flex;align-items:center;gap:10px;background:#1a1a1a;color:#fff;padding:16px 32px;border-radius:12px;font-weight:700;border:none;font-size:15px;box-shadow:0 8px 20px rgba(0,0,0,.15);transition:all .3s;width:fit-content}
-    .featured:hover .featured-cta{background:var(--brand-primary);transform:translateX(4px)}
-
-    /* Section Header */
-    .section-header{text-align:center;margin-bottom:60px}
-    .section-title{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,44px);font-weight:800;margin-bottom:12px}
-    .section-subtitle{color:var(--muted);font-size:17px}
+    .featured{
+      position:relative;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:0;
+      background:#fff;
+      border-radius:32px;
+      overflow:hidden;
+      box-shadow:var(--shadow-md);
+      transition:all .4s cubic-bezier(.25,.8,.25,1);
+      margin-bottom:60px;
+      text-decoration:none;
+      color:inherit;
+    }
+    
+    @media(min-width:900px){
+      .featured{
+        grid-template-columns:1.2fr 1fr;
+        min-height:480px;
+      }
+    }
+    
+    .featured:hover{
+      transform:translateY(-8px);
+      box-shadow:var(--shadow-lg);
+    }
+    
+    .featured-image-wrap{
+      position:relative;
+      overflow:hidden;
+      min-height:400px;
+      background:#e2e8f0;
+    }
+    
+    @media(min-width:900px){
+      .featured-image-wrap{min-height:auto}
+    }
+    
+    .featured-image{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transition:transform .6s ease;
+    }
+    
+    .featured:hover .featured-image{
+      transform:scale(1.05);
+    }
+    
+    .featured-content{
+      padding:40px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+    
+    @media(min-width:900px){
+      .featured-content{padding:50px}
+    }
+    
+    .featured-badge{
+      background:var(--brand-primary);
+      color:#fff;
+      padding:8px 18px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:11px;
+      display:inline-block;
+      margin-bottom:20px;
+      text-transform:uppercase;
+      letter-spacing:1px;
+      box-shadow:0 4px 12px rgba(185,155,107,.3);
+      width:fit-content;
+    }
+    
+    .featured-title{
+      font-family:'Playfair Display',serif;
+      font-size:clamp(24px,4vw,36px);
+      font-weight:800;
+      line-height:1.15;
+      margin-bottom:16px;
+      color:#1a1a1a;
+    }
+    
+    .featured-excerpt{
+      color:#666;
+      font-size:16px;
+      line-height:1.7;
+      margin-bottom:24px;
+    }
+    
+    .featured-meta{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      color:var(--muted);
+      font-size:13px;
+      flex-wrap:wrap;
+    }
 
     /* Blog Grid */
-    .blog-grid{display:grid;grid-template-columns:1fr;gap:32px}
-    @media(min-width:640px){.blog-grid{grid-template-columns:repeat(2,1fr);gap:28px}}
-    @media(min-width:1024px){.blog-grid{grid-template-columns:repeat(3,1fr);gap:32px}}
+    .blog-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:28px;
+    }
+    
+    @media(min-width:640px){
+      .blog-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    
+    @media(min-width:1024px){
+      .blog-grid{
+        grid-template-columns:repeat(3,1fr);
+        gap:32px;
+      }
+    }
 
     /* Article Card */
-    .article-card{background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.06);transition:all .35s cubic-bezier(.4,0,.2,1);text-decoration:none;color:inherit;display:flex;flex-direction:column;border:1px solid rgba(0,0,0,.04)}
-    .article-card:hover{transform:translateY(-10px) scale(1.01);box-shadow:0 20px 50px rgba(0,0,0,.12);border-color:rgba(185,155,107,.2)}
-    .article-image-wrap{position:relative;overflow:hidden;aspect-ratio:16/10;background:#e2e8f0}
-    .article-image{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.4,0,.2,1)}
-    .article-card:hover .article-image{transform:scale(1.08) rotate(1deg)}
-    .category-badge{position:absolute;top:16px;left:16px;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);color:var(--brand-secondary);padding:6px 16px;border-radius:999px;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.8px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
-    .article-content{padding:28px;flex:1;display:flex;flex-direction:column}
-    .article-meta{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--muted);margin-bottom:16px}
-    .article-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;line-height:1.3;margin-bottom:12px;color:#1a1a1a}
-    .article-excerpt{color:#666;font-size:15px;line-height:1.65;margin-bottom:20px;flex:1}
-    .read-more{color:var(--brand-secondary);font-weight:700;font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:all .3s;margin-top:auto}
-    .read-more svg{transition:transform .3s}
-    .article-card:hover .read-more{color:var(--brand-primary)}
-    .article-card:hover .read-more svg{transform:translateX(4px)}
+    .article-card{
+      background:#fff;
+      border-radius:24px;
+      overflow:hidden;
+      box-shadow:var(--shadow-sm);
+      transition:all .35s cubic-bezier(.4,0,.2,1);
+      text-decoration:none;
+      color:inherit;
+      display:flex;
+      flex-direction:column;
+      border:1px solid rgba(0,0,0,.04);
+      opacity:0;
+      animation:cardFadeIn .5s ease forwards;
+    }
+    
+    @keyframes cardFadeIn{
+      to{opacity:1}
+    }
+    
+    .article-card:hover{
+      transform:translateY(-10px) scale(1.01);
+      box-shadow:var(--shadow-md);
+      border-color:rgba(185,155,107,.2);
+    }
+    
+    .article-image-wrap{
+      position:relative;
+      overflow:hidden;
+      aspect-ratio:16/10;
+      background:#e2e8f0;
+    }
+    
+    .article-image{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      transition:transform .5s cubic-bezier(.4,0,.2,1);
+    }
+    
+    .article-card:hover .article-image{
+      transform:scale(1.08);
+    }
+    
+    .category-badge{
+      position:absolute;
+      top:16px;
+      left:16px;
+      background:rgba(255,255,255,.95);
+      backdrop-filter:blur(10px);
+      color:var(--brand-secondary);
+      padding:6px 16px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+      box-shadow:0 4px 12px rgba(0,0,0,.1);
+    }
+    
+    .article-content{
+      padding:24px;
+      flex:1;
+      display:flex;
+      flex-direction:column;
+    }
+    
+    .article-meta{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:12px;
+    }
+    
+    .article-title{
+      font-family:'Playfair Display',serif;
+      font-size:20px;
+      font-weight:700;
+      line-height:1.3;
+      margin-bottom:12px;
+      color:#1a1a1a;
+    }
+    
+    .article-excerpt{
+      color:#666;
+      font-size:14px;
+      line-height:1.65;
+      margin-bottom:16px;
+      flex:1;
+    }
+    
+    .read-more{
+      color:var(--brand-secondary);
+      font-weight:700;
+      font-size:14px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition:all .3s;
+      margin-top:auto;
+    }
+    
+    .read-more svg{
+      transition:transform .3s;
+    }
+    
+    .article-card:hover .read-more{
+      color:var(--brand-primary);
+    }
+    
+    .article-card:hover .read-more svg{
+      transform:translateX(4px);
+    }
+    
+    mark{
+      background:rgba(185,155,107,.3);
+      padding:2px 4px;
+      border-radius:3px;
+      font-weight:600;
+    }
+
+    /* Pagination */
+    .pagination{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:12px;
+      margin-top:60px;
+    }
+    
+    .pagination a,
+    .pagination span{
+      padding:12px 20px;
+      border-radius:12px;
+      font-weight:600;
+      font-size:14px;
+      transition:all .3s;
+      text-decoration:none;
+    }
+    
+    .pagination a{
+      background:#fff;
+      color:var(--text);
+      border:2px solid var(--border);
+    }
+    
+    .pagination a:hover{
+      background:var(--brand-primary);
+      color:#fff;
+      border-color:var(--brand-primary);
+      transform:translateY(-2px);
+      box-shadow:0 4px 12px rgba(185,155,107,.3);
+    }
+    
+    .pagination .current{
+      background:var(--brand-primary);
+      color:#fff;
+      border:2px solid var(--brand-primary);
+    }
+    
+    .pagination .disabled{
+      opacity:.4;
+      pointer-events:none;
+      background:#f5f5f5;
+      border:2px solid var(--border);
+      color:var(--muted);
+    }
+
+    /* Empty State */
+    .empty-state{
+      text-align:center;
+      padding:80px 24px;
+      background:#fff;
+      border-radius:24px;
+      margin:40px 0;
+      box-shadow:var(--shadow-sm);
+    }
+    
+    .empty-state svg{
+      width:120px;
+      height:120px;
+      margin:0 auto 24px;
+      opacity:.3;
+      stroke:var(--brand-primary);
+    }
+    
+    .empty-state h2{
+      font-family:'Playfair Display',serif;
+      font-size:28px;
+      margin-bottom:12px;
+    }
+    
+    .empty-state p{
+      color:var(--muted);
+      font-size:16px;
+      max-width:400px;
+      margin:0 auto 24px;
+      line-height:1.6;
+    }
+    
+    .empty-state a{
+      display:inline-block;
+      padding:12px 28px;
+      background:var(--brand-primary);
+      color:#fff;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:700;
+      transition:all .3s;
+    }
+    
+    .empty-state a:hover{
+      transform:translateY(-2px);
+      box-shadow:0 8px 20px rgba(185,155,107,.3);
+    }
+
+    /* Scroll to Top */
+    .scroll-top{
+      position:fixed;
+      bottom:40px;
+      right:40px;
+      width:56px;
+      height:56px;
+      background:var(--brand-primary);
+      border:none;
+      border-radius:50%;
+      color:#fff;
+      cursor:pointer;
+      opacity:0;
+      visibility:hidden;
+      transition:all .3s;
+      box-shadow:0 8px 20px rgba(185,155,107,.3);
+      z-index:99;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    
+    .scroll-top.visible{
+      opacity:1;
+      visibility:visible;
+    }
+    
+    .scroll-top:hover{
+      transform:translateY(-4px);
+      box-shadow:0 12px 28px rgba(185,155,107,.4);
+    }
 
     /* Footer */
-    footer{margin-top:60px;padding:60px 24px 40px;background:#fff;border-top:1px solid rgba(0,0,0,.06)}
-    .footer-content{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:40px;text-align:center}
-    @media(min-width:768px){.footer-content{grid-template-columns:1.5fr 1fr 1fr;text-align:left;gap:60px}}
-    .footer-brand{font-family:'Playfair Display',serif;font-size:28px;font-weight:800;margin-bottom:12px}
-    .footer-desc{color:var(--muted);font-size:14px;line-height:1.6}
-    .footer-section h4{font-weight:700;margin-bottom:16px;font-size:14px;text-transform:uppercase;letter-spacing:.8px}
-    .footer-links{display:flex;flex-direction:column;gap:10px}
-    .footer-links a{color:var(--muted);text-decoration:none;font-size:14px;transition:color .2s}
-    .footer-links a:hover{color:var(--brand-primary)}
-    .footer-bottom{margin-top:40px;padding-top:30px;border-top:1px solid rgba(0,0,0,.06);text-align:center;color:var(--muted);font-size:13px}
+    footer{
+      margin-top:60px;
+      padding:60px 24px 40px;
+      background:#fff;
+      border-top:1px solid rgba(0,0,0,.06);
+    }
+    
+    .footer-content{
+      max-width:1320px;
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:40px;
+      text-align:center;
+    }
+    
+    @media(min-width:768px){
+      .footer-content{
+        grid-template-columns:1.5fr 1fr 1fr;
+        text-align:left;
+        gap:60px;
+      }
+    }
+    
+    .footer-brand{
+      font-family:'Playfair Display',serif;
+      font-size:28px;
+      font-weight:800;
+      margin-bottom:12px;
+    }
+    
+    .footer-desc{
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+    }
+    
+    .footer-section h4{
+      font-weight:700;
+      margin-bottom:16px;
+      font-size:14px;
+      text-transform:uppercase;
+      letter-spacing:.8px;
+    }
+    
+    .footer-links{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    
+    .footer-links a{
+      color:var(--muted);
+      text-decoration:none;
+      font-size:14px;
+      transition:color .2s;
+    }
+    
+    .footer-links a:hover{
+      color:var(--brand-primary);
+    }
+    
+    .footer-bottom{
+      margin-top:40px;
+      padding-top:30px;
+      border-top:1px solid rgba(0,0,0,.06);
+      text-align:center;
+      color:var(--muted);
+      font-size:13px;
+    }
 
+    /* Mobile Responsive */
     @media(max-width:639px){
-      nav{display:none}
-      .hero{padding:80px 0 60px}
+      .mobile-toggle{display:flex}
+      
+      nav{
+        display:flex;
+        position:absolute;
+        top:100%;
+        left:0;
+        right:0;
+        background:rgba(255,255,255,0.98);
+        backdrop-filter:blur(12px);
+        flex-direction:column;
+        padding:20px;
+        gap:16px;
+        transform:translateY(-100%);
+        opacity:0;
+        visibility:hidden;
+        transition:all .3s;
+        box-shadow:0 10px 30px rgba(0,0,0,.1);
+      }
+      
+      nav.mobile-active{
+        transform:translateY(0);
+        opacity:1;
+        visibility:visible;
+      }
+      
+      .hero{padding:80px 0 50px}
+      
+      .filter-bar{
+        margin:30px 16px;
+        padding:20px;
+      }
+      
+      .filter-bar-inner{
+        flex-direction:column;
+        align-items:stretch;
+      }
+      
+      .search-box{
+        min-width:100%;
+      }
+      
+      .category-tabs{
+        overflow-x:auto;
+        overflow-y:hidden;
+        -webkit-overflow-scrolling:touch;
+        scrollbar-width:none;
+        padding-bottom:4px;
+        justify-content:flex-start;
+      }
+      
+      .category-tabs::-webkit-scrollbar{
+        display:none;
+      }
+      
+      .category-tab{
+        flex-shrink:0;
+      }
+      
+      .scroll-top{
+        bottom:24px;
+        right:24px;
+        width:48px;
+        height:48px;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
+  <header id="header">
     <div class="header-inner">
       <a href="https://www.simscent.com" class="brand">
         <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -121,7 +926,12 @@ const otherPosts = sortedPosts.slice(1);
         </svg>
         simscent
       </a>
-      <nav>
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Menüyü aç">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav id="nav">
         <a href="https://www.simscent.com">Ana Sayfa</a>
         <a href="/" class="nav-active">Blog</a>
       </nav>
@@ -130,85 +940,189 @@ const otherPosts = sortedPosts.slice(1);
 
   <section class="hero">
     <div class="hero-content">
-      <h1>Koku Dünyasından<br/>Hikayeler</h1>
+      <h1>Koku Dünyasından Hikayeler</h1>
       <p>Parfüm kültürü, öneriler ve keşifler hakkında ilham veren yazılarımızı okuyun.</p>
     </div>
   </section>
 
-  <main class="container">
-    {featuredPost && (
-      <a href={featuredPost.url} class="featured">
-        <div class="featured-image-wrap">
-          {featuredPost.frontmatter.image && (
-            <img class="featured-image" src={featuredPost.frontmatter.image} alt={featuredPost.frontmatter.title} />
-          )}
-        </div>
-        <div class="featured-content">
-          <span class="featured-badge">✨ Öne Çıkan</span>
-          <h2 class="featured-title">{featuredPost.frontmatter.title}</h2>
-          <p class="featured-excerpt">{featuredPost.frontmatter.description}</p>
-          <div class="featured-meta">
-            {featuredPost.frontmatter.author && <span>{featuredPost.frontmatter.author}</span>}
-            {featuredPost.frontmatter.date && (
-              <>
-                <span>•</span>
-                <time datetime={featuredPost.frontmatter.date}>
-                  {new Date(featuredPost.frontmatter.date).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' })}
-                </time>
-              </>
-            )}
-            {featuredPost.frontmatter.readTime && (
-              <>
-                <span>•</span>
-                <span>{featuredPost.frontmatter.readTime} dakika</span>
-              </>
-            )}
-          </div>
-        </div>
-      </a>
-    )}
-
-    <div class="section-header">
-      <h2 class="section-title">Son Yazılar</h2>
-      <p class="section-subtitle">Parfüm dünyasından güncel içerikler</p>
+  <div class="filter-bar">
+    <div class="filter-bar-inner">
+      <div class="search-box">
+        <input 
+          type="search" 
+          id="blog-search" 
+          placeholder="Yazılarda ara..." 
+          aria-label="Blog yazılarında ara"
+        >
+        <button class="search-clear" id="search-clear" aria-label="Aramayı temizle">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="category-tabs">
+        <a href="/" class={`category-tab ${activeCategory === 'all' ? 'active' : ''}`}>
+          {categoryIcons['Genel']} Tümü
+          <span class="category-count">{posts.length}</span>
+        </a>
+        {categories.map(category => (
+          <a 
+            href={`?category=${encodeURIComponent(category)}`} 
+            class={`category-tab ${activeCategory === category ? 'active' : ''}`}
+          >
+            {categoryIcons[category] || '📝'} {category}
+            <span class="category-count">{categoryCount[category]}</span>
+          </a>
+        ))}
+      </div>
     </div>
+  </div>
 
-    <div class="blog-grid">
-      {otherPosts.map(post => (
-        <a href={post.url} class="article-card">
-          <div class="article-image-wrap">
-            {post.frontmatter.image && (
-              <img class="article-image" src={post.frontmatter.image} alt={post.frontmatter.title} />
-            )}
-            {post.frontmatter.category && (
-              <span class="category-badge">{post.frontmatter.category}</span>
-            )}
-          </div>
-          <div class="article-content">
-            <div class="article-meta">
-              {post.frontmatter.date && (
-                <time datetime={post.frontmatter.date}>
-                  {new Date(post.frontmatter.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
-                </time>
-              )}
-              {post.frontmatter.readTime && (
-                <>
-                  <span>•</span>
-                  <span>{post.frontmatter.readTime} dk</span>
-                </>
+  <main class="container">
+    {filteredPosts.length === 0 ? (
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 6v6l4 2"/>
+        </svg>
+        <h2>Bu kategoride henüz yazı yok</h2>
+        <p>Diğer kategorileri keşfedin veya tüm yazıları görüntüleyin</p>
+        <a href="/">Tüm Yazılar</a>
+      </div>
+    ) : (
+      <>
+        <div class="result-info">
+          <strong>{filteredPosts.length}</strong> yazı bulundu
+          {activeCategory !== 'all' && ` · Kategori: ${activeCategory}`}
+        </div>
+
+        {featuredPost && currentPage === 1 && (
+          <a href={featuredPost.url} class="featured">
+            <div class="featured-image-wrap">
+              {featuredPost.frontmatter.image && (
+                <img 
+                  class="featured-image" 
+                  src={featuredPost.frontmatter.image} 
+                  alt={featuredPost.frontmatter.title}
+                  loading="eager"
+                  width="800"
+                  height="600"
+                />
               )}
             </div>
-            <h3 class="article-title">{post.frontmatter.title}</h3>
-            <p class="article-excerpt">{post.frontmatter.description}</p>
-            <span class="read-more">
-              Devamını Oku
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </span>
+            <div class="featured-content">
+              <span class="featured-badge">✨ Öne Çıkan</span>
+              <h2 class="featured-title">{featuredPost.frontmatter.title}</h2>
+              <p class="featured-excerpt">{featuredPost.frontmatter.description}</p>
+              <div class="featured-meta">
+                {featuredPost.frontmatter.author && <span>{featuredPost.frontmatter.author}</span>}
+                {featuredPost.frontmatter.date && (
+                  <>
+                    <span>•</span>
+                    <time datetime={featuredPost.frontmatter.date}>
+                      {new Date(featuredPost.frontmatter.date).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    </time>
+                  </>
+                )}
+                {featuredPost.frontmatter.readTime && (
+                  <>
+                    <span>•</span>
+                    <span>{featuredPost.frontmatter.readTime} dakika okuma</span>
+                  </>
+                )}
+              </div>
+            </div>
+          </a>
+        )}
+
+        {paginatedPosts.length > 0 && (
+          <div class="blog-grid" id="blog-grid">
+            {paginatedPosts.map((post, index) => (
+              <a 
+                href={post.url} 
+                class="article-card" 
+                data-title={post.frontmatter.title.toLowerCase()} 
+                data-description={post.frontmatter.description?.toLowerCase() || ''}
+                data-category={post.frontmatter.category || 'Genel'}
+                style={`animation-delay: ${index * 0.1}s`}
+              >
+                <div class="article-image-wrap">
+                  {post.frontmatter.image ? (
+                    <img 
+                      class="article-image" 
+                      src={post.frontmatter.image} 
+                      alt={post.frontmatter.title}
+                      loading="lazy"
+                      width="600"
+                      height="400"
+                    />
+                  ) : (
+                    <div class="article-image" style="background: linear-gradient(135deg, #f9f8f6 0%, #e2e8f0 100%); display: flex; align-items: center; justify-content: center; font-size: 48px;">
+                      {categoryIcons[post.frontmatter.category || 'Genel'] || '📝'}
+                    </div>
+                  )}
+                  {post.frontmatter.category && (
+                    <span class="category-badge">{post.frontmatter.category}</span>
+                  )}
+                </div>
+                <div class="article-content">
+                  <div class="article-meta">
+                    {post.frontmatter.date && (
+                      <time datetime={post.frontmatter.date}>
+                        {new Date(post.frontmatter.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                      </time>
+                    )}
+                    {post.frontmatter.readTime && (
+                      <>
+                        <span>•</span>
+                        <span>{post.frontmatter.readTime} dk</span>
+                      </>
+                    )}
+                  </div>
+                  <h3 class="article-title">{post.frontmatter.title}</h3>
+                  <p class="article-excerpt">{post.frontmatter.description}</p>
+                  <span class="read-more">
+                    Devamını Oku
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </span>
+                </div>
+              </a>
+            ))}
           </div>
-        </a>
-      ))}
-    </div>
+        )}
+
+        {totalPages > 1 && (
+          <div class="pagination">
+            {currentPage > 1 ? (
+              <a href={`?${activeCategory !== 'all' ? `category=${encodeURIComponent(activeCategory)}&` : ''}page=${currentPage - 1}`}>
+                ← Önceki
+              </a>
+            ) : (
+              <span class="disabled">← Önceki</span>
+            )}
+            
+            <span class="current">Sayfa {currentPage} / {totalPages}</span>
+            
+            {currentPage < totalPages ? (
+              <a href={`?${activeCategory !== 'all' ? `category=${encodeURIComponent(activeCategory)}&` : ''}page=${currentPage + 1}`}>
+                Sonraki →
+              </a>
+            ) : (
+              <span class="disabled">Sonraki →</span>
+            )}
+          </div>
+        )}
+      </>
+    )}
   </main>
+
+  <button class="scroll-top" id="scroll-top" aria-label="Yukarı çık">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 19V5M5 12l7-7 7 7"/>
+    </svg>
+  </button>
 
   <footer>
     <div class="footer-content">
@@ -236,5 +1150,273 @@ const otherPosts = sortedPosts.slice(1);
       <p>&copy; 2025 simscent. Tüm hakları saklıdır.</p>
     </div>
   </footer>
+
+  <script>
+    // Debounce fonksiyonu
+    function debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    // Mobil menü toggle
+    const mobileToggle = document.getElementById('mobile-toggle');
+    const nav = document.getElementById('nav');
+    
+    if (mobileToggle && nav) {
+      mobileToggle.addEventListener('click', () => {
+        nav.classList.toggle('mobile-active');
+        mobileToggle.classList.toggle('active');
+      });
+
+      // Menü dışına tıklanınca kapat
+      document.addEventListener('click', (e) => {
+        if (!mobileToggle.contains(e.target) && !nav.contains(e.target)) {
+          nav.classList.remove('mobile-active');
+          mobileToggle.classList.remove('active');
+        }
+      });
+    }
+
+    // Arama fonksiyonu
+    const searchInput = document.getElementById('blog-search');
+    const searchClear = document.getElementById('search-clear');
+    const blogGrid = document.getElementById('blog-grid');
+    
+    if (searchInput && blogGrid) {
+      searchInput.addEventListener('input', debounce((e) => {
+        const searchTerm = e.target.value.toLowerCase().trim();
+        const cards = blogGrid.querySelectorAll('.article-card');
+        let visibleCount = 0;
+        
+        // Clear butonu göster/gizle
+        if (searchTerm && searchClear) {
+          searchClear.classList.add('visible');
+        } else if (searchClear) {
+          searchClear.classList.remove('visible');
+        }
+        
+        cards.forEach(card => {
+          const title = card.getAttribute('data-title') || '';
+          const description = card.getAttribute('data-description') || '';
+          const category = card.getAttribute('data-category')?.toLowerCase() || '';
+          
+          if (title.includes(searchTerm) || description.includes(searchTerm) || category.includes(searchTerm)) {
+            card.style.display = 'flex';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        
+        // Sonuç bilgisi güncelle
+        const resultInfo = document.querySelector('.result-info');
+        if (resultInfo && searchTerm) {
+          resultInfo.innerHTML = `<strong>${visibleCount}</strong> yazı bulundu · Arama: "${searchTerm}"`;
+        }
+      }, 300));
+
+      // Arama temizle butonu
+      if (searchClear) {
+        searchClear.addEventListener('click', () => {
+          searchInput.value = '';
+          searchClear.classList.remove('visible');
+          const cards = blogGrid.querySelectorAll('.article-card');
+          cards.forEach(card => {
+            card.style.display = 'flex';
+          });
+          
+          // Sonuç bilgisini sıfırla
+          const resultInfo = document.querySelector('.result-info');
+          const activeCategory = new URLSearchParams(window.location.search).get('category');
+          const totalCards = cards.length;
+          if (resultInfo) {
+            resultInfo.innerHTML = `<strong>${totalCards}</strong> yazı bulundu${activeCategory && activeCategory !== 'all' ? ` · Kategori: ${activeCategory}` : ''}`;
+          }
+        });
+      }
+    }
+
+    // Scroll to top butonu
+    const scrollTopBtn = document.getElementById('scroll-top');
+    
+    if (scrollTopBtn) {
+      window.addEventListener('scroll', debounce(() => {
+        if (window.pageYOffset > 300) {
+          scrollTopBtn.classList.add('visible');
+        } else {
+          scrollTopBtn.classList.remove('visible');
+        }
+      }, 100));
+
+      scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    }
+
+    // Header scroll efekti
+    const header = document.getElementById('header');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', debounce(() => {
+      const currentScroll = window.pageYOffset;
+      
+      if (currentScroll > 100) {
+        header.classList.add('header-scrolled');
+      } else {
+        header.classList.remove('header-scrolled');
+      }
+      
+      lastScroll = currentScroll;
+    }, 50));
+
+    // Smooth scroll için anchor linkler
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Intersection Observer ile kartları animasyonla göster
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Sayfa yüklendiğinde kartları gözlemle
+    document.addEventListener('DOMContentLoaded', () => {
+      const cards = document.querySelectorAll('.article-card');
+      cards.forEach(card => {
+        observer.observe(card);
+      });
+    });
+
+    // Analytics - Kategori tıklama izleme
+    document.querySelectorAll('.category-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const category = tab.textContent.trim().split('\n')[0].trim();
+        
+        // Google Analytics (eğer yüklüyse)
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'category_filter', {
+            'category_name': category,
+            'event_category': 'Blog',
+            'event_label': 'Category Filter'
+          });
+        }
+        
+        // Plausible Analytics (eğer yüklüyse)
+        if (typeof plausible !== 'undefined') {
+          plausible('Category Filter', {
+            props: { category: category }
+          });
+        }
+        
+        console.log('Kategori tıklandı:', category);
+      });
+    });
+
+    // Arama analitikleri
+    if (searchInput) {
+      let searchCount = 0;
+      searchInput.addEventListener('input', debounce((e) => {
+        const term = e.target.value.trim();
+        if (term.length >= 3) {
+          searchCount++;
+          
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'search', {
+              'search_term': term,
+              'event_category': 'Blog'
+            });
+          }
+          
+          console.log('Arama yapıldı:', term);
+        }
+      }, 1000));
+    }
+
+    // Sayfa performans ölçümü
+    window.addEventListener('load', () => {
+      if ('performance' in window) {
+        const perfData = window.performance.timing;
+        const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+        console.log('Sayfa yüklenme süresi:', pageLoadTime + 'ms');
+        
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'timing_complete', {
+            'name': 'load',
+            'value': pageLoadTime,
+            'event_category': 'Page Performance'
+          });
+        }
+      }
+    });
+
+    // Klavye navigasyonu - Escape tuşu ile arama temizleme
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (searchInput && searchInput.value) {
+          searchInput.value = '';
+          if (searchClear) searchClear.click();
+        }
+        if (nav && nav.classList.contains('mobile-active')) {
+          nav.classList.remove('mobile-active');
+        }
+      }
+    });
+
+    // Tab ile kategori navigasyonu
+    const categoryTabs = document.querySelectorAll('.category-tab');
+    categoryTabs.forEach((tab, index) => {
+      tab.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          const nextTab = categoryTabs[index + 1] || categoryTabs[0];
+          nextTab.focus();
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          const prevTab = categoryTabs[index - 1] || categoryTabs[categoryTabs.length - 1];
+          prevTab.focus();
+        }
+      });
+    });
+
+    // Print için özel stil
+    window.addEventListener('beforeprint', () => {
+      document.querySelectorAll('.article-card').forEach(card => {
+        card.style.display = 'flex';
+      });
+    });
+
+    console.log('✨ simscent Blog yüklendi!');
+    console.log('📊 Toplam yazı:', document.querySelectorAll('.article-card').length);
+    console.log('🏷️ Kategoriler:', Array.from(document.querySelectorAll('.category-tab')).map(t => t.textContent.trim().split('\n')[0]).join(', '));
+  </script>
 </body>
 </html>
