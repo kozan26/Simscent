@@ -2,7 +2,7 @@
 layout: ../../layouts/PostLayout.astro
 title: "Tom Ford Ombré Leather: Lüks Derinin Verilerle Anatomisi"
 description: "Tom Ford Ombré Leather'ın koku DNA'sını, stil profilini, ideal kullanımını ve performansını kullanıcı verileriyle analiz eden kapsamlı inceleme."
-date: "2025-10-07"
+date: "2025-10-08"
 category: "Analiz"
 author: "Ozan Kılıç"
 readTime: 7
