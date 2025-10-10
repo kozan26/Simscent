@@ -73,7 +73,7 @@ Sonbaharla güçlü bir pozitif ilişki sergileyen reçineler, parfüme antik ta
 
 Tütsü ve huş katranı gibi notalar, verilerde de onaylandığı üzere sonbaharın gizemli yüzüyle mükemmel uyum sağlar. Bu kokular, sadece yanan bir şömineyi değil, aynı zamanda sönmekte olan bir ateşin melankolisini de çağrıştırır.
 
--   **Örnek:** _Comme des Garçons 2 Man (Comme des Garçons)_ - Tütsü ve odunsu notaların dumanlı harmonisi, sonbahar akşamları için gizemli bir aura yaratarak bu ailenin melankolik karakterini yansıtır.
+-   **Örnek:** [_Comme des Garçons 2 Man (Comme des Garçons)_](https://blog.simscent.com/posts/cdg-2-man/) - Tütsü ve odunsu notaların dumanlı harmonisi, sonbahar akşamları için gizemli bir aura yaratarak bu ailenin melankolik karakterini yansıtır.
     
 
 #### **Deri (Leathery): Sofistike Bir Dokunuş**
