@@ -80,7 +80,7 @@ Tütsü ve huş katranı gibi notalar, verilerde de onaylandığı üzere sonbah
 
 Deri kokuları, rafine bir zarafet ve ham bir güç arasında mükemmel bir denge kurar. Sonbaharın serin havasına karşı şık bir deri ceket gibi koruyucu ve karakterli bir katman sunar.
 
--   **Örnek:** _Ombré Leather (Tom Ford)_ - Bu parfüm, derinin sıcak ve zengin dokusunu ön plana çıkararak sonbahar şıklığını karakterli bir imza ile tamamlar.
+-   **Örnek:** [_Ombré Leather (Tom Ford)_](https://blog.simscent.com/posts/tom-ford-ombre-leather/)- Bu parfüm, derinin sıcak ve zengin dokusunu ön plana çıkararak sonbahar şıklığını karakterli bir imza ile tamamlar.
     
 
 #### **Odunsu (Woody): Ormanın Kalbi**
