@@ -15,6 +15,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="robots" content="index, follow"/>
   <meta name="google-adsense-account" content="ca-pub-9033780165680589">
+  <meta name="theme-color" content="#B99B6B"/>
+  <meta name="keywords" content="parfüm, parfüm önerisi, koku keşfi, parfüm analizi, parfüm rehberi, simscent, parfüm koleksiyonu"/>
 
   <!-- Primary Meta -->
   <title>simscent — Ana Sayfa</title>
@@ -196,6 +198,26 @@
     [data-debug-outline] *{outline:1px dashed rgba(100,116,139,.35)}
   </style>
 
+  <!-- Structured Data / Schema.org: Organization -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"simscent",
+    "url":"https://www.simscent.com/",
+    "logo":"https://www.simscent.com/assets/logo.svg",
+    "description":"Benzersiz tercihlerinle eşleşen parfümleri keşfet",
+    "sameAs":[
+      "https://www.simscent.com/blog"
+    ],
+    "contactPoint":{
+      "@type":"ContactPoint",
+      "contactType":"customer service",
+      "availableLanguage":"Turkish"
+    }
+  }
+  </script>
+
   <!-- Structured Data / Schema.org: WebSite + SearchAction -->
   <script type="application/ld+json">
   {
@@ -204,6 +226,11 @@
     "name":"simscent",
     "url":"https://www.simscent.com/",
     "description":"Benzersiz tercihlerinle eşleşen parfümleri keşfet",
+    "publisher":{
+      "@type":"Organization",
+      "name":"simscent",
+      "logo":"https://www.simscent.com/assets/logo.svg"
+    },
     "potentialAction":{
       "@type":"SearchAction",
       "target":"https://www.simscent.com/?q={search_term_string}",
@@ -231,9 +258,9 @@
 <main class="landing" id="appRoot" role="main">
   <div class="card"><div class="card-inner">
     <header class="top">
-      <h1 class="brand" aria-label="simscent ana sayfa">
+      <div class="brand" aria-label="simscent ana sayfa">
         <img class="logo" src="/assets/logo.svg" alt="simscent logo" width="32" height="32">simscent
-      </h1>
+      </div>
       <button class="cta" id="signupBtn" type="button">Kayıt Ol</button>
     </header>
 
@@ -244,7 +271,7 @@
         <div class="blob2" aria-hidden="true"></div>
       </figure>
       <div>
-        <h2 id="hero-title" class="title">İmza Kokunu<br/>Keşfet</h2>
+        <h1 id="hero-title" class="title">İmza Kokunu<br/>Keşfet</h1>
         <p class="desc">Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul.</p>
 
         <div class="search-wrap">
@@ -259,6 +286,7 @@
 
         <nav class="actions" aria-label="Ana işlemler">
           <a class="btn primary" href="#results">Koleksiyonu Keşfet</a>
+          <a class="btn ghost" href="https://blog.simscent.com" target="_blank" rel="noopener">Blog</a>
           <button class="btn ghost" id="surpriseBtn" type="button">Beni Şaşırt!</button>
         </nav>
       </div>
