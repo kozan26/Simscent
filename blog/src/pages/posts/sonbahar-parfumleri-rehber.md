@@ -87,7 +87,7 @@ Deri kokuları, rafine bir zarafet ve ham bir güç arasında mükemmel bir deng
 
 Sandal ağacından sedire uzanan bu geniş aile, sonbaharda ormanda yapılan bir yürüyüşün tüm katmanlarını teninize taşır. Bu kokular, toprağa bağlılık ve dingin bir güç hissi verir.
 
--   **Örnek:** _Encre Noire à L'Extrême (Lalique)_ - Vetiver ve selvinin koyu, odunsu ve topraksı profili, sonbahar ormanının kalbini yansıtarak bu ailenin temel vaadini yerine getirir.
+-   **Örnek:** [_Encre Noire à L'Extrême (Lalique)_](https://simscent-blog.pages.dev/posts/encre-noire-extreme/) - Vetiver ve selvinin koyu, odunsu ve topraksı profili, sonbahar ormanının kalbini yansıtarak bu ailenin temel vaadini yerine getirir.
     
 
 #### **Topraksı (Earthy): Doğanın Kökleri**
