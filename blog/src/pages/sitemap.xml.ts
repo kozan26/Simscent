@@ -49,9 +49,23 @@ export async function GET() {
   const uniq = Array.from(new Set(urls)).sort((a, b) => (a === base ? -1 : a.localeCompare(b)));
 
   const today = new Date().toISOString().slice(0, 10);
-  const xmlItems = uniq.map(loc =>
-    `<url><loc>${loc}</loc><lastmod>${today}</lastmod><changefreq>weekly</changefreq><priority>${loc === base ? '1.0' : '0.7'}</priority></url>`
-  ).join('\n');
+  const xmlItems = uniq.map(loc => {
+    let priority = '0.7';
+    let changefreq = 'weekly';
+    
+    if (loc === base) {
+      priority = '1.0';
+      changefreq = 'daily';
+    } else if (loc.includes('/posts/')) {
+      priority = '0.8';
+      changefreq = 'monthly';
+    } else if (loc.includes('?category=') || loc.includes('?tag=')) {
+      priority = '0.6';
+      changefreq = 'weekly';
+    }
+    
+    return `<url><loc>${loc}</loc><lastmod>${today}</lastmod><changefreq>${changefreq}</changefreq><priority>${priority}</priority></url>`;
+  }).join('\n');
 
   const body =
 `<?xml version="1.0" encoding="UTF-8"?>
