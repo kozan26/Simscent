@@ -16,25 +16,26 @@
   <meta name="robots" content="index, follow"/>
   <meta name="google-adsense-account" content="ca-pub-9033780165680589">
   <meta name="theme-color" content="#B99B6B"/>
-  <meta name="keywords" content="parfüm, parfüm önerisi, koku keşfi, parfüm analizi, parfüm rehberi, simscent, parfüm koleksiyonu"/>
+  <meta name="keywords" content="{{BRAND}} {{NAME}}, parfüm alternatifi, benzer parfümler, {{BRAND}} parfümleri, koku keşfi, parfüm analizi, simscent"/>
 
   <!-- Primary Meta -->
-  <title>simscent — Ana Sayfa</title>
-  <meta name="description" content="Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul."/>
-  <link rel="canonical" href="https://www.simscent.com/"/>
+  <title>{{TITLE}} | simscent</title>
+  <meta name="description" content="{{DESCRIPTION}}"/>
+  <link rel="canonical" href="{{CANONICAL}}"/>
 
   <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website"/>
-  <meta property="og:url" content="https://www.simscent.com/"/>
-  <meta property="og:title" content="simscent — Ana Sayfa"/>
-  <meta property="og:description" content="Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul."/>
+  <meta property="og:url" content="{{CANONICAL}}"/>
+  <meta property="og:title" content="{{TITLE}} | simscent"/>
+  <meta property="og:description" content="{{DESCRIPTION}}"/>
   <meta property="og:image" content="https://www.simscent.com/assets/social-home.jpg"/>
   <meta property="og:locale" content="tr_TR"/>
   <meta property="og:site_name" content="simscent"/>
 
   <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="simscent — Ana Sayfa"/>
-  <meta name="twitter:description" content="Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul."/>
+  <meta name="twitter:title" content="{{TITLE}} | simscent"/>
+  <meta name="twitter:description" content="{{DESCRIPTION}}"/>
+  <meta name="twitter:site" content="@simscent"/>
   <meta name="twitter:image" content="https://www.simscent.com/assets/social-home.jpg"/>
 
   <!-- Favicons -->
@@ -46,6 +47,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="dns-prefetch" href="https://www.googletagmanager.com"/>
+  <link rel="dns-prefetch" href="https://images.unsplash.com"/>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net"/>
 
   <!-- Fonts (preload stylesheet, swap fallback) -->
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
@@ -198,23 +201,56 @@
     [data-debug-outline] *{outline:1px dashed rgba(100,116,139,.35)}
   </style>
 
-  <!-- Structured Data / Schema.org: Organization -->
+  <!-- Structured Data / Schema.org: Thing (Fragrance) -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
-    "@type":"Organization",
-    "name":"simscent",
-    "url":"https://www.simscent.com/",
-    "logo":"https://www.simscent.com/assets/logo.svg",
-    "description":"Benzersiz tercihlerinle eşleşen parfümleri keşfet",
+    "@type":"Thing",
+    "name":"{{TITLE}}",
+    "description":"{{DESCRIPTION}}",
+    "url":"{{CANONICAL}}",
+    "brand":{
+      "@type":"Brand",
+      "name":"{{BRAND}}"
+    },
+    "about":"{{BRAND}} {{NAME}} {{CONCENTRATION}} parfümü hakkında detaylı bilgi, notalar, akordlar ve benzer parfüm önerileri",
     "sameAs":[
-      "https://www.simscent.com/blog"
+      "https://www.parfumo.com",
+      "https://www.fragrantica.com"
     ],
-    "contactPoint":{
-      "@type":"ContactPoint",
-      "contactType":"customer service",
-      "availableLanguage":"Turkish"
+    "isPartOf":{
+      "@type":"WebSite",
+      "name":"simscent",
+      "url":"https://www.simscent.com/"
     }
+  }
+  </script>
+
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[
+      {
+        "@type":"ListItem",
+        "position":1,
+        "name":"Ana Sayfa",
+        "item":"https://www.simscent.com/"
+      },
+      {
+        "@type":"ListItem",
+        "position":2,
+        "name":"{{BRAND}}",
+        "item":"https://www.simscent.com/?brand={{BRAND}}"
+      },
+      {
+        "@type":"ListItem",
+        "position":3,
+        "name":"{{TITLE}}",
+        "item":"{{CANONICAL}}"
+      }
+    ]
   }
   </script>
 

@@ -16,25 +16,26 @@
   <meta name="robots" content="index, follow"/>
   <meta name="google-adsense-account" content="ca-pub-9033780165680589">
   <meta name="theme-color" content="#B99B6B"/>
-  <meta name="keywords" content="parfüm, parfüm önerisi, koku keşfi, parfüm analizi, parfüm rehberi, simscent, parfüm koleksiyonu"/>
+  <meta name="keywords" content="parfüm bulucu, parfüm alternatifi, benzer parfümler, koku keşfi, parfüm önerisi, parfüm analizi, parfüm rehberi, simscent, parfüm koleksiyonu, parfüm eşleştirme, benzer koku önerisi, parfüm alternatifi bulucu"/>
 
   <!-- Primary Meta -->
   <title>simscent — Ana Sayfa</title>
-  <meta name="description" content="Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul."/>
+  <meta name="description" content="AI destekli parfüm alternatifi bulucu. Benzer parfümler keşfet, koku eşleştirme yap, parfüm önerisi al. Binlerce parfüm arasından size en uygun olanı bulun."/>
   <link rel="canonical" href="https://www.simscent.com/"/>
 
   <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://www.simscent.com/"/>
-  <meta property="og:title" content="simscent — Ana Sayfa"/>
-  <meta property="og:description" content="Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul."/>
+  <meta property="og:title" content="simscent — Parfüm Alternatifi Bulucu"/>
+  <meta property="og:description" content="AI destekli parfüm alternatifi bulucu. Benzer parfümler keşfet, koku eşleştirme yap, parfüm önerisi al. Binlerce parfüm arasından size en uygun olanı bulun."/>
   <meta property="og:image" content="https://www.simscent.com/assets/social-home.jpg"/>
   <meta property="og:locale" content="tr_TR"/>
   <meta property="og:site_name" content="simscent"/>
 
   <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="simscent — Ana Sayfa"/>
-  <meta name="twitter:description" content="Benzersiz tercihlerinle eşleşen parfümleri keşfet. Hazır koleksiyonumuzu incele ve sana en uygun eşleşmeyi bul."/>
+  <meta name="twitter:title" content="simscent — Parfüm Alternatifi Bulucu"/>
+  <meta name="twitter:description" content="AI destekli parfüm alternatifi bulucu. Benzer parfümler keşfet, koku eşleştirme yap, parfüm önerisi al. Binlerce parfüm arasından size en uygun olanı bulun."/>
+  <meta name="twitter:site" content="@simscent"/>
   <meta name="twitter:image" content="https://www.simscent.com/assets/social-home.jpg"/>
 
   <!-- Favicons -->
@@ -46,6 +47,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="dns-prefetch" href="https://www.googletagmanager.com"/>
+  <link rel="dns-prefetch" href="https://images.unsplash.com"/>
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net"/>
 
   <!-- Fonts (preload stylesheet, swap fallback) -->
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
@@ -198,6 +201,39 @@
     [data-debug-outline] *{outline:1px dashed rgba(100,116,139,.35)}
   </style>
 
+  <!-- Structured Data / Schema.org: WebApplication -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebApplication",
+    "name":"simscent",
+    "url":"https://www.simscent.com/",
+    "description":"Benzersiz tercihlerinle eşleşen parfümleri keşfet. AI destekli parfüm alternatifi bulucu ve benzer koku önerisi aracı.",
+    "applicationCategory":"LifestyleApplication",
+    "operatingSystem":"Web browser",
+    "offers":{
+      "@type":"Offer",
+      "price":"0",
+      "priceCurrency":"TRY"
+    },
+    "publisher":{
+      "@type":"Organization",
+      "name":"simscent",
+      "logo":"https://www.simscent.com/assets/logo.svg"
+    },
+    "sameAs":[
+      "https://blog.simscent.com"
+    ],
+    "featureList":[
+      "Parfüm benzerlik analizi",
+      "Koku ailesi eşleştirme",
+      "Mevsimsel öneriler",
+      "Marka ve parfümör filtreleme",
+      "Detaylı parfüm bilgileri"
+    ]
+  }
+  </script>
+
   <!-- Structured Data / Schema.org: Organization -->
   <script type="application/ld+json">
   {
@@ -208,7 +244,7 @@
     "logo":"https://www.simscent.com/assets/logo.svg",
     "description":"Benzersiz tercihlerinle eşleşen parfümleri keşfet",
     "sameAs":[
-      "https://www.simscent.com/blog"
+      "https://blog.simscent.com"
     ],
     "contactPoint":{
       "@type":"ContactPoint",
@@ -240,6 +276,88 @@
   }
   </script>
 
+  <!-- FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"simscent nasıl çalışır?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"simscent, binlerce parfümün koku profillerini analiz ederek benzerlik algoritması kullanır. Bir parfüm aradığınızda, kullanım amacı, mevsim, stil ve koku ailesi kriterlerine göre en benzer parfümleri bulur."
+        }
+      },
+      {
+        "@type":"Question",
+        "name":"Hangi kriterlere göre benzerlik hesaplanır?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"Benzerlik hesaplaması kullanım amacı (günlük, iş, akşam), mevsim (ilkbahar, yaz, sonbahar, kış), stil (klasik, modern, maskülen, feminen) ve koku ailesi (odunsu, çiçeksi, narenciye vb.) kriterlerine dayanır."
+        }
+      },
+      {
+        "@type":"Question",
+        "name":"Veriler nereden geliyor?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"Parfüm verilerimiz kullanıcı deneyimleri, uzman değerlendirmeleri ve güvenilir parfüm veritabanlarından derlenmiştir. Her parfüm için notalar, akordlar, kalıcılık ve yayılım bilgileri dahil edilmiştir."
+        }
+      },
+      {
+        "@type":"Question",
+        "name":"simscent ücretsiz mi?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"Evet, simscent tamamen ücretsizdir. Parfüm arama, benzerlik analizi ve öneri alma özelliklerinin hepsini ücretsiz kullanabilirsiniz."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- HowTo Schema -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"HowTo",
+    "name":"Mükemmel parfüm eşleşmesi nasıl bulunur?",
+    "description":"simscent kullanarak size en uygun parfüm alternatiflerini bulma rehberi",
+    "step":[
+      {
+        "@type":"HowToStep",
+        "position":1,
+        "name":"Parfüm Ara",
+        "text":"Arama çubuğuna bildiğiniz bir parfümün adını yazın (örn: Aventus, Sauvage)",
+        "url":"https://www.simscent.com/#search"
+      },
+      {
+        "@type":"HowToStep",
+        "position":2,
+        "name":"Kriterleri Ayarla",
+        "text":"Benzerlik kriterlerini seçin: kullanım amacı, mevsim, stil ve koku ailesi",
+        "url":"https://www.simscent.com/#criteria"
+      },
+      {
+        "@type":"HowToStep",
+        "position":3,
+        "name":"Sonuçları İncele",
+        "text":"Benzer parfümleri görüntüleyin ve detaylı bilgileri okuyun",
+        "url":"https://www.simscent.com/#results"
+      },
+      {
+        "@type":"HowToStep",
+        "position":4,
+        "name":"Keşfet",
+        "text":"Yeni parfümler keşfetmek için 'Beni Şaşırt!' butonunu kullanın",
+        "url":"https://www.simscent.com/#surprise"
+      }
+    ]
+  }
+  </script>
+
   <!-- Breadcrumb (Ana sayfa) -->
   <script type="application/ld+json">
   {
@@ -267,7 +385,7 @@
     <section id="hero" class="hero" aria-labelledby="hero-title">
       <figure class="shot-wrap">
         <div class="blob" aria-hidden="true"></div>
-        <img id="heroShot" class="shot" src="https://images.unsplash.com/photo-1617839400561-d55457a29da2?q=80&w=930&auto=format&fit=crop" alt="Parfüm şişesi görseli" fetchpriority="high" decoding="async"/>
+        <img id="heroShot" class="shot" src="https://images.unsplash.com/photo-1617839400561-d55457a29da2?q=80&w=930&auto=format&fit=crop" alt="Parfüm alternatifi bulucu - simscent ana sayfa görseli" fetchpriority="high" decoding="async"/>
         <div class="blob2" aria-hidden="true"></div>
       </figure>
       <div>
@@ -286,7 +404,7 @@
 
         <nav class="actions" aria-label="Ana işlemler">
           <a class="btn primary" href="#results">Koleksiyonu Keşfet</a>
-          <a class="btn ghost" href="https://blog.simscent.com" target="_blank" rel="noopener">Blog</a>
+          <a class="btn ghost" href="https://blog.simscent.com" target="_blank" rel="noopener">Parfüm Rehberleri</a>
           <button class="btn ghost" id="surpriseBtn" type="button">Beni Şaşırt!</button>
         </nav>
       </div>
@@ -529,7 +647,7 @@
     const img=p['Image URL']||`https://placehold.co/240x240/e2e8f0/64748b?text=${encodeURIComponent((p.Brand||'?').slice(0,1))}`;
     const el=document.createElement('article'); el.className=`pf ${isRef?'ref':''}`;
     el.innerHTML=`
-      <img class='pf-img' src='${img}' alt='${p.fullName}' loading="lazy" width="240" height="240" onerror="this.onerror=null;this.src='https://placehold.co/240x240/e2e8f0/64748b?text=Hata'"/>
+      <img class='pf-img' src='${img}' alt='${p.Brand || ''} ${p.fullName || ''} parfümü görseli' loading="lazy" width="240" height="240" onerror="this.onerror=null;this.src='https://placehold.co/240x240/e2e8f0/64748b?text=Hata'"/>
       <div>
         <div style='display:flex;justify-content:space-between;align-items:flex-start;gap:8px'>
           <div class='pf-brand brand-link' data-brand="${encodeURIComponent(p.Brand || '')}">${p.Brand||''}</div>
@@ -587,7 +705,7 @@
       <div class="card-inner">
         <div class="ref-card-grid">
           <div>
-            <img class='ref-card-image' src='${img}' alt='${p.fullName}' width="480" height="480" onerror="this.onerror=null;this.src='https://google.com/images/cleardot.gif'"/>
+            <img class='ref-card-image' src='${img}' alt='${p.Brand || ''} ${p.fullName || ''} parfümü detay görseli' width="480" height="480" onerror="this.onerror=null;this.src='https://google.com/images/cleardot.gif'"/>
             ${sourceLink}
             ${notesHTML}
           </div>
@@ -708,7 +826,7 @@
         el.className = 'pf';
         el.style.cursor = 'pointer';
         el.innerHTML = `
-          <img class='pf-img' src='${img}' alt='${p.fullName}' loading="lazy" width="240" height="240" onerror="this.onerror=null;this.src='https://placehold.co/240x240/e2e8f0/64748b?text=Hata'"/>
+          <img class='pf-img' src='${img}' alt='${p.Brand || ''} ${p.fullName || ''} parfümü görseli' loading="lazy" width="240" height="240" onerror="this.onerror=null;this.src='https://placehold.co/240x240/e2e8f0/64748b?text=Hata'"/>
           <div>
             <div style='display:flex;justify-content:space-between;align-items:flex-start;gap:8px'>
               <div class='pf-brand brand-link' data-brand="${encodeURIComponent(p.Brand || '')}">${p.Brand || ''}</div>

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /generate.mjs
+Disallow: /perfumes_data.json
+
+Sitemap: https://www.simscent.com/sitemap.xml
