@@ -10,15 +10,22 @@ const structuredData = {
   "description": description,
   "author": {
     "@type": "Person",
-    "name": author || "simscent"
+    "name": author || "Ozan Kılıç",
+    "url": "https://blog.simscent.com",
+    "sameAs": [
+      "https://www.simscent.com"
+    ]
   },
   "publisher": {
     "@type": "Organization",
     "name": "simscent",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://www.simscent.com/assets/logo.svg"
-    }
+      "url": "https://www.simscent.com/assets/logo.svg",
+      "width": 100,
+      "height": 100
+    },
+    "url": "https://www.simscent.com"
   },
   "datePublished": date,
   "dateModified": date,
@@ -26,7 +33,11 @@ const structuredData = {
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": Astro.url.href
-  }
+  },
+  "articleSection": category,
+  "keywords": tags ? tags.join(", ") : undefined,
+  "wordCount": Astro.content?.body?.split(/\s+/).length || 0,
+  "inLanguage": "tr-TR"
 };
 ---
 <!DOCTYPE html>
@@ -38,7 +49,6 @@ const structuredData = {
   <meta name="description" content={description}>
   <link rel="canonical" href={Astro.url.href}>
   
-  <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article">
   <meta property="og:title" content={title}>
   <meta property="og:description" content={description}>
@@ -47,12 +57,15 @@ const structuredData = {
   <meta property="og:site_name" content="simscent">
   <meta property="article:published_time" content={date}>
   <meta property="article:modified_time" content={date}>
+  {category && <meta property="article:section" content={category}>}
+  {tags && tags.map(tag => <meta property="article:tag" content={tag} />)}
   
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content={title}>
   <meta name="twitter:description" content={description}>
   <meta name="twitter:image" content={image ? `https://www.simscent.com${image}` : 'https://www.simscent.com/assets/logo.svg'}>
+  <meta name="twitter:site" content="@simscent">
   
   <!-- Structured Data -->
   <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
