@@ -167,31 +167,6 @@ const otherPosts = filteredPosts.slice(1);
     .article-card:hover .read-more{color:var(--brand-primary)}
     .article-card:hover .read-more svg{transform:translateX(4px)}
 
-    /* Filter and Category Styles */
-    .filters-section{background:#fff;border-radius:20px;padding:32px;margin-bottom:40px;box-shadow:0 4px 20px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.04)}
-    .filters-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:16px}
-    .filters-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#1a1a1a}
-    .search-box{position:relative;flex:1;min-width:250px;max-width:400px}
-    .search-input{width:100%;padding:12px 16px 12px 44px;border:2px solid var(--border);border-radius:12px;font-size:15px;transition:all .3s;background:#fafafa}
-    .search-input:focus{outline:none;border-color:var(--brand-primary);background:#fff;box-shadow:0 0 0 3px rgba(185,155,107,.1)}
-    .search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);width:16px;height:16px}
-    
-    .filter-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
-    .filter-tab{padding:8px 16px;border-radius:20px;background:#f5f5f5;color:var(--text);text-decoration:none;font-size:14px;font-weight:600;transition:all .3s;border:2px solid transparent;cursor:pointer}
-    .filter-tab:hover{background:var(--brand-primary);color:#fff;transform:translateY(-1px)}
-    .filter-tab.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-secondary)}
-    
-    .tags-cloud{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-    .tag{padding:6px 12px;border-radius:16px;background:rgba(185,155,107,.1);color:var(--brand-secondary);text-decoration:none;font-size:13px;font-weight:600;transition:all .3s;border:1px solid rgba(185,155,107,.2)}
-    .tag:hover{background:var(--brand-primary);color:#fff;transform:translateY(-1px);box-shadow:0 4px 12px rgba(185,155,107,.3)}
-    .tag.active{background:var(--brand-primary);color:#fff;border-color:var(--brand-primary);box-shadow:0 4px 12px rgba(185,155,107,.3)}
-    .tag-count{opacity:.7;margin-left:4px}
-    
-    .stats-section{background:linear-gradient(135deg,#f9f8f6 0%,#fefefe 100%);border-radius:20px;padding:32px;margin-bottom:40px;border:1px solid rgba(185,155,107,.1)}
-    .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
-    .stat-card{text-align:center;padding:20px;background:#fff;border-radius:16px;box-shadow:0 2px 12px rgba(0,0,0,.04)}
-    .stat-number{font-family:'Playfair Display',serif;font-size:32px;font-weight:800;color:var(--brand-primary);margin-bottom:8px}
-    .stat-label{color:var(--muted);font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
     
     .category-badge{position:absolute;top:16px;left:16px;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);color:var(--brand-secondary);padding:6px 16px;border-radius:999px;font-weight:800;font-size:11px;text-transform:uppercase;letter-spacing:.8px;box-shadow:0 4px 12px rgba(0,0,0,.1)}
     .tags-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
@@ -220,15 +195,6 @@ const otherPosts = filteredPosts.slice(1);
     @media(max-width:639px){
       nav{display:none}
       .hero{padding:80px 0 60px}
-      .filters-header{flex-direction:column;align-items:stretch}
-      .search-box{max-width:none;margin-top:16px}
-      .filter-tabs{justify-content:center}
-      .tags-cloud{justify-content:center}
-      .stats-grid{grid-template-columns:repeat(2,1fr);gap:16px}
-      .stat-card{padding:16px}
-      .stat-number{font-size:24px}
-      .filters-section{padding:24px;margin-bottom:32px}
-      .stats-section{padding:24px;margin-bottom:32px}
     }
   </style>
 </head>
@@ -252,7 +218,7 @@ const otherPosts = filteredPosts.slice(1);
   <section class="hero">
     <div class="hero-content">
       <h1>
-        {categoryParam ? `${categoryParam} Kategorisi` : tagParam ? `${tagParam} Etiketi` : 'Koku Dünyasından<br/>Hikayeler'}
+        {categoryParam ? `${categoryParam} Kategorisi` : tagParam ? `${tagParam} Etiketi` : 'Koku Dünyasından Hikayeler'}
       </h1>
       <p>
         {categoryParam ? `${categoryParam} kategorisindeki parfüm yazılarını keşfedin.` : 
@@ -274,62 +240,6 @@ const otherPosts = filteredPosts.slice(1);
       </div>
     )}
 
-    <!-- Statistics Section -->
-    <div class="stats-section">
-      <h2 class="section-title">Blog İstatistikleri</h2>
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-number">{posts.length}</div>
-          <div class="stat-label">Toplam Yazı</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">{categories.length}</div>
-          <div class="stat-label">Kategori</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">{uniqueTags.length}</div>
-          <div class="stat-label">Etiket</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">{Math.round(posts.reduce((acc, post) => acc + (post.frontmatter.readTime || 0), 0) / posts.length)}</div>
-          <div class="stat-label">Ortalama Okuma Süresi</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Filters Section -->
-    <div class="filters-section">
-      <div class="filters-header">
-        <h2 class="filters-title">Keşfet</h2>
-        <div class="search-box">
-          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="M21 21l-4.35-4.35"/>
-          </svg>
-          <input type="text" class="search-input" placeholder="Yazılar arasında ara..." id="searchInput">
-        </div>
-      </div>
-      
-      <div class="filter-tabs">
-        <button class="filter-tab {!categoryParam && !tagParam ? 'active' : ''}" data-category="all">Tümü ({posts.length})</button>
-        {categories.map(category => (
-          <button class="filter-tab {categoryParam === category ? 'active' : ''}" data-category={category}>
-            {category} ({categoryCounts[category]})
-          </button>
-        ))}
-      </div>
-      
-      <div class="tags-cloud">
-        {uniqueTags.slice(0, 15).map(tag => (
-          <a href={`/?tag=${encodeURIComponent(tag)}`} class="tag {tagParam === tag ? 'active' : ''}" data-tag={tag}>
-            {tag} <span class="tag-count">({tagCounts[tag]})</span>
-          </a>
-        ))}
-        {uniqueTags.length > 15 && (
-          <span class="tag">+{uniqueTags.length - 15} daha</span>
-        )}
-      </div>
-    </div>
 
     {featuredPost && (
       <a href={featuredPost.url} class="featured">
@@ -464,116 +374,6 @@ const otherPosts = filteredPosts.slice(1);
   </footer>
 
   <script>
-    // Global variables for filter state
-    let currentCategory = '{categoryParam || "all"}';
-    let currentSearchTerm = '';
-    let currentTag = '{tagParam || ""}';
-
-    // Filter and search functionality
-    document.addEventListener('DOMContentLoaded', function() {
-      const searchInput = document.getElementById('searchInput');
-      const filterTabs = document.querySelectorAll('.filter-tab');
-      const tagLinks = document.querySelectorAll('.tag[data-tag]');
-      const articleCards = document.querySelectorAll('.article-card');
-      const featuredCard = document.querySelector('.featured');
-      const noResultsDiv = document.getElementById('noResults');
-
-      // Search functionality
-      searchInput.addEventListener('input', function() {
-        currentSearchTerm = this.value.toLowerCase();
-        filterPosts();
-      });
-
-      // Category filter functionality
-      filterTabs.forEach(tab => {
-        tab.addEventListener('click', function(e) {
-          e.preventDefault();
-          
-          const category = this.dataset.category;
-          if (category === 'all') {
-            window.location.href = '/';
-          } else {
-            window.location.href = `/?category=${encodeURIComponent(category)}`;
-          }
-        });
-      });
-
-      // Tag filter functionality - tags now use href navigation, no need for click handler
-
-      function filterPosts() {
-        let visibleCount = 0;
-        
-        articleCards.forEach(card => {
-          const cardCategory = card.dataset.category;
-          const cardTags = card.dataset.tags ? card.dataset.tags.split(',') : [];
-          const cardTitle = card.querySelector('.article-title').textContent.toLowerCase();
-          const cardDescription = card.querySelector('.article-excerpt').textContent.toLowerCase();
-          
-          let showCard = true;
-          
-          // Category filter
-          if (currentCategory !== 'all' && cardCategory !== currentCategory) {
-            showCard = false;
-          }
-          
-          // Tag filter
-          if (currentTag && !cardTags.includes(currentTag)) {
-            showCard = false;
-          }
-          
-          // Search filter
-          if (currentSearchTerm && 
-              !cardTitle.includes(currentSearchTerm) && 
-              !cardDescription.includes(currentSearchTerm)) {
-            showCard = false;
-          }
-          
-          if (showCard) {
-            card.style.display = 'flex';
-            visibleCount++;
-          } else {
-            card.style.display = 'none';
-          }
-        });
-        
-        // Show/hide no results message
-        if (visibleCount === 0) {
-          noResultsDiv.style.display = 'block';
-        } else {
-          noResultsDiv.style.display = 'none';
-        }
-        
-        // Update section header
-        const sectionSubtitle = document.querySelector('.section-subtitle');
-        if (currentCategory !== 'all' || currentTag || currentSearchTerm) {
-          let filterText = '';
-          if (currentCategory !== 'all') {
-            filterText = `${currentCategory} kategorisinde `;
-          }
-          if (currentTag) {
-            filterText += `${currentTag} etiketinde `;
-          }
-          if (currentSearchTerm) {
-            filterText += `"${currentSearchTerm}" aramasında `;
-          }
-          sectionSubtitle.textContent = `${filterText}${visibleCount} yazı bulundu`;
-        } else {
-          sectionSubtitle.textContent = 'Parfüm dünyasından güncel içerikler';
-        }
-      }
-
-      // Smooth scroll for tag links
-      tagLinks.forEach(tag => {
-        tag.addEventListener('click', function(e) {
-          e.preventDefault();
-          document.querySelector('.blog-grid').scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
-          });
-        });
-      });
-    });
-
     // Clear filters function (global scope for onclick)
     function clearFilters() {
       // Navigate to main page to clear all filters
