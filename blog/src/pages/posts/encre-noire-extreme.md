@@ -6,7 +6,7 @@ date: "2025-10-07"
 category: "Analiz"
 author: "Ozan Kılıç"
 readTime: 8
-image: "/encre-noire-extreme-hero.jpg"
+image: "/encre-noire-extreme-hero.png"
 ---
 
 # Lalique Encre Noire à L'Extrême: Verilerle Karanlığın Derinliklerine Yolculuk
