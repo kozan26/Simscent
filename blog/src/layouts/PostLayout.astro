@@ -346,59 +346,6 @@ const structuredData = {
       box-shadow: var(--shadow-sm);
     }
 
-    /* Tags and Categories */
-    .post-tags {
-      margin-top: 1.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border-light);
-    }
-
-    .tags-label {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--muted);
-      margin-bottom: 0.75rem;
-      display: block;
-    }
-
-    .tags-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      padding: 0.375rem 0.75rem;
-      background: var(--shell-light);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-lg);
-      font-size: 0.8125rem;
-      font-weight: 500;
-      color: var(--text-light);
-      text-decoration: none;
-      transition: all var(--transition-normal);
-      cursor: pointer;
-    }
-
-    .tag:hover {
-      background: var(--brand-primary);
-      color: #fff;
-      border-color: var(--brand-primary);
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .tag::before {
-      content: '#';
-      margin-right: 0.25rem;
-      opacity: 0.7;
-    }
-
-    .tag:hover::before {
-      opacity: 1;
-    }
     
     /* Featured Image */
     .featured-image {
@@ -832,19 +779,6 @@ const structuredData = {
         padding: 1.25rem 0;
       }
       
-      .post-tags {
-        margin-top: 1.25rem;
-        padding-top: 1.25rem;
-      }
-      
-      .tags-list {
-        gap: 0.375rem;
-      }
-      
-      .tag {
-        font-size: 0.75rem;
-        padding: 0.3125rem 0.625rem;
-      }
       
       .featured-image {
         margin: 2rem auto;
@@ -1033,18 +967,6 @@ const structuredData = {
         )}
       </div>
         
-        {tags && tags.length > 0 && (
-          <div class="post-tags">
-            <span class="tags-label">Etiketler:</span>
-            <div class="tags-list">
-              {tags.map((tag) => (
-                <a href={`/?tag=${encodeURIComponent(tag)}`} class="tag" aria-label={`${tag} etiketli yazıları görüntüle`}>
-                  {tag}
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
     </header>
     
     {image && (
@@ -1261,17 +1183,14 @@ const structuredData = {
       revealObserver.observe(el);
     });
 
-    // Tag and category click handlers
-    document.querySelectorAll('.tag, .category-badge').forEach(element => {
+    // Category click handlers
+    document.querySelectorAll('.category-badge').forEach(element => {
       element.addEventListener('click', function(e) {
         // Add click animation
         this.style.transform = 'scale(0.95)';
         setTimeout(() => {
           this.style.transform = '';
         }, 150);
-        
-        // Optional: Add analytics tracking here
-        // Example: gtag('event', 'click', { 'event_category': 'tag', 'event_label': this.textContent });
       });
     });
   </script>
